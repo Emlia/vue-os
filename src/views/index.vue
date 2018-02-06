@@ -1,81 +1,58 @@
+<style scoped>
+    .index {
+        width: 100%;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        text-align: center;
+    }
+
+    .index h1 {
+        height: 150px;
+    }
+
+    .index h1 img {
+        height: 100%;
+    }
+
+    .index h2 {
+        color: #666;
+        margin-bottom: 200px;
+    }
+
+    .index h2 p {
+        margin: 0 0 50px;
+    }
+
+    .index .ivu-row-flex {
+        height: 100%;
+    }
+</style>
 <template>
-    <div class="wrapper">
-        <div>
-            <div v-for="i in 2" :key="i" style="margin-bottom: 30px;">
-                <Row>
-                    <div>基础服务</div>
-                    <Col v-for="i in 4" :key="i" :span="4">
-                        <cell></cell>
-                    </Col>
-                </Row>
-            </div>
-        </div>
-        <div style="display:flex;flex-direction: row;justify-content: space-between;margin-bottom: 3px;">
-            <div style="display:flex;flex-direction: row;justify-content: flex-start;align-items: center;width: 400px;">
-                <div style="margin-left: 5px;">基础服务</div>
-                <div style="margin-left: 5px;">独立产品</div>
-                <div style="margin-left: 5px;">行业解决方案</div>
-            </div>
-            <Input v-model="value" icon="ios-clock-outline" placeholder="Enter something..."
-                   style="width: 200px"></Input>
-            <Button>Default</Button>
-        </div>
-        <Table :columns="columns1" :data="data1"></Table>
+    <div class="index">
+        <Row type="flex" justify="center" align="middle">
+            <Col span="24">
+                <h1>
+                    <img src="https://raw.githubusercontent.com/iview/iview/master/assets/logo.png">
+                </h1>
+                <h2>
+                    <p>Welcome to your iView app!</p>
+                    <Button type="ghost" @click="handleStart">Start iView</Button>
+                </h2>
+            </Col>
+        </Row>
     </div>
 </template>
 <script>
-    import cell from './cell'
-
     export default {
-        components: {cell},
-        methods: {},
-        data() {
-            return {
-                value: '',
-                columns1: [
-                    {
-                        title: 'Name',
-                        key: 'name'
-                    },
-                    {
-                        title: 'Age',
-                        key: 'age'
-                    },
-                    {
-                        title: 'Address',
-                        key: 'address'
-                    }
-                ],
-                data1: [
-                    {
-                        name: 'John Brown',
-                        age: 18,
-                        address: 'New York No. 1 Lake Park',
-                        date: '2016-10-03'
-                    },
-                    {
-                        name: 'Jim Green',
-                        age: 24,
-                        address: 'London No. 1 Lake Park',
-                        date: '2016-10-01'
-                    },
-                    {
-                        name: 'Joe Black',
-                        age: 30,
-                        address: 'Sydney No. 1 Lake Park',
-                        date: '2016-10-02'
-                    },
-                    {
-                        name: 'Jon Snow',
-                        age: 26,
-                        address: 'Ottawa No. 2 Lake Park',
-                        date: '2016-10-04'
-                    }
-                ]
+        methods: {
+            handleStart() {
+                this.$Modal.info({
+                    title: 'Bravo',
+                    content: 'Now, enjoy the convenience of iView.'
+                });
             }
         }
-    }
+    };
 </script>
-<style scoped lang="less">
-
-</style>
