@@ -1,12 +1,12 @@
 <template>
-    <home></home>
+    <login></login>
 </template>
 <script>
-    import home from './pages/home'
+    import login from './pages/login'
 
     export default {
         name: 'index',
-        components: {home},
+        components: {login},
         data() {
             return {}
         }
