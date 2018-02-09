@@ -12,14 +12,14 @@
                 <Col span="12" class="a-text" style="text-align: left;" @click="doSomething">
                 忘记密码?</Col>
                 <Col span="12" class="a-text"
-                     style="text-align: right;"  @click="doSomething">
+                     style="text-align: right;" @click="doSomething">
                 新用户注册</Col>
             </Row>
         </div>
         <Row class="wrapper-bottom">
             <Col span="24" style="text-align: center;">
             登录即代表阅读并统一
-            <div class="a-text"  @click="doSomething">服务条款</div>
+            <div class="a-text" @click="doSomething">服务条款</div>
             </Col>
         </Row>
     </div>
@@ -39,19 +39,12 @@
             }
         },
         created() {
-            this.getBackgroundImage()
+            // this.getBackgroundImage()
         },
         methods: {
-            async getBackgroundImage() {
-                let res = await axios.get('http://guolin.tech/api/bing_pic').then(function (response) {
-                    console.log(response);
-                })
-                    .catch(function (error) {
-                        console.log(error);
-                    });
-                ;
-
-            },
+            // async getBackgroundImage() {
+            //     let res = await axios.get('http://guolin.tech/api/bing_pic')
+            // },
             doSomething() {
                 this.$Message.info('do something ...')
             }
