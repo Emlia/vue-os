@@ -3,41 +3,53 @@
 
         <Carousel autoplay v-model="value" loop>
             <CarouselItem>
-                <div class="demo-carousel">1</div>
+                <div class="demo-carousel">
+                    <img class="img" src="http://oxjvsyqoj.bkt.clouddn.com/Grp1%2000469.png" alt="">
+                </div>
             </CarouselItem>
             <CarouselItem>
-                <div class="demo-carousel">2</div>
+                <div class="demo-carousel">
+                    <img class="img" src="http://oxjvsyqoj.bkt.clouddn.com/Grp1%2001770.png" alt="">
+                </div>
             </CarouselItem>
             <CarouselItem>
-                <div class="demo-carousel">3</div>
-            </CarouselItem>
-            <CarouselItem>
-                <div class="demo-carousel">4</div>
+                <div class="demo-carousel">
+                    <img class="img" src="http://oxjvsyqoj.bkt.clouddn.com/Grp1%2001807.png" alt="">
+                </div>
             </CarouselItem>
         </Carousel>
 
-        <Alert type="warning" show-icon closable>A warning prompt</Alert>
+        <Alert style="margin-top: 10px;" type="warning" show-icon closable>本程序可能于 1018年3月1日更新</Alert>
 
 
         <div class="wrapper-selector">
             <Alert type="success">
-                顺序练习
-                <template slot="desc">Content of prompt. Content of prompt. Content of prompt. Content of prompt.
+                <Button @click="$router.push('orderExercise')">顺序练习</Button>
+                <template slot="desc">
+                    一题一题做,一点一点成长~
                 </template>
             </Alert>
             <Alert type="success">
-                章节练习
-                <template slot="desc">Content of prompt. Content of prompt. Content of prompt. Content of prompt.
+
+                <Button @click="$router.push('chapterExercise')">章节练习</Button>
+                <template slot="desc">
+                    针对每个章节,进行强化训练~
                 </template>
             </Alert>
             <Alert type="success">
-                课后习题
-                <template slot="desc">Content of prompt. Content of prompt. Content of prompt. Content of prompt.
+
+                <Button @click="$router.push('homework')">课后习题</Button>
+
+                <template slot="desc">
+                    一步一个脚印,巩固基础知识~
                 </template>
             </Alert>
             <Alert type="success">
-                错题本
-                <template slot="desc">Content of prompt. Content of prompt. Content of prompt. Content of prompt.
+
+                <Button @click="$router.push('errorQuestion')">错题本</Button>
+
+                <template slot="desc">
+                    错题虐我千百遍,我待错题如初恋~
                 </template>
             </Alert>
         </div>
@@ -72,8 +84,13 @@
     .demo-carousel {
         width: 100%;
         height: 200px;
-        text-align: center;
-        background: #2d8cf0;
-        color: white;
+        background: #fff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .img {
+        height: 100%;
     }
 </style>
