@@ -1,7 +1,7 @@
 <template>
     <div>
+        <navPage/>
         <whitespace>
-            <div>顺序练习</div>
             <div class="tag-wrapper">
                 <div class="tag" v-for="(tagitem,index) in  radioQ[0].tag" :key="index">{{tagitem}}</div>
             </div>
@@ -9,21 +9,27 @@
             <div class="text">驾驶机动车正在被其他车辆超车时,别找出更哈市极大哈斯件?
             </div>
             <radio :radioitems="radioQ[0]"/>
+            <!--<div>{{myAnswer[3]}}</div>-->
+
         </whitespace>
+        <orderExercise/>
     </div>
 </template>
 
 <script>
     import radio from '../components/radio/radio'
     import whitespace from '../components/whitespace/whitespace'
+    import orderExercise from '../components/bottomPanel/bottomPanel'
+    import navPage from '../components/nav/navPage'
 
     export default {
         name: "order-exercise",
-        components: {radio, whitespace},
+        components: {radio, whitespace, orderExercise, navPage},
         data() {
             return {
                 radioQ: [
                     {
+                        id: 1,
                         tag: ['单选题', '判断题'],
                         type: 'radio',
                         answer: 'B',
@@ -40,7 +46,11 @@
                             {value: 'D', label: '选项D'}
                         ]
                     }
-                ]
+                ],
+                myAnswer: {
+                    1: 'B',
+                    3: 'D'
+                }
             }
         }
     }
@@ -56,7 +66,7 @@
 
     .tag {
         color: #2d8cf0;
-        margin-left: 10px;
+        margin-right: 10px;
         font-size: 12px;
     }
 
