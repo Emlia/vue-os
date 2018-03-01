@@ -97,8 +97,8 @@
         align-items: center;
         border: 2px solid #eee;
         background: #2db7f5;
-        width: 26px;
-        height: 26px;
+        width: 25px;
+        height: 25px;
         border-radius: 50%;
     }
 
