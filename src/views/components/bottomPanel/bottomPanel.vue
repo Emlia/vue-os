@@ -1,6 +1,6 @@
 <template>
     <div class="wrapper">
-        <div class="top" @click="show = !show">
+        <div class="top" @click="cTop">
             <div class="left">
                 <Icon type="ios-star-outline" size="25" color="#80848f"></Icon>
                 <div class="font">收藏</div>
@@ -13,11 +13,11 @@
             </div>
             <div class="right">
                 <Icon type="grid" size="25" color="#80848f"></Icon>
-                <div class="font">113/115</div>
+                <div class="font">{{pos+1}}/{{num}}</div>
             </div>
         </div>
         <div v-show="show" class="bottom">
-            <div @click="clickT(i)" class="cell" v-for="i in 1000" :key="i">{{i}}</div>
+            <div @click="clickT(i)" class="cell" v-for="i in num" :key="i">{{i}}</div>
         </div>
         <!--<transition name="slide-fade">-->
 
@@ -28,14 +28,36 @@
 <script>
     export default {
         name: "bottom-panel",
-        data() {
-            return {
-                show: false
+        props: {
+            num: {
+                type: Number,
+                default() {
+                    return 0
+                }
+            },
+            pos: {
+                type: Number,
+                default() {
+                    return 0
+                }
+            },
+            show: {
+                type: Boolean,
+                default() {
+                    return false
+                }
             }
+        },
+        data() {
+            return {}
         },
         methods: {
             clickT(value) {
                 console.log('get', value)
+                this.$emit('selected', value)
+            },
+            cTop() {
+                this.$emit('ctop')
             }
         }
     }
@@ -47,16 +69,18 @@
         position: absolute;
         bottom: 0px;
         border-top: 1px solid #eee;
+
     }
 
     .top {
         display: flex;
         width: 100%;
-        height: 35px;
+        height: 40px;
         flex-direction: row;
         justify-content: space-between;
         align-items: center;
         background: #fff;
+        border-bottom: 1px solid #eee;
     }
 
     .left {

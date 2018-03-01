@@ -2,8 +2,9 @@
     <div>
         <radioItem class="radio-item-wrapper" v-for="(item,index) in radioitems.values"
                    :key="index"
-                   state="#fff"
-                   @selectedItem="checkAnswer"
+                   :myAnswer="myAnswer"
+                   :answer="radioitems.answer"
+                   @click="value=>$emit('click',{id:radioitems.id,value:value})"
                    :value="item"/>
     </div>
 </template>
@@ -18,9 +19,13 @@
             radioitems: {
                 type: Object,
                 default() {
-                    return {
-                        selected: ''
-                    }
+                    return {}
+                }
+            },
+            myAnswer: {
+                type: undefined | String,
+                default() {
+                    return ''
                 }
             }
 
@@ -30,24 +35,14 @@
         },
         methods: {
             checkAnswer(value) {
-                this.selected = value
-                console.log('get', value)
+                // console.log('get', value)
             },
-            getBgColor() {
-                if (this.selected === radioitems.answer) {
-                    return 'blue'
-                } else if (this.selected != radioitems.answer && this.selected != '') {
-                    return 'red'
-                }
 
-                return 'green'
-            }
         },
-        watch: {
-            selected(value) {
+        computed: {
 
-            }
-        }
+        },
+        watch: {}
     }
 </script>
 
