@@ -9,7 +9,10 @@
             标题
         </div>
         <div class="right">
-            <Icon type="gear-a" size="25" color="#80848f"></Icon>
+            <div @click="$router.push('adminManagement')">
+                <Icon type="gear-a" size="25" color="#80848f"></Icon>
+            </div>
+
         </div>
     </div>
 </template>

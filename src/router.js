@@ -6,6 +6,9 @@ import orderExercise from './views/pages/orderExercise'
 import chapterExercise from './views/pages/chapterExercise'
 import homework from './views/pages/homework'
 import errorQuestion from './views/pages/errorQuestion'
+import adminManagement from './views/pages/adminManagement'
+import adminAdd from './views/pages/admin/add'
+import adminEdit from './views/pages/admin/edit'
 
 const routers = [
     {
@@ -42,6 +45,18 @@ const routers = [
     {
         path: '/errorQuestion',
         component: errorQuestion
+    },
+    {
+        path: '/adminManagement',
+        component: adminManagement
+    },
+    {
+        path: '/adminAdd',
+        component: adminAdd
+    },
+    {
+        path: '/adminEdit',
+        component: adminEdit
     },
 
 ];

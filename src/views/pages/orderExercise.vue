@@ -1,7 +1,7 @@
 <template>
     <div>
         <navPage/>
-        <whitespace @click="show = false">
+        <whitespace @click="show = false" class="whitespace">
             <div class="tag-wrapper">
                 <div class="tag" v-for="(tagitem,index) in  radioQ[cPosition].tag" :key="index">{{tagitem}}</div>
             </div>
@@ -13,18 +13,20 @@
                    @click="mRadio"
             />
             <div v-show="showAnalysis">
-                <div>答案 {{this.radioQ[this.cPosition].answer}}</div>
-                <div>
-                    <div></div>
-                    <div>
-                        答案详解
-                    </div>
-                    <div></div>
+                <div class="analysis-wapper">
+                    <div class="analysis-font">答案 {{this.radioQ[this.cPosition].answer}}</div>
+                    <Button style="color:deepskyblue" shape="circle" @click="next">下一题</Button>
                 </div>
-                <div>{{this.radioQ[this.cPosition].analysis}}</div>
+
+
+                <div class="analysis-font analysis-center">
+                    答案详解
+                </div>
+
+                <div class="analysis-font">{{this.radioQ[this.cPosition].analysis}}</div>
             </div>
             <!--<div>{{myAnswers[cPosition+1]}}</div>-->
-            <Button @click="next">下一题</Button>
+
         </whitespace>
         <bottomPanel
                 :collections="myCollections"
@@ -132,6 +134,14 @@
 </script>
 
 <style scoped>
+    .whitespace {
+        overflow: scroll;
+        position: absolute;
+        top: 40px;
+        bottom: 40px;
+        width: 100%;
+    }
+
     .tag-wrapper {
         display: flex;
         flex-direction: row;
@@ -149,5 +159,23 @@
         font-size: 18px;
         margin-top: 5px;
         margin-bottom: 10px;
+    }
+
+    .analysis-center {
+        text-align: center;
+        margin-bottom: 5px;
+    }
+
+    .analysis-wapper {
+        display: flex;
+        width: 100%;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+
+    .analysis-font {
+        font-size: 18px;
     }
 </style>

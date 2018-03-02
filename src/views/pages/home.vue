@@ -1,6 +1,6 @@
 <template>
     <div class="wrapper">
-
+        <navPage/>
         <Carousel autoplay v-model="value" loop>
             <CarouselItem>
                 <div class="demo-carousel">
@@ -60,9 +60,11 @@
 </template>
 
 <script>
+    import navPage from '../components/nav/navPage'
 
     export default {
         name: "home",
+        components: {navPage},
         data() {
             return {
                 value: 0
