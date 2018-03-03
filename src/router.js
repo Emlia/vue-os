@@ -9,6 +9,13 @@ import errorQuestion from './views/pages/errorQuestion'
 import adminManagement from './views/pages/adminManagement'
 import adminAdd from './views/pages/admin/add'
 import adminEdit from './views/pages/admin/edit'
+import QAdd from './views/pages/admin/question/add'
+import QEdit from './views/pages/admin/question/edit'
+import QAll from './views/pages/admin/question/all'
+import TAdd from './views/pages/admin/tag/add'
+import TEdit from './views/pages/admin/tag/edit'
+import TAll from './views/pages/admin/tag/all'
+
 
 const routers = [
     {
@@ -57,6 +64,30 @@ const routers = [
     {
         path: '/adminEdit',
         component: adminEdit
+    },
+    {
+        path: '/QAdd',
+        component: QAdd
+    },
+    {
+        path: '/QEdit',
+        component: QEdit
+    },
+    {
+        path: '/QAll',
+        component: QAll
+    },
+    {
+        path: '/TAdd',
+        component: TAdd
+    },
+    {
+        path: '/TEdit',
+        component: TEdit
+    },
+    {
+        path: '/TAll',
+        component: TAll
     },
 
 ];

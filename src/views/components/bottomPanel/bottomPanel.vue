@@ -109,7 +109,10 @@
         justify-content: flex-start;
         align-items: flex-start;
         flex-wrap: wrap;
-        overflow: scroll;
+        /*overflow: scroll;*/
+        overflow-x: hidden;
+        overflow-y: auto;
+
         background: #fff;
         max-height: 300px;
     }

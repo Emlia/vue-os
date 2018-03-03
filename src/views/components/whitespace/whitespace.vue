@@ -1,5 +1,5 @@
 <template>
-    <div class="wrapper" @click="$emit('click')">
+    <div class="ws-wrapper" @click="$emit('click')">
         <slot></slot>
     </div>
 </template>
@@ -11,7 +11,8 @@
 </script>
 
 <style scoped>
-    .wrapper {
-        margin: 30px 10px;
+    .ws-wrapper {
+        width: 100%;
+        padding: 30px 10px;
     }
 </style>

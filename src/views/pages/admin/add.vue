@@ -11,6 +11,7 @@
 <script>
     import axios from 'axios';
     import qs from 'qs'
+    import util from '../../../libs/util'
 
     export default {
         name: "add",
@@ -28,7 +29,10 @@
                 }).catch(function (error) {
                     console.log(error);
                 });
-                console.log('all   ', res)
+                // console.log('all   ', res)
+                // util.get('http://localhost/php-ci-os/index.php/Test/all').then(res => {
+                //     this.res = res.data
+                // })
             },
             add() {
                 let data = qs.stringify({
