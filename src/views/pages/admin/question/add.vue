@@ -10,7 +10,7 @@
             </div>
             <div class="cell">
                 <div class="cell-title">标签</div>
-                <Select v-model="tag" style="width: 60%">
+                <Select multiple v-model="tag" style="width: 60%">
                     <Option v-for="item in tags" :value="item.value" :key="item.value">{{ item.label }}</Option>
                 </Select>
             </div>
@@ -23,7 +23,11 @@
             </div>
             <div class="cell">
                 <div class="cell-title">题干</div>
-                <Input v-model="text" type="textarea" placeholder="请输入题干.eg:请问今天是几号?" clearable style="width: 60%"/>
+                <Input v-model="text" type="textarea" placeholder="请输入题干.eg:您的幸运号码是多少?" clearable style="width: 60%"/>
+            </div>
+            <div class="cell">
+                <div class="cell-title">图片</div>
+                <Input v-model="src" placeholder="请输入图片的url地址.eg:www.baidu.com." clearable style="width: 60%"/>
             </div>
 
             <div class="cell">
@@ -34,7 +38,7 @@
                     <div class="cell-option">{{abc[index]}}</div>
                 </div>
                 <Input v-model="options[index]" type="textarea"
-                       placeholder="请输入答案.eg:2018/2/30" clearable
+                       :placeholder="`请输入答案.eg:我的幸运号码是${index}`" clearable
                        style="width: 60%"/>
                 <div @click="sub(index)" v-show="index !=0" class="icon-sub">
                     <Icon type="minus-circled" color="#ff0000" size="20"></Icon>
@@ -45,13 +49,18 @@
             </div>
             <div class="cell">
                 <div class="cell-title">答案</div>
-                <Select v-model="answer" style="width: 60%">
+                <Select multiple v-model="answer" style="width: 60%">
                     <Option v-for="i in options.length" :value=" abc[i-1]" :key="i">{{ abc[i-1] }}</Option>
                 </Select>
             </div>
+            <div class="cell">
+                <div class="cell-title">解析</div>
+                <Input v-model="analysis" type="textarea" placeholder="请输入解析.eg:本题是一道开放题,言之有理即可." clearable
+                       style="width: 60%"/>
+            </div>
             <div class="tool">
                 <Button @click="$router.go(-1)">返回</Button>
-                <Button @click="submit">提交</Button>
+                <Button @click="addQT">提交</Button>
             </div>
             <div>{{res}}</div>
         </whitespace>
@@ -73,12 +82,15 @@
                 tags: [],
                 chapters: [],
                 types: [],
-                tag: 0,
+                tag: [],
                 chapter: 0,
-                type: 0,
-                answer: '',
+                type: 1,
+                answer: [],
                 text: '',
+                src: '',
+                analysis: '',
                 options: ['', '', '', ''],
+                moptions: [],
                 res: ''
             }
         },
@@ -87,19 +99,78 @@
             this.getTag()
             this.getType()
         },
+        watch: {
+            tag(value) {
+                console.log('tag', value)
+            }
+        },
         methods: {
             submit() {
-                if (this.label == '' || this.value == '') {
-                    this.$Message.error('输入不能为空,提交失败')
-                    return
-                }
-                let data = qs.stringify({
-                    label: this.label,
-                    value: this.value
+                // if (this.type == 0 || this.text == '' || this.answer == '' || this.options[0] == '') {
+                //     this.$Message.error('输入不能为空,提交失败')
+                //     return
+                // }
+                this.options.forEach((item, index) => {
+                    let data = qs.stringify({
+                        label: item,
+                        value: this.abc[index]
+
+                    })
+                    axios.post('http://localhost/php-ci-os/index.php/Os/addOptions',
+                        data).then((response) => {
+                        this.res = response.data
+                        if (response.data.ret === '200') {
+                            this.moptions.push(response.data.data)
+                        }
+                    }).catch(function (error) {
+                        console.log(error);
+                    });
+
                 })
-                axios.post('http://localhost/php-ci-os/index.php/Os/addTag',
+
+            },
+            addQ() {
+                let data = qs.stringify({
+                    type: this.type,
+                    tag: this.tag,
+                    chapter: this.chapter,
+                    text: this.text,
+                    src: this.src,
+                    options: this.options.join('^'),
+                    answer: this.answer,
+                    analysis: this.analysis,
+
+                })
+                axios.post('http://localhost/php-ci-os/index.php/Os/addQuestion',
                     data).then((response) => {
                     this.res = response.data
+                }).catch(function (error) {
+                    console.log(error);
+                });
+            },
+            addQT() {
+                let data = qs.stringify({
+                    type: this.type,
+                    tag: JSON.stringify(this.tag),
+                    chapter: this.chapter,
+                    text: this.text,
+                    src: this.src,
+                    options: JSON.stringify(this.options),
+                    answer: JSON.stringify(this.answer),
+                    analysis: this.analysis,
+
+                })
+                axios.post('http://localhost/php-ci-os/index.php/Os/addQuestion',
+                    data).then((response) => {
+                    this.res = response.data
+                    this.type = 1
+                    this.tag = []
+                    this.chapter = 0
+                    this.text = ''
+                    this.src = ''
+                    this.options = ['', '', '', '']
+                    this.answer = []
+                    this.analysis = ''
                 }).catch(function (error) {
                     console.log(error);
                 });
@@ -126,7 +197,7 @@
                     let temp = res.data.data
                     let ch = []
                     temp.forEach(item => {
-                        ch.push({label: item.label, value: item.value})
+                        ch.push({label: item.label, value: item.id})
                     })
                     this.tags = ch
                 }).catch(function (error) {

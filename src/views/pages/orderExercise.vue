@@ -2,19 +2,29 @@
     <div>
         <navPage/>
         <whitespace @click="show = false" class="whitespace">
+            <!--<div>{{questions}}</div>-->
+            <!--<div>{{JSON.stringify(myAnswers)}}</div>-->
+            <!--<div class="tag-wrapper">-->
+            <!--<div class="tag" v-for="(tagitem,index) in  questions[cPosition].tag" :key="index">{{tagitem}}</div>-->
+            <!--</div>-->
             <div class="tag-wrapper">
-                <div class="tag" v-for="(tagitem,index) in  radioQ[cPosition].tag" :key="index">{{tagitem}}</div>
+                <div class="tag">标签:{{question.tag}}</div>
             </div>
 
-            <div class="text">{{radioQ[cPosition].text}}
+            <!--<div class="tag-wrapper">-->
+            <!--<div class="type">{{types[question.type].label}}</div>-->
+            <!--</div>-->
+
+
+            <div class="text">{{question.text}}
             </div>
-            <radio :radioitems="radioQ[cPosition]"
-                   :myAnswer="myAnswers[radioQ[cPosition].id]"
+            <radio :question="question"
+                   :myAnswer="myAnswers[this.question.id]"
                    @click="mRadio"
             />
             <div v-show="showAnalysis">
                 <div class="analysis-wapper">
-                    <div class="analysis-font">答案 {{this.radioQ[this.cPosition].answer}}</div>
+                    <div class="analysis-font">答案 {{this.questions[this.cPosition].answer}}</div>
                     <Button style="color:deepskyblue" shape="circle" @click="next">下一题</Button>
                 </div>
 
@@ -23,7 +33,7 @@
                     答案详解
                 </div>
 
-                <div class="analysis-font">{{this.radioQ[this.cPosition].analysis}}</div>
+                <div class="analysis-font">{{this.questions[this.cPosition].analysis}}</div>
             </div>
             <!--<div>{{myAnswers[cPosition+1]}}</div>-->
 
@@ -31,7 +41,7 @@
         <bottomPanel
                 :collections="myCollections"
                 @selected="selected"
-                :num="radioQ.length"
+                :num="questions.length"
                 :pos="cPosition" :show="show" @ctop="ctop"/>
     </div>
 
@@ -42,84 +52,148 @@
     import whitespace from '../components/whitespace/whitespace'
     import bottomPanel from '../components/bottomPanel/bottomPanel'
     import navPage from '../components/nav/navPage'
+    import axios from "axios"
 
     export default {
         name: "order-exercise",
         components: {radio, whitespace, bottomPanel, navPage},
         data() {
             return {
-                cPosition: 1,
+                cPosition: 0,
                 show: false,
                 showAnalysis: false,
-                radioQ: [
+                tags: [],
+                types: [{label: '', value: 0}],
+                chapters: [],
+                myAnswers: {
+                    1: ['B'],
+                    3: ['D']
+                },
+                myCollections: [1, 2],
+                questions: [
                     {
-                        id: 1,
-                        tag: ['单选题', '判断题'],
-                        type: 'radio',
-                        answer: 'B',
-                        text: '驾驶机动车正在被其他车辆超车时,别找出更哈市极大哈斯件?',
-                        src: 'http://oxjvsyqoj.bkt.clouddn.com/Grp1%2001807.png',
-                        values: [
-                            {value: 'A', label: '选项A'},
-                            {value: 'B', label: '选项B'},
-                            {
-                                value: 'C', label: '选项C,这是一个横诚的选项,是一个横诚的选项,' +
-                                '是一个横诚的选项,是一个横诚的选项,是一个横诚的选项是一个横诚的选项是一' +
-                                '个横诚的选项~'
-                            },
-                            {value: 'D', label: '选项D'}
-                        ]
-                    },
-                    {
-                        id: 2,
-                        tag: ['单选题', '判断题', '客观题'],
-                        type: 'radio',
-                        answer: 'B',
-                        text: '这是第二题,这是第二题,这是第二题,这是第二题这是第二题,这是第二题这是第二题?',
-                        src: 'http://oxjvsyqoj.bkt.clouddn.com/Grp1%2001807.png',
-                        analysis: '这是参考答案,这是参考答案,这是参考答案,这是参考答案,这是参考答案,~~',
-                        values: [
-                            {value: 'A', label: '选项AA'},
-                            {
-                                value: 'B', label: '选项BBB,这是一个横诚的选项,是一个横诚的选项一个横诚的选项,是一个横诚的选项,'
-                            },
-                            {
-                                value: 'C', label: '选项CC,是一个横诚的选项是一个横诚的选项是一' +
-                                '个横诚的选项~'
-                            },
-                            {value: 'D', label: '选项DD'}
-                        ]
+                        id: 0,
+                        type: 0,
+                        tag: 0,
+                        chapter: 0,
+                        answer: '',
+                        text: '??',
+                        src: '',
+                        analysis: '',
+                        options: ''
                     }
                 ],
-                myAnswers: {
-                    1: 'B',
-                    3: 'D'
-                },
-                myCollections: [1, 2]
+                question: {
+                    id: 0,
+                    type: 0,
+                    tag: 0,
+                    chapter: 0,
+                    answer: '',
+                    text: '??',
+                    src: '',
+                    analysis: '',
+                    options: ''
+                }
+                // {
+                //     id: 0,
+                //         type: 0,
+                //     tag: 0,
+                //     chapter: 0,
+                //     answer: '',
+                //     text: '??',
+                //     src: '',
+                //     analysis: '',
+                //     options: ''
+                // }
             }
+        },
+        created() {
+            this.getTags()
+            this.getTypes()
+            this.getCapters()
+            this.getQuestions()
         },
         methods: {
             next() {
-                this.cPosition = (this.cPosition + 1) % this.radioQ.length
+                this.cPosition = (this.cPosition + 1) % this.questions.length
+                this.question = this.questions[this.cPosition]
             },
             selected(value) {
                 this.cPosition = value - 1
+                this.question = this.questions[value - 1]
             },
             ctop() {
                 this.show = !this.show
             },
             mRadio(value) {
-                let temp = {}
-                temp[value.id] = value.value
-                this.myAnswers = Object.assign({}, this.myAnswers, temp)
-                if (value.value === this.radioQ[this.cPosition].answer) {
-                    this.showAnalysis = false
-                    this.next()
-                } else {
-                    this.showAnalysis = true
+                // 如果是单选
+                if (true) {
+                    let temp = {}
+                    temp[value.id] = []
+                    temp[value.id][0] = value.value
+                    this.myAnswers = Object.assign({}, this.myAnswers, temp)
+                    let answer = JSON.parse(this.question.answer)
+                    // console.log('eee', value.value, answer)
+                    if (value.value === answer[0]) {
+                        this.showAnalysis = false
+                        this.next()
+                    } else {
+                        this.showAnalysis = true
+                    }
                 }
+
                 // console.log('aaa', value)
                 // console.log('bb', this.myAnswers)
+            },
+            getQuestions() {
+                axios.get('http://localhost/php-ci-os/index.php/Os/getQuestions').then((response) => {
+                    this.res = response.data
+                    this.questions = this.res.data
+                    // this.question = Object.assign({}, this.question, this.questions[0])
+                    this.question = this.questions[0]
+                    console.log('data', this.questions)
+                }).catch(function (error) {
+                    console.log(error);
+                });
+            },
+            getCapters() {
+                axios.get('http://localhost/php-ci-os/index.php/Os/getChapters'
+                ).then((res) => {
+                    let temp = res.data.data
+                    let ch = []
+                    temp.forEach(item => {
+                        ch.push({label: item.name, value: item.id})
+                    })
+                    this.chapters = ch
+                }).catch(function (error) {
+                    console.log(error);
+                });
+            },
+            getTags() {
+                axios.get('http://localhost/php-ci-os/index.php/Os/getTags'
+                ).then((res) => {
+                    let temp = res.data.data
+                    let ch = []
+                    temp.forEach(item => {
+                        ch.push({label: item.label, value: item.id})
+                    })
+                    this.tags = ch
+                }).catch(function (error) {
+                    console.log(error);
+                });
+            },
+            getTypes() {
+                axios.get('http://localhost/php-ci-os/index.php/Os/getTypes'
+                ).then((res) => {
+                    let temp = res.data.data
+                    let ch = []
+                    temp.forEach(item => {
+                        ch.push({label: item.label, value: item.id})
+                    })
+                    this.types = ch
+                }).catch(function (error) {
+                    console.log(error);
+                });
             }
         },
         watch: {
@@ -128,6 +202,9 @@
                     // console.log('answer', val)
                 },
                 deep: true
+            },
+            question(val) {
+                // console.log('question', val)
             }
         }
     }

@@ -23,25 +23,29 @@
             <div class="a-text" @click="doSomething">服务条款</div>
             </Col>
         </Row>
+        <div>{{res}}</div>
     </div>
 
 
 </template>
 
 <script>
-    import axios from 'axios';
+    import axios from 'axios'
+    import qs from "qs"
 
     export default {
         name: "login",
         data() {
             return {
-                username: '',
-                password: ''
+                username: 'emlia',
+                password: 'emlia103',
+                res: ''
             }
         },
         created() {
             // this.getBackgroundImage()
             console.log('os', this)
+            this.login()
         },
         methods: {
             // async getBackgroundImage() {
@@ -50,6 +54,19 @@
             doSomething() {
                 this.$Message.info('do something ...')
             },
+            login() {
+                let data = qs.stringify({
+                    username: this.username,
+                    password: this.password
+
+                })
+                axios.post('http://localhost/php-ci-os/index.php/Os/login',
+                    data).then((response) => {
+                    this.res = response.data
+                }).catch(function (error) {
+                    console.log(error);
+                });
+            }
 
         }
     }

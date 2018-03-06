@@ -1,11 +1,13 @@
 <template>
     <div>
-        <radioItem class="radio-item-wrapper" v-for="(item,index) in radioitems.values"
+        <div>{{values}}</div>
+        <div></div>
+        <radioItem class="radio-item-wrapper" v-for="(item,index) in values"
                    :key="index"
                    :myAnswer="myAnswer"
-                   :answer="radioitems.answer"
-                   @click="value=>$emit('click',{id:radioitems.id,value:value})"
-                   :value="item"/>
+                   :answer="answer"
+                   @click="value=>$emit('click',{id:question.id,value:value})"
+                   :value="{value:abc[index],label:item}"/>
     </div>
 </template>
 
@@ -16,33 +18,43 @@
         name: "radio",
         components: {radioItem},
         props: {
-            radioitems: {
+            question: {
                 type: Object,
                 default() {
                     return {}
                 }
             },
             myAnswer: {
-                type: undefined | String,
+                type: Array,
                 default() {
-                    return ''
+                    return []
                 }
             }
 
         },
         data() {
-            return {}
+            return {
+                values: [],
+                answer: [],
+                abc: ['A', 'B', 'C', 'D', 'E', 'F', 'G', "H"],
+            }
         },
+        created() {
+        },
+        computed: {},
         methods: {
             checkAnswer(value) {
                 // console.log('get', value)
             },
 
         },
-        computed: {
-
-        },
-        watch: {}
+        computed: {},
+        watch: {
+            question(value) {
+                this.values = JSON.parse(value.options)
+                this.answer = JSON.parse(value.answer)
+            }
+        }
     }
 </script>
 

@@ -23,15 +23,15 @@
                 }
             },
             myAnswer: {
-                type: String,
+                type: Array,
                 default() {
-                    return '';
+                    return [];
                 }
             },
             answer: {
-                type: String,
+                type: Array,
                 default() {
-                    return '';
+                    return [];
                 }
             }
         },
@@ -47,17 +47,18 @@
         },
         watch: {
             myAnswer(value) {
-                if (value) {
+                // console.log(`myAnswer=${value}--answer=${this.answer[0]}`)
+                if (value[0]) {
                     //如果选中该按钮
-                    if (value === this.value.value) {
+                    if (value[0] === this.value.value) {
                         //如果答案是该按钮
-                        if (this.value.value === this.answer) {
+                        if (this.value.value === this.answer[0]) {
                             this.type = 'true'
                         } else {
                             this.type = 'false'
                         }
                     } else {
-                        if (this.value.value === this.answer) {
+                        if (this.value.value === this.answer[0]) {
                             this.type = 'true'
                         } else {
                             this.type = 'text'

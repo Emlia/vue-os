@@ -8,7 +8,7 @@
             <Input class="home-input" v-model="username" placeholder="请输入用户名" clearable autofocus/>
             <Input class="home-input" v-model="password" placeholder="请输入密码" clearable/>
             <Input class="home-input" v-model="conformPassword" placeholder="请再输入密码" clearable/>
-            <Button class="home-input" type="info" long @click="doSomething">注册</Button>
+            <Button class="home-input" type="info" long @click="register">注册</Button>
             <Row>
                 <Col span="12" class="a-text"
                      style="text-align: left;">
@@ -28,6 +28,9 @@
 </template>
 
 <script>
+    import axios from 'axios'
+    import qs from 'qs'
+
     export default {
         name: "register",
         data() {
@@ -42,6 +45,19 @@
         methods: {
             doSomething() {
                 this.$Message.info('do something ...')
+            },
+            register() {
+                let data = qs.stringify({
+                    username: this.username,
+                    password: this.password
+
+                })
+                axios.post('http://localhost/php-ci-os/index.php/Os/register',
+                    data).then((response) => {
+                    this.res = response.data
+                }).catch(function (error) {
+                    console.log(error);
+                });
             }
         }
     }

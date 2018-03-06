@@ -399,6 +399,22 @@
       align-items: center;
 }
 
+.title[data-v-65e6e906] {
+  font-size: 18px;
+  padding-left: 5px;
+  border-left: #2db7f5 4px solid;
+  margin-bottom: 20px;
+}
+.tool[data-v-65e6e906] {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: justify;
+      justify-content: space-between;
+  -ms-flex-align: center;
+      align-items: center;
+  margin-top: 20px;
+}
+
 .title[data-v-7351b037] {
   font-size: 18px;
   padding-left: 5px;
