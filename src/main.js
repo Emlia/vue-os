@@ -2,7 +2,7 @@ import Vue from 'vue';
 import iView from 'iview';
 import VueRouter from 'vue-router';
 import Routers from './router';
-import Vuex from 'vuex';
+
 import Util from './libs/util';
 import App from './app.vue';
 import 'iview/dist/styles/iview.css';
@@ -12,8 +12,10 @@ import Locales from './locale';
 import zhLocale from 'iview/src/locale/lang/zh-CN';
 import enLocale from 'iview/src/locale/lang/en-US';
 
+import store from './data/store'
+
 Vue.use(VueRouter);
-Vue.use(Vuex);
+
 Vue.use(VueI18n);
 Vue.use(iView);
 
@@ -34,7 +36,7 @@ Vue.locale('en-US', mergeEN);
 
 // 路由配置
 const RouterConfig = {
-   // mode: 'history',
+    // mode: 'history',
     routes: Routers
 };
 const router = new VueRouter(RouterConfig);
@@ -51,20 +53,7 @@ router.afterEach(() => {
 });
 
 
-const store = new Vuex.Store({
-    state: {
 
-    },
-    getters: {
-
-    },
-    mutations: {
-
-    },
-    actions: {
-
-    }
-});
 
 
 new Vue({

@@ -3,12 +3,14 @@
         <navPage/>
         <whitespace @click="show = false" class="whitespace">
             <!--<div>{{questions}}</div>-->
-            <!--<div>{{JSON.stringify(myAnswers)}}</div>-->
-            <!--<div class="tag-wrapper">-->
-            <!--<div class="tag" v-for="(tagitem,index) in  questions[cPosition].tag" :key="index">{{tagitem}}</div>-->
-            <!--</div>-->
+            <!--<div>{{$store.getters.showTF}}</div>-->
+            <!--<div>{{$store.getters.showTags}}</div>-->
+            <!--<div>myAnswers :{{JSON.stringify(myAnswers)}}</div>-->
             <div class="tag-wrapper">
-                <div class="tag">标签:{{question.tag}}</div>
+                <div class="tag" v-for="(tagitem,index) in  $store.getters.showTags" :key="index">{{tagitem}}</div>
+            </div>
+            <div class="tag-wrapper">
+                <div class="tag">章节:{{$store.getters.showChapter}}</div>
             </div>
 
             <!--<div class="tag-wrapper">-->
@@ -24,7 +26,7 @@
             />
             <div v-show="showAnalysis">
                 <div class="analysis-wapper">
-                    <div class="analysis-font">答案 {{this.questions[this.cPosition].answer}}</div>
+                    <div class="analysis-font">答案 {{this.question.answer}}</div>
                     <Button style="color:deepskyblue" shape="circle" @click="next">下一题</Button>
                 </div>
 
@@ -65,11 +67,8 @@
                 tags: [],
                 types: [{label: '', value: 0}],
                 chapters: [],
-                myAnswers: {
-                    1: ['B'],
-                    3: ['D']
-                },
-                myCollections: [1, 2],
+                myAnswers: {},
+                myCollections: [],
                 questions: [
                     {
                         id: 0,
@@ -89,22 +88,12 @@
                     tag: 0,
                     chapter: 0,
                     answer: '',
-                    text: '??',
+                    text: '',
                     src: '',
                     analysis: '',
                     options: ''
-                }
-                // {
-                //     id: 0,
-                //         type: 0,
-                //     tag: 0,
-                //     chapter: 0,
-                //     answer: '',
-                //     text: '??',
-                //     src: '',
-                //     analysis: '',
-                //     options: ''
-                // }
+                },
+                qqq: {t: [], f: []}
             }
         },
         created() {
@@ -112,6 +101,10 @@
             this.getTypes()
             this.getCapters()
             this.getQuestions()
+            this.$store.commit('getQuestions')
+            this.$store.commit('getTags')
+            this.$store.commit('getChapters')
+            // this.$store.commit('getQuestion', this.cPosition)
         },
         methods: {
             next() {
@@ -132,6 +125,7 @@
                     temp[value.id] = []
                     temp[value.id][0] = value.value
                     this.myAnswers = Object.assign({}, this.myAnswers, temp)
+                    this.$store.commit('addMyAnswer', {key: value.id, value: [value.value]})
                     let answer = JSON.parse(this.question.answer)
                     // console.log('eee', value.value, answer)
                     if (value.value === answer[0]) {
@@ -151,7 +145,7 @@
                     this.questions = this.res.data
                     // this.question = Object.assign({}, this.question, this.questions[0])
                     this.question = this.questions[0]
-                    console.log('data', this.questions)
+                    // console.log('data', this.questions)
                 }).catch(function (error) {
                     console.log(error);
                 });
@@ -205,7 +199,47 @@
             },
             question(val) {
                 // console.log('question', val)
+            },
+            cPosition(value) {
+                this.$store.commit('getQuestion', value)
+            },
+            '$store.state.myAnswers': {
+                handler: function (val, oldVal) {
+                    // let temp = []
+                    // this.questions.forEach(item => {
+                    //     console.log('eee')
+                    //     temp = val
+                    //     if (temp[item.id] !== undefined) {
+                    //         if (temp[item.id][0] === item.answer[0]) {
+                    //             this.qqq.t.push(item.id)
+                    //         } else {
+                    //             this.qqq.f.push(item.id)
+                    //         }
+                    //     }
+                    // })
+
+                },
+                deep: true
             }
+        },
+        computed: {
+            // showT: function () {
+            //     let t = []
+            //     let f = []
+            //     let temp = []
+            //     this.$store.state.questions.forEach(item => {
+            //         console.log('eee')
+            //         temp = this.$store.state.myAnswers
+            //         if (temp[item.id] != undefined) {
+            //             if (temp[item.id][0] == item.answer[0]) {
+            //                 t.push(item.id)
+            //             } else {
+            //                 f.push(item.id)
+            //             }
+            //         }
+            //     })
+            //     return {t, f}
+            // }
         }
     }
 </script>

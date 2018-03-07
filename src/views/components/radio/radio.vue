@@ -1,7 +1,7 @@
 <template>
     <div>
-        <div>{{values}}</div>
-        <div></div>
+        <!--<div>{{values}}</div>-->
+        <!--<div></div>-->
         <radioItem class="radio-item-wrapper" v-for="(item,index) in values"
                    :key="index"
                    :myAnswer="myAnswer"

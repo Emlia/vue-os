@@ -7,7 +7,7 @@
             </div>
             <Input class="home-input" v-model="username" placeholder="请输入用户名" clearable autofocus></Input>
             <Input class="home-input" v-model="password" placeholder="请输入密码" clearable></Input>
-            <Button class="home-input" type="info" long @click="$router.push('/home')">登录</Button>
+            <Button class="home-input" type="info" long @click="login">登录</Button>
             <Row>
                 <Col span="12" class="a-text" style="text-align: left;" @click="doSomething">
                 忘记密码?</Col>
@@ -45,7 +45,7 @@
         created() {
             // this.getBackgroundImage()
             console.log('os', this)
-            this.login()
+            // this.login()
         },
         methods: {
             // async getBackgroundImage() {
@@ -63,6 +63,12 @@
                 axios.post('http://localhost/php-ci-os/index.php/Os/login',
                     data).then((response) => {
                     this.res = response.data
+                    if (this.res.ret == '200') {
+                        this.$store.commit('setLoginState', this.res.data[0])
+                        this.$router.push('home')
+                    } else {
+                        this.$Message.error('用户名或密码错误')
+                    }
                 }).catch(function (error) {
                     console.log(error);
                 });

@@ -38,10 +38,10 @@
             </Alert>
             <Alert type="success">
 
-                <Button @click="$router.push('homework')">课后习题</Button>
+                <Button @click="$router.push('homework')">随机出题</Button>
 
                 <template slot="desc">
-                    一步一个脚印,巩固基础知识~
+                    随机生成50道题,检验自己~
                 </template>
             </Alert>
             <Alert type="success">
@@ -65,6 +65,11 @@
     export default {
         name: "home",
         components: {navPage},
+        created() {
+            if (this.$store.state.user.id == '') {
+                this.$router.replace('/login')
+            }
+        },
         data() {
             return {
                 value: 0

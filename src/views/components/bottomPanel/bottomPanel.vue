@@ -7,9 +7,9 @@
             </div>
             <div class="center">
                 <Icon type="ios-checkmark-outline" size="25" color="#80848f"></Icon>
-                <div class="font">3</div>
+                <div class="font" style="color:blue">{{$store.getters.showTF.t.length}}</div>
                 <Icon type="ios-close-outline" size="25" color="#80848f"></Icon>
-                <div class="font">5</div>
+                <div class="font" style="color:red">{{$store.getters.showTF.f.length}}</div>
             </div>
             <div class="right">
                 <Icon type="grid" size="25" color="#80848f"></Icon>
@@ -49,7 +49,9 @@
             }
         },
         data() {
-            return {}
+            return {
+                eee: this.$store.getters.showTF
+            }
         },
         methods: {
             clickT(value) {
