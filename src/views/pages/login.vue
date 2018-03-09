@@ -1,5 +1,10 @@
 <template>
     <div style="width:100%;height:100%;">
+        <navPage>
+            <div slot="right" @click="$router.push('adminManagement')">
+                <Icon type="gear-a" size="25" color="#80848f"></Icon>
+            </div>
+        </navPage>
         <div class="wrapper-center">
             <div class="wrapper-title">
                 <Avatar src="https://i.loli.net/2017/08/21/599a521472424.jpg" size="large"/>
@@ -32,9 +37,11 @@
 <script>
     import axios from 'axios'
     import qs from "qs"
+    import navPage from '../components/nav/navPage'
 
     export default {
         name: "login",
+        components: {navPage},
         data() {
             return {
                 username: 'emlia',
@@ -91,7 +98,7 @@
         left: 10%;
         right: 10%;
         position: absolute;
-        top: 28%;
+        top: 33%;
         transform: translateY(-50%);
     }
 

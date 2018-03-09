@@ -51,8 +51,10 @@
         computed: {},
         watch: {
             question(value) {
-                this.values = JSON.parse(value.options)
-                this.answer = JSON.parse(value.answer)
+                // this.values = JSON.parse(value.options)
+                // this.answer = JSON.parse(value.answer)
+                this.values = value.options
+                this.answer = value.answer
             }
         }
     }
