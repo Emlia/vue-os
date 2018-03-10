@@ -52,7 +52,24 @@
   margin-left: 15px;
 }
 .right[data-v-529f6c07] {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: row;
+      flex-direction: row;
+  -ms-flex-pack: start;
+      justify-content: flex-start;
+  -ms-flex-align: center;
+      align-items: center;
   margin-right: 15px;
+}
+.vertical-center-modal[data-v-529f6c07] {
+  width: 60%;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-align: center;
+      align-items: center;
+  -ms-flex-pack: center;
+      justify-content: center;
 }
 
 .wrapper-title[data-v-1f943a28] {

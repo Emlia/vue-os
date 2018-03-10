@@ -2,7 +2,7 @@
     <div style="width:100%;height:100%;">
         <navPage>
             <div slot="right" @click="$router.push('adminManagement')">
-                <Icon type="gear-a" size="25" color="#80848f"></Icon>
+                <Icon type="navicon" size="25" color="#80848f"></Icon>
             </div>
         </navPage>
         <div class="wrapper-center">
@@ -51,7 +51,7 @@
         },
         created() {
             // this.getBackgroundImage()
-            console.log('os', this)
+            // console.log('os', this)
             // this.login()
         },
         methods: {
@@ -77,6 +77,7 @@
                         this.$Message.error('用户名或密码错误')
                     }
                 }).catch(function (error) {
+                    this.$Message.error(error)
                     console.log(error);
                 });
             }

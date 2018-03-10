@@ -7,13 +7,13 @@
             <!--<div>{{$store.getters.showTags}}</div>-->
             <!--<div>myAnswers :{{JSON.stringify(myAnswers)}}</div>-->
             <div>{{showType}}</div>
-            <div class="tag-wrapper">
-                <div class="tag" v-for="(tagitem,index) in  showTags" :key="index">{{tagitem}}</div>
-            </div>
+
             <div class="tag-wrapper">
                 <div class="tag">章节:{{showChapter}}</div>
             </div>
-
+            <div class="tag-wrapper">
+                <div class="tag" v-for="(tagitem,index) in  showTags" :key="index">{{tagitem}}</div>
+            </div>
             <!--<div class="tag-wrapper">-->
             <!--<div class="type">{{types[question.type].label}}</div>-->
             <!--</div>-->

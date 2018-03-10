@@ -11,11 +11,20 @@
 
         </slot>
         <div class="right">
-            <!--<div @click="$router.push('adminManagement')">-->
+            <slot name="right"></slot>
+            <!--<div style="margin-left: 10px;" @click="setting=true">-->
                 <!--<Icon type="gear-a" size="25" color="#80848f"></Icon>-->
             <!--</div>-->
-            <slot name="right"></slot>
+
         </div>
+        <!--<Modal style="width: 60%"-->
+                <!--title="设置"-->
+                <!--v-model="setting"-->
+               <!--&gt;-->
+            <!--<p>Content of dialog</p>-->
+            <!--<p>Content of dialog</p>-->
+            <!--<p>Content of dialog</p>-->
+        <!--</Modal>-->
     </div>
 </template>
 
@@ -28,6 +37,11 @@
                 default() {
                     return true
                 }
+            }
+        },
+        data() {
+            return {
+                setting: false
             }
         },
         methods: {
@@ -54,6 +68,18 @@
     }
 
     .right {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: center;
         margin-right: 15px;
+    }
+
+    .vertical-center-modal {
+        width: 60%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
     }
 </style>
