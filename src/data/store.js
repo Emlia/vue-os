@@ -4,7 +4,8 @@ import axios from 'axios'
 import qs from 'qs'
 
 Vue.use(Vuex);
-const baseurl = 'http://localhost'
+// const baseurl = 'http://localhost'
+const baseurl = ''
 
 const store = new Vuex.Store({
     state: {
