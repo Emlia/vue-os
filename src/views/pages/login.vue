@@ -10,8 +10,16 @@
                 <Avatar src="https://i.loli.net/2017/08/21/599a521472424.jpg" size="large"/>
                 <div class="home-text-login">登录</div>
             </div>
-            <Input class="home-input" v-model="username" placeholder="请输入用户名" clearable autofocus></Input>
-            <Input class="home-input" v-model="password" placeholder="请输入密码" clearable></Input>
+            <div class="input-text">
+                <Input class="home-input" v-model="username" placeholder="请输入用户名" clearable autofocus></Input>
+                <Icon class="input-icon" size="20" color="#ed3f14" type="close-round"></Icon>
+            </div>
+            <div class="input-text">
+                <Input class="home-input" type="password" v-model="password" placeholder="请输入密码" clearable></Input>
+                <!--<div class="input-icon" style="color:#19be6b;width:19px;height:20px;line-height: 20px;font-size: 15px;">强</div>-->
+                <div class="input-icon" style="width: 19px;"></div>
+            </div>
+
             <Button class="home-input" type="info" long @click="login">登录</Button>
             <Row>
                 <Col span="12" class="a-text" style="text-align: left;" @click="doSomething">
@@ -28,7 +36,7 @@
             <div class="a-text" @click="doSomething">服务条款</div>
             </Col>
         </Row>
-        <div>{{res}}</div>
+        <!--<div>{{res}}</div>-->
     </div>
 
 
@@ -50,39 +58,17 @@
             }
         },
         created() {
-            // this.getBackgroundImage()
-            // console.log('os', this)
-            // this.login()
         },
         methods: {
-            // async getBackgroundImage() {
-            //     let res = await axios.get('http://guolin.tech/api/bing_pic')
-            // },
             doSomething() {
                 this.$Message.info('do something ...')
             },
             login() {
-                let data = qs.stringify({
-                    username: this.username,
-                    password: this.password
+                this.$store.commit('login', {username: this.username, password: this.password, _this: this})
+            },
 
-                })
-                axios.post('http://localhost/php-ci-os/index.php/Os/login',
-                    data).then((response) => {
-                    this.res = response.data
-                    if (this.res.ret == '200') {
-                        this.$store.commit('setLoginState', this.res.data[0])
-                        this.$router.push('home')
-                    } else {
-                        this.$Message.error('用户名或密码错误')
-                    }
-                }).catch(function (error) {
-                    this.$Message.error(error)
-                    console.log(error);
-                });
-            }
+        },
 
-        }
     }
 </script>
 
@@ -124,4 +110,15 @@
         color: #2d8cf0;
     }
 
+    .input-text {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: center;
+    }
+
+    .input-icon {
+        margin-left: 5px;
+        margin-bottom: 15px;
+    }
 </style>

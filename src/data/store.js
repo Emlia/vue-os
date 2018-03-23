@@ -2,14 +2,20 @@ import Vuex from 'vuex'
 import Vue from 'vue'
 import axios from 'axios'
 import qs from 'qs'
+import config from '../config/config'
 
 Vue.use(Vuex);
-// const baseurl = 'http://localhost'
-const baseurl = ''
+let baseurl = ''
+if (config.env === 'production') {
 
+}else{
+    baseurl = 'http://localhost'
+}
+
+console.log(this)
 const store = new Vuex.Store({
     state: {
-        user: {id: 0, username: '', password: ''},
+        user: {id: 0, username: '', password: '', appkey: ''},
         myAnswers: [],
         tags: [],
         chapters: [],
@@ -149,7 +155,7 @@ const store = new Vuex.Store({
         },
         getTypes(state) {
             if (state.types.length == 0) {
-                axios.get('http://localhost/php-ci-os/index.php/Os/getTypes'
+                axios.get(`${baseurl}/php-ci-os/index.php/Os/getTypes`
                 ).then((res) => {
                     let code = res.data.ret
                     if (code == '200') {
@@ -178,6 +184,25 @@ const store = new Vuex.Store({
 
 
         },
+        login(state, arg) {
+            let data = qs.stringify({
+                username: arg.username,
+                password: arg.password
+
+            })
+            axios.post(`${baseurl}/php-ci-os/index.php/Os/login`,
+                data).then((response) => {
+                let res = response.data
+                if (res.ret == '200') {
+                    state.user.appkey = res.data[0].appkey
+                    arg._this.$router.push('/home')
+                } else {
+                }
+
+            }).catch(function (error) {
+                console.log(error);
+            });
+        }
     },
     actions: {}
 });

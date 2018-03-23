@@ -27,7 +27,7 @@
             />
             <div v-show="showAnalysis">
                 <div class="analysis-wapper">
-                    <div class="analysis-font">答案 {{question.answer}}</div>
+                    <div class="analysis-font">答案 B</div>
                     <Button style="color:deepskyblue" shape="circle" @click="next">下一题</Button>
                 </div>
 
@@ -69,7 +69,7 @@
             }
         },
         created() {
-            if (this.$store.state.user.id == '') {
+            if (this.$store.state.user.appkey == '') {
                 this.$router.replace('/login')
                 return
             }

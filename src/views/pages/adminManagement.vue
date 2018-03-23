@@ -1,15 +1,25 @@
 <template>
     <div class="wrapper">
+        <navPage></navPage>
         <whitesapce>
+            <!--<div class="cell">-->
+                <!--<div class="tag">test</div>-->
+                <!--<div>-->
+                    <!--<Button class="btn" @click="$router.push('adminAdd')">添加测试数据</Button>-->
+                    <!--<Button class="btn" @click="$router.push('adminEdit')">编辑测试数据</Button>-->
+                    <!--<Button class="btn" @click="$router.push('adminAdd')">添加测试数据</Button>-->
+                    <!--<Button class="btn" @click="$router.push('adminEdit')">编辑测试数据</Button>-->
+                    <!--<Button class="btn" @click="$router.push('adminAdd')">添加测试数据</Button>-->
+                    <!--&lt;!&ndash;<Button class="btn" @click="$router.push('adminEdit')">编辑测试数据</Button>&ndash;&gt;-->
+                <!--</div>-->
+            <!--</div>-->
             <div class="cell">
-                <div class="tag">test</div>
+                <div class="tag">用户(user)</div>
                 <div>
-                    <Button class="btn" @click="$router.push('adminAdd')">添加测试数据</Button>
-                    <Button class="btn" @click="$router.push('adminEdit')">编辑测试数据</Button>
-                    <Button class="btn" @click="$router.push('adminAdd')">添加测试数据</Button>
-                    <Button class="btn" @click="$router.push('adminEdit')">编辑测试数据</Button>
-                    <Button class="btn" @click="$router.push('adminAdd')">添加测试数据</Button>
-                    <Button class="btn" @click="$router.push('adminEdit')">编辑测试数据</Button>
+                    <Button class="btn" @click="$router.push('QAdd')">添加数据</Button>
+                    <Button class="btn" @click="$router.push('QEdit')">编辑数据</Button>
+                    <Button class="btn" @click="$router.push('QAll')">获取所有数据</Button>
+                    <!--<Button class="btn" @click="$router.push('adminAdd')">电脑端操作</Button>-->
                 </div>
             </div>
             <div class="cell">
@@ -18,7 +28,7 @@
                     <Button class="btn" @click="$router.push('QAdd')">添加数据</Button>
                     <Button class="btn" @click="$router.push('QEdit')">编辑数据</Button>
                     <Button class="btn" @click="$router.push('QAll')">获取所有数据</Button>
-                    <Button class="btn" @click="$router.push('adminAdd')">电脑端操作</Button>
+                    <!--<Button class="btn" @click="$router.push('adminAdd')">电脑端操作</Button>-->
                 </div>
             </div>
             <div class="cell">
@@ -27,7 +37,25 @@
                     <Button class="btn" @click="$router.push('TAdd')">添加数据</Button>
                     <Button class="btn" @click="$router.push('TEdit')">编辑数据</Button>
                     <Button class="btn" @click="$router.push('TAll')">获取所有数据</Button>
-                    <Button class="btn" @click="$router.push('adminAdd')">电脑端操作</Button>
+                    <!--<Button class="btn" @click="$router.push('adminAdd')">电脑端操作</Button>-->
+                </div>
+            </div>
+            <div class="cell">
+                <div class="tag">章节(chapter)</div>
+                <div>
+                    <Button class="btn" @click="$router.push('QAdd')">添加数据</Button>
+                    <Button class="btn" @click="$router.push('QEdit')">编辑数据</Button>
+                    <Button class="btn" @click="$router.push('QAll')">获取所有数据</Button>
+                    <!--<Button class="btn" @click="$router.push('adminAdd')">电脑端操作</Button>-->
+                </div>
+            </div>
+            <div class="cell">
+                <div class="tag">答案(answer)</div>
+                <div>
+                    <Button class="btn" @click="$router.push('QAdd')">添加数据</Button>
+                    <Button class="btn" @click="$router.push('QEdit')">编辑数据</Button>
+                    <Button class="btn" @click="$router.push('QAll')">获取所有数据</Button>
+                    <!--<Button class="btn" @click="$router.push('adminAdd')">电脑端操作</Button>-->
                 </div>
             </div>
         </whitesapce>
@@ -38,9 +66,9 @@
 
 <script>
     import whitesapce from '../components/whitespace/whitespace'
-
+import navPage from '../components/nav/navPage'
     export default {
-        components: {whitesapce},
+        components: {whitesapce,navPage},
         name: "admin-management"
     }
 </script>

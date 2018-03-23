@@ -7,7 +7,7 @@
                 <Button @click="$router.go(-1)">返回</Button>
                 <Button @click="getData">重新获取数据</Button>
             </div>
-            <div>{{res}}</div>
+            <!--<div>{{res}}</div>-->
         </whitespace>
 
     </div>

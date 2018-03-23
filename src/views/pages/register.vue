@@ -1,5 +1,6 @@
 <template>
     <div style="width:100%;height:100%;">
+        <navPage></navPage>
         <div class="wrapper-center">
             <div class="wrapper-title">
                 <Avatar src="https://i.loli.net/2017/08/21/599a521472424.jpg" size="large"/>
@@ -28,11 +29,13 @@
 </template>
 
 <script>
+    import navPage from '../components/nav/navPage'
     import axios from 'axios'
     import qs from 'qs'
 
     export default {
         name: "register",
+        components:{navPage},
         data() {
             return {
                 username: '',
@@ -76,7 +79,7 @@
         left: 10%;
         right: 10%;
         position: absolute;
-        top: 28%;
+        top: 200px;
         transform: translateY(-50%);
     }
 
