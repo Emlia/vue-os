@@ -36,38 +36,33 @@
             }
         },
         data() {
-            return {
-                type: 'text'
-            }
+            return {}
         },
-        methods: {
-            // clickRadio(value) {
-            //     this.$emit('selectedItem', value)
-            // }
-        },
-        watch: {
-            myAnswer(value) {
-                // console.log(`myAnswer=${value}--answer=${this.answer[0]}`)
-                if (value[0]) {
+        methods: {},
+        watch: {},
+        computed: {
+            type() {
+
+                // console.log(`value=${this.value.value}--answer=${this.answer[0]}--myAnswer${this.myAnswer[0]}`)
+                if (this.myAnswer[0]) {
                     //如果选中该按钮
-                    if (value[0] === this.value.value) {
+                    if (this.myAnswer[0] === this.value.value) {
                         //如果答案是该按钮
                         if (this.value.value === this.answer[0]) {
-                            this.type = 'true'
+                            return 'true'
                         } else {
-                            this.type = 'false'
+                            return 'false'
                         }
                     } else {
                         if (this.value.value === this.answer[0]) {
-                            this.type = 'true'
+                            return 'true'
                         } else {
-                            this.type = 'text'
+                            return 'text'
                         }
                     }
                 } else {
-                    this.type = 'text'
+                    return 'text'
                 }
-                // console.log('item', value, this.value.value, value === this.value.value)
             }
         }
     }

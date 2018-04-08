@@ -4,7 +4,8 @@ import login from './views/pages/login'
 import home from './views/pages/home'
 import orderExercise from './views/pages/orderExercise'
 import chapterExercise from './views/pages/chapterExercise'
-import homework from './views/pages/homework'
+import chapterUi from './views/pages/chapterUi'
+import simulationExercise from './views/pages/simulationExercise'
 import errorQuestion from './views/pages/errorQuestion'
 import adminManagement from './views/pages/adminManagement'
 import adminAdd from './views/pages/admin/add'
@@ -39,15 +40,20 @@ const routers = [
     },
     {
         path: '/orderExercise',
-        component: orderExercise
+        component: orderExercise,
+        meta: {keepAlive: false} // 这是不会被keepalive的
     },
     {
         path: '/chapterExercise',
         component: chapterExercise
     },
     {
-        path: '/homework',
-        component: homework
+        path: '/chapterUi',
+        component: chapterUi
+    },
+    {
+        path: '/simulationExercise',
+        component: simulationExercise
     },
     {
         path: '/errorQuestion',

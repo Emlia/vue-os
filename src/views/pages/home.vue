@@ -33,7 +33,7 @@
             </Alert>
             <Alert type="success">
 
-                <Button class="home-btn" type="success" @click="$router.push('chapterExercise')">章节练习</Button>
+                <Button class="home-btn" type="success" @click="$router.push('chapterUi')">章节练习</Button>
                 <template slot="desc">
                     <div class="home-label">
                         针对每个章节,进行强化训练~
@@ -42,7 +42,7 @@
             </Alert>
             <Alert type="success">
 
-                <Button class="home-btn" type="warning" @click="$router.push('homework')">随机出题</Button>
+                <Button class="home-btn" type="warning" @click="$router.push('simulationExercise')">随机出题</Button>
 
                 <template slot="desc">
                     <div class="home-label">

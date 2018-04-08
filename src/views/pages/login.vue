@@ -12,12 +12,12 @@
             </div>
             <div class="input-text">
                 <Input class="home-input" v-model="username" placeholder="请输入用户名" clearable autofocus></Input>
-                <Icon class="input-icon" size="20" color="#ed3f14" type="close-round"></Icon>
+                <!--<Icon class="input-icon" size="20" color="#ed3f14" type="close-round"></Icon>-->
             </div>
             <div class="input-text">
                 <Input class="home-input" type="password" v-model="password" placeholder="请输入密码" clearable></Input>
                 <!--<div class="input-icon" style="color:#19be6b;width:19px;height:20px;line-height: 20px;font-size: 15px;">强</div>-->
-                <div class="input-icon" style="width: 19px;"></div>
+                <!--<div class="input-icon" style="width: 19px;"></div>-->
             </div>
 
             <Button class="home-input" type="info" long @click="login">登录</Button>

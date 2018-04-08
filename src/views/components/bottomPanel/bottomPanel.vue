@@ -1,15 +1,16 @@
 <template>
     <div class="wrapper">
         <div class="top" @click="cTop">
-            <div class="left">
-                <Icon type="ios-star-outline" size="25" color="#80848f"></Icon>
-                <div class="font">收藏</div>
+            <div class="left" @click="collect">
+                <!--<Icon type="ios-star-outline" size="25" color="#80848f"></Icon>-->
+                <!--<div class="font">收藏</div>-->
+                <!--<div> {{TF}}</div>-->
             </div>
             <div class="center">
                 <Icon type="ios-checkmark-outline" size="25" color="#80848f"></Icon>
-                <div class="font" style="color:blue">{{$store.getters.showTF.t.length}}</div>
+                <div class="font" style="color:blue">{{TF.t.length}}</div>
                 <Icon type="ios-close-outline" size="25" color="#80848f"></Icon>
-                <div class="font" style="color:red">{{$store.getters.showTF.f.length}}</div>
+                <div class="font" style="color:red">{{TF.f.length}}</div>
             </div>
             <div class="right">
                 <Icon type="grid" size="25" color="#80848f"></Icon>
@@ -46,12 +47,16 @@
                 default() {
                     return false
                 }
+            },
+            collections: {
+                type: Array,
+                default() {
+                    return []
+                }
             }
         },
         data() {
-            return {
-                eee: this.$store.getters.showTF
-            }
+            return {}
         },
         methods: {
             clickT(value) {
@@ -60,6 +65,14 @@
             },
             cTop() {
                 this.$emit('ctop')
+            },
+            collect() {
+                this.$emit('collect')
+            }
+        },
+        computed: {
+            TF() {
+                return this.$store.getters.showTF
             }
         }
     }

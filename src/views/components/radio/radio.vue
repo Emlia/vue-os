@@ -1,7 +1,5 @@
 <template>
     <div>
-        <!--<div>{{values}}</div>-->
-        <!--<div></div>-->
         <radioItem class="radio-item-wrapper" v-for="(item,index) in values"
                    :key="index"
                    :myAnswer="myAnswer"
@@ -34,8 +32,6 @@
         },
         data() {
             return {
-                values: [],
-                answer: [],
                 abc: ['A', 'B', 'C', 'D', 'E', 'F', 'G', "H"],
             }
         },
@@ -48,14 +44,19 @@
             },
 
         },
-        computed: {},
-        watch: {
-            question(value) {
-                // this.values = JSON.parse(value.options)
-                // this.answer = JSON.parse(value.answer)
-                this.values = value.options
-                this.answer = value.answer
+        computed: {
+            values(){
+                return this.question.options
+            },
+            answer(){
+                return this.question.answer
             }
+        },
+        watch: {
+            // question(value) {
+            //     this.values = value.options
+            //     this.answer = value.answer
+            // }
         }
     }
 </script>
