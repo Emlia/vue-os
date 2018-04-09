@@ -5,7 +5,7 @@
                    :myAnswer="myAnswer"
                    :answer="answer"
                    @click="value=>$emit('click',{id:question.id,value:value})"
-                   :value="{value:abc[index],label:item}"/>
+                   :value="{value:abc[index],label:item,question:question}"/>
     </div>
 </template>
 
@@ -22,6 +22,7 @@
                     return {}
                 }
             },
+            // 实际为myAnswers[question.id]
             myAnswer: {
                 type: Array,
                 default() {
@@ -45,10 +46,10 @@
 
         },
         computed: {
-            values(){
+            values() {
                 return this.question.options
             },
-            answer(){
+            answer() {
                 return this.question.answer
             }
         },

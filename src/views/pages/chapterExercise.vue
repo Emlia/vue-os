@@ -1,12 +1,12 @@
 <template>
     <div>
-        <cell :question="question" :questions="chapterQuestions" :myAnswers="myAnswers"></cell>
+        <cell  :questions="chapterQuestions" :myAnswers="myAnswers"></cell>
     </div>
 </template>
 
 <script>
     import cell from './cell'
-
+    import Vue from 'vue'
     export default {
         name: "chapterExercise",
         components: {cell},
@@ -26,9 +26,23 @@
         methods: {},
         computed: {
            chapterQuestions() {
+               if (this.$store.state.keepOnChapter) {
+                   return this.questions.filter(item => {
+                       if (Object.keys(this.myAnswers).includes(item.id)) {
+                           return true
+                       }
+                       return false
+                   })
+               }
+
+               if (this.questions.length == 0) {
+                   return []
+               }
+
                 let chapterId = this.chapterId
                 return this.questions.filter(item => {
                     if (item.chapter == chapterId) {
+                        Vue.set(this.$store.state.chapterAnswers, item.id, []);
                         return true
                     }
                     return false

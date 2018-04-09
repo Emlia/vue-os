@@ -60,7 +60,7 @@
         },
         methods: {
             clickT(value) {
-                console.log('get', value)
+                // console.log('get', value)
                 this.$emit('selected', value)
             },
             cTop() {

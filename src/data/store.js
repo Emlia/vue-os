@@ -14,27 +14,19 @@ if (config.env === 'production') {
 
 const store = new Vuex.Store({
     state: {
-        user: {id: 0, username: '', password: '', appkey: ''},
+        user: {id: 0, username: '', appkey: ''},
         orderAnswers: {},
         chapterAnswers: {},
         simulationAnswers: {},
+        errorAnswers: {},
         errors: [],
         tags: [],
         chapters: [],
         chapterId: 0,
         etype: 'order',
         types: [],
-        question: {
-            id: 0,
-            type: 0,
-            tag: [],
-            chapter: 0,
-            answer: [],
-            text: '',
-            src: '',
-            analysis: '',
-            options: []
-        },
+        keepOnSim: false,
+        keepOnChapter: false,
         questions: [],
     },
     getters: {
@@ -62,45 +54,14 @@ const store = new Vuex.Store({
                         f.push(i)
                         var set = new Set(state.errors);
                         set.add(i)
-                        state.errors=Array.from(set)
+                        state.errors = Array.from(set)
                     }
                     // console.log('temp', temp)
                 }
             }
             return {t, f}
         },
-        // 根据question.tag,得到tag的label集合
-        showTags(state) {
-            let temp = []
-            state.tags.forEach(item => {
-                // console.log(state.question.tag,item)
-                if (state.question.tag.includes(item.value)) {
-                    temp.push(item.label)
-                }
-            })
-            return temp
-        },
-        // 根据question.chapter,得到chapter的label
-        showChapter(state) {
-            let temp = '未划分章节'
-            state.chapters.forEach(item => {
-                // console.log(item.value)
-                if (item.value === state.question.chapter) {
-                    temp = item.label
-                }
-            })
-            return temp
-        },
-        showType(state) {
-            let temp = '未划分类型'
-            state.types.forEach(item => {
-                // console.log(item.value)
-                if (item.value === state.question.type) {
-                    temp = item.label
-                }
-            })
-            return temp
-        },
+
         getMyAnswer(state) {
             let temp = []
             switch (state.etype) {
@@ -112,6 +73,9 @@ const store = new Vuex.Store({
                     break;
                 case 'simulation':
                     temp = state.simulationAnswers
+                    break;
+                case 'error':
+                    temp = state.errorAnswers
                     break;
                 default:
                     temp = {}
@@ -146,6 +110,9 @@ const store = new Vuex.Store({
                 case 'simulation':
                     Vue.set(state.simulationAnswers, args.id, args.value);
                     this.commit('uploadAnswer')
+                    break;
+                case 'error':
+                    Vue.set(state.errorAnswers, args.id, args.value);
                     break;
                 default:
                     console.log('ettype 出错')
@@ -239,16 +206,22 @@ const store = new Vuex.Store({
                 if (code == '200') {
 
                     let data = response.data.data
-                    if (data[0].orderAnswer != '{}') {
+                    if (data.length == 0) {
+                        return
+                    }
+                    console.log(`${data[0].orderAnswer == ''} ${data[0].orderAnswer == '{}'}`)
+                    if (!(data[0].orderAnswer == '' || data[0].orderAnswer == '{}')) {
                         state.orderAnswers = JSON.parse(data[0].orderAnswer)
                     }
-                    if (data[0].chapterAnswer != '{}') {
+                    if (!(data[0].chapterAnswer == '' || data[0].chapterAnswer == '{}')) {
                         state.chapterAnswers = JSON.parse(data[0].chapterAnswer)
+                        state.keepOnChapter = true
                     }
-                    if (data[0].simulationAnswer != '{}') {
+                    if (!(data[0].simulationAnswer == '' || data[0].simulationAnswer == '{}')) {
                         state.simulationAnswers = JSON.parse(data[0].simulationAnswer)
+                        state.keepOnSim = true
                     }
-                    if (data[0].error != '') {
+                    if (!(data[0].error == '' || data[0].error == '{}')) {
                         state.errors = JSON.parse(data[0].error)
                     }
 
@@ -341,13 +314,12 @@ const store = new Vuex.Store({
         // {type,pos}
         getQuestion(state, arg) {
             // console.log('getQuestion-', arg.pos)
-
-            if (typeof state.question.options === 'string') {
-                state.question.options = JSON.parse(state.question.options)
-                state.question.tag = JSON.parse(state.question.tag)
-                state.question.answer = JSON.parse(state.question.answer)
+            let i = arg.pos
+            if (typeof state.questions[i].options === 'string') {
+                state.questions[i].options = JSON.parse(state.questions[i].options)
+                state.questions[i].tag = JSON.parse(state.questions[i].tag)
+                state.questions[i].answer = JSON.parse(state.questions[i].answer)
             }
-            state.question = state.questions[arg.pos]
         },
         login(state, arg) {
             let data = qs.stringify({
@@ -361,6 +333,15 @@ const store = new Vuex.Store({
                 if (res.ret == '200') {
                     state.user.appkey = res.data[0].appkey
                     state.user.id = res.data[0].id
+                    //初始化
+
+                    state.orderAnswers = {}
+                    state.chapterAnswers = {}
+                    state.simulationAnswers = {}
+                    state.errors = []
+                    state.keepOnSim = false
+                    state.keepOnChapter = false
+
                     arg._this.$router.push('/home')
                 } else {
                 }

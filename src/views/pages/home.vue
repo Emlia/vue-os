@@ -53,7 +53,7 @@
             </Alert>
             <Alert type="success">
 
-                <Button class="home-btn" type="error" @click="$router.push('errorQuestion')">错 题 本</Button>
+                <Button class="home-btn" type="error" @click="$router.push('errorExercise')">错 题 本</Button>
 
                 <template slot="desc">
                     <div class="home-label">错题虐我千百遍,我待错题如初恋~</div>

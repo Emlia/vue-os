@@ -1,7 +1,7 @@
 <template>
     <div>
         <!--<div> {{myAnswers}}</div>-->
-        <cell :question="question" :questions="questions" :myAnswers="myAnswers"></cell>
+        <cell :questions="questions" :myAnswers="myAnswers"></cell>
 
 
     </div>
@@ -22,9 +22,6 @@
             this.$store.commit('setEtype','order')
         },
         computed: {
-            question() {
-                return this.$store.state.question
-            },
             questions() {
                 return this.$store.state.questions
             },
