@@ -2,7 +2,7 @@
     <div class="wrapper">
         <navPage></navPage>
         <whitespace>
-            <div class="title">添加标签</div>
+            <div class="title">添加题目</div>
             <div class="cell">
                 <div class="cell-title">类型</div>
                 <Select v-model="type" style="width: 60%">
