@@ -1,24 +1,25 @@
 <template>
     <div class="wrapper">
+        <navPage></navPage>
         <whitespace>
             <div class="title">添加标签</div>
             <div class="cell">
                 <div class="cell-title">类型</div>
                 <Select v-model="type" style="width: 60%">
-                    <Option v-for="item in types" :value="item.value" :key="item.value">{{ item.label }}</Option>
+                    <Option v-for="item in types" :value="item.id" :key="item.value">{{ item.label }}</Option>
                 </Select>
             </div>
-            <div class="cell">
-                <div class="cell-title">标签</div>
-                <Select multiple v-model="tag" style="width: 60%">
-                    <Option v-for="item in tags" :value="item.value" :key="item.value">{{ item.label }}</Option>
-                </Select>
-            </div>
+            <!--<div class="cell">-->
+            <!--<div class="cell-title">标签</div>-->
+            <!--<Select multiple v-model="tag" style="width: 60%">-->
+            <!--<Option v-for="item in tags" :value="item.value" :key="item.value">{{ item.label }}</Option>-->
+            <!--</Select>-->
+            <!--</div>-->
 
             <div class="cell">
                 <div class="cell-title">章节</div>
                 <Select v-model="chapter" style="width: 60%">
-                    <Option v-for="item in chapters" :value="item.value" :key="item.value">{{ item.label }}</Option>
+                    <Option v-for="item in chapters" :value="item.id" :key="item.value">{{ item.label }}</Option>
                 </Select>
             </div>
             <div class="cell">
@@ -47,9 +48,15 @@
             <div class="btn-add-wrapper">
                 <Button v-show="options.length<8" class="btn-add" @click="options.push('')">添加</Button>
             </div>
-            <div class="cell">
+            <div class="cell" v-if="multiple">
                 <div class="cell-title">答案</div>
-                <Select multiple v-model="answer" style="width: 60%">
+                <Select key="ee1" multiple v-model="answer" style="width: 60%">
+                    <Option v-for="i in options.length" :value=" abc[i-1]" :key="i">{{ abc[i-1] }}</Option>
+                </Select>
+            </div>
+            <div class="cell" v-else>
+                <div class="cell-title">答案</div>
+                <Select key="ee2" v-model="answer" style="width: 60%">
                     <Option v-for="i in options.length" :value=" abc[i-1]" :key="i">{{ abc[i-1] }}</Option>
                 </Select>
             </div>
@@ -62,7 +69,7 @@
                 <Button @click="$router.go(-1)">返回</Button>
                 <Button @click="addQT">提交</Button>
             </div>
-            <div>{{res}}</div>
+            <!--<div>{{getType}}</div>-->
         </whitespace>
 
     </div>
@@ -72,16 +79,15 @@
     import whitespace from '../../../components/whitespace/whitespace'
     import axios from 'axios'
     import qs from 'qs'
+    import navPage from '../../../components/nav/navPage'
 
     export default {
-        components: {whitespace},
+        components: {whitespace, navPage},
         name: "add",
         data() {
             return {
                 abc: ['A', 'B', 'C', 'D', 'E', 'F', 'G', "H"],
-                tags: [],
-                chapters: [],
-                types: [],
+                // tags: [],
                 tag: [],
                 chapter: 0,
                 type: 1,
@@ -91,64 +97,20 @@
                 analysis: '',
                 options: ['', '', '', ''],
                 moptions: [],
-                res: ''
             }
         },
-        created() {
-            this.getCapter()
-            this.getTag()
-            this.getType()
-        },
-        watch: {
-            tag(value) {
-                console.log('tag', value)
-            }
+        mounted() {
+            // this.$store.commit('getTags')
+            this.$store.commit('getChapters')
+            this.$store.commit('getTypes')
+            this.$store.commit('getAnswers')
         },
         methods: {
-            submit() {
-                // if (this.type == 0 || this.text == '' || this.answer == '' || this.options[0] == '') {
-                //     this.$Message.error('输入不能为空,提交失败')
-                //     return
-                // }
-                this.options.forEach((item, index) => {
-                    let data = qs.stringify({
-                        label: item,
-                        value: this.abc[index]
-
-                    })
-                    axios.post('http://localhost/php-ci-os/index.php/Os/addOptions',
-                        data).then((response) => {
-                        this.res = response.data
-                        if (response.data.ret === '200') {
-                            this.moptions.push(response.data.data)
-                        }
-                    }).catch(function (error) {
-                        console.log(error);
-                    });
-
-                })
-
-            },
-            addQ() {
-                let data = qs.stringify({
-                    type: this.type,
-                    tag: this.tag,
-                    chapter: this.chapter,
-                    text: this.text,
-                    src: this.src,
-                    options: this.options.join('^'),
-                    answer: this.answer,
-                    analysis: this.analysis,
-
-                })
-                axios.post('http://localhost/php-ci-os/index.php/Os/addQuestion',
-                    data).then((response) => {
-                    this.res = response.data
-                }).catch(function (error) {
-                    console.log(error);
-                });
-            },
             addQT() {
+                let answer = this.answer
+                if (typeof answer === 'string') {
+                    answer = [answer]
+                }
                 let data = qs.stringify({
                     type: this.type,
                     tag: JSON.stringify(this.tag),
@@ -156,21 +118,26 @@
                     text: this.text,
                     src: this.src,
                     options: JSON.stringify(this.options),
-                    answer: JSON.stringify(this.answer),
+                    answer: JSON.stringify(answer),
                     analysis: this.analysis,
 
                 })
                 axios.post('http://localhost/php-ci-os/index.php/Os/addQuestion',
                     data).then((response) => {
-                    this.res = response.data
-                    this.type = 1
-                    this.tag = []
-                    this.chapter = 0
-                    this.text = ''
-                    this.src = ''
-                    this.options = ['', '', '', '']
-                    this.answer = []
-                    this.analysis = ''
+                    let res = response.data
+                    if (res.ret === '200') {
+                        this.type = -1
+                        this.chapter = -1
+                        this.text = ''
+                        this.src = ''
+                        this.options = ['', '', '', '']
+                        this.answer = []
+                        this.analysis = ''
+                        this.$Message.success('success')
+                    } else {
+                        this.$Message.error('fail')
+                    }
+
                 }).catch(function (error) {
                     console.log(error);
                 });
@@ -178,44 +145,33 @@
             sub(index) {
                 this.options.splice(index, 1)
             },
-            getCapter() {
-                axios.get('http://localhost/php-ci-os/index.php/Os/getChapters'
-                ).then((res) => {
-                    let temp = res.data.data
-                    let ch = []
-                    temp.forEach(item => {
-                        ch.push({label: item.name, value: item.id})
-                    })
-                    this.chapters = ch
-                }).catch(function (error) {
-                    console.log(error);
-                });
-            },
-            getTag() {
-                axios.get('http://localhost/php-ci-os/index.php/Os/getTags'
-                ).then((res) => {
-                    let temp = res.data.data
-                    let ch = []
-                    temp.forEach(item => {
-                        ch.push({label: item.label, value: item.id})
-                    })
-                    this.tags = ch
-                }).catch(function (error) {
-                    console.log(error);
-                });
+        },
+        computed: {
+            multiple() {
+                this.answer = []
+                if (this.getType.length == 0) {
+                    return false
+                }
+                if (this.getType.length == 1) {
+                    if (this.getType[0].label == '多选')
+                        return true
+                    else
+                        return false
+                }
             },
             getType() {
-                axios.get('http://localhost/php-ci-os/index.php/Os/getTypes'
-                ).then((res) => {
-                    let temp = res.data.data
-                    let ch = []
-                    temp.forEach(item => {
-                        ch.push({label: item.label, value: item.id})
-                    })
-                    this.types = ch
-                }).catch(function (error) {
-                    console.log(error);
-                });
+                return this.types.filter(item => {
+                    if (item.id == this.type) {
+                        return true
+                    }
+                    return false
+                })
+            },
+            types() {
+                return this.$store.state.types
+            },
+            chapters() {
+                return this.$store.state.chapters
             }
         }
     }

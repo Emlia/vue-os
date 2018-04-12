@@ -46,9 +46,31 @@ const store = new Vuex.Store({
                 }
                 qt = state.questions[i]
                 temp = getters.getMyAnswer[qt.id]
-                if (temp) {
+                // console.log(`+++${qt}++++${temp}++++`)
+                if (qt && temp && temp[0]) {
                     // console.log(`i=${i}  ${temp[0]} == ${qt.answer[0]}  ${temp[0] == qt.answer[0]}`)
-                    if (temp[0] == qt.answer[0]) {
+//
+
+
+                    let a = qt.answer
+                    let b = temp
+                    let flag = true
+
+                    // console.log(`---length ----${a.length}----${ b.length}---${a}----${b}`)
+                    if (a && b) {
+                        for (let j = 0; j < b.length; j++) {
+                            // console.log(`包含的判断 ${b[j]}  ${a.includes(b[j])} a=  ${a}; b= ${b}`)
+                            if (!a.includes(b[j])) {
+                                flag = false
+                            }
+                        }
+                    } else {
+                        flag = false
+                    }
+                    // console.log(`${flag}  ${a.length} ${temp.length}`)
+                    if (flag && a.length > temp.length) {
+
+                    } else if (flag && a.length == temp.length) {
                         t.push(i)
                     } else {
                         f.push(i)
@@ -140,60 +162,6 @@ const store = new Vuex.Store({
                 console.log(error);
             });
         },
-        uploadOrderAnswer(state) {
-            let data = qs.stringify({
-                userid: state.user.id,
-                orderAnswer: JSON.stringify(state.orderAnswers)
-
-            })
-            axios.post(`${baseurl}/php-ci-os/index.php/Os/updateOrderAnswer`,
-                data).then((response) => {
-                let res = response.data
-                if (res.ret == '200') {
-
-                } else {
-                }
-
-            }).catch(function (error) {
-                console.log(error);
-            });
-        },
-        uploadChapterAnswer(state) {
-            let data = qs.stringify({
-                userid: state.user.id,
-                chapterAnswer: JSON.stringify(state.chapterAnswers)
-
-            })
-            axios.post(`${baseurl}/php-ci-os/index.php/Os/updateChapterAnswer`,
-                data).then((response) => {
-                let res = response.data
-                if (res.ret == '200') {
-
-                } else {
-                }
-
-            }).catch(function (error) {
-                console.log(error);
-            });
-        },
-        uploadSimulationAnswer(state) {
-            let data = qs.stringify({
-                userid: state.user.id,
-                simulationAnswer: JSON.stringify(state.simulationAnswers)
-
-            })
-            axios.post(`${baseurl}/php-ci-os/index.php/Os/updateSimulationAnswer`,
-                data).then((response) => {
-                let res = response.data
-                if (res.ret == '200') {
-
-                } else {
-                }
-
-            }).catch(function (error) {
-                console.log(error);
-            });
-        },
         getAnswers(state) {
             if (Object.keys(state.orderAnswers).length !== 0) {
                 return
@@ -209,7 +177,7 @@ const store = new Vuex.Store({
                     if (data.length == 0) {
                         return
                     }
-                    console.log(`${data[0].orderAnswer == ''} ${data[0].orderAnswer == '{}'}`)
+                    // console.log(`${data[0].orderAnswer == ''} ${data[0].orderAnswer == '{}'}`)
                     if (!(data[0].orderAnswer == '' || data[0].orderAnswer == '{}')) {
                         state.orderAnswers = JSON.parse(data[0].orderAnswer)
                     }
@@ -282,7 +250,7 @@ const store = new Vuex.Store({
                         let temp = res.data.data
                         let ch = []
                         temp.forEach(item => {
-                            ch.push({label: item.label, value: item.value})
+                            ch.push({label: item.label, value: item.value, id: item.id})
                         })
                         state.chapters = ch
                     }
@@ -302,7 +270,7 @@ const store = new Vuex.Store({
                         let ch = []
                         temp.forEach(item => {
                             // console.log('ggg')
-                            ch.push({label: item.label, value: item.id})
+                            ch.push({label: item.label, value: item.value, id: item.id})
                         })
                         state.types = ch
                     }

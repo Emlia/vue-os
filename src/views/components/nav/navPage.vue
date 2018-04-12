@@ -1,6 +1,6 @@
 <template>
-    <div class="wrapper">
-        <div class="left">
+    <div class="nav-wrapper">
+        <div class="nav-left">
             <div v-if="back" @click="clickLeft">
                 <Icon type="android-arrow-back" size="25" color="#80848f"></Icon>
             </div>
@@ -10,7 +10,7 @@
         <slot name="center">
 
         </slot>
-        <div class="right">
+        <div class="nav-right">
             <slot name="right"></slot>
             <!--<div style="margin-left: 10px;" @click="setting=true">-->
                 <!--<Icon type="gear-a" size="25" color="#80848f"></Icon>-->
@@ -53,7 +53,7 @@
 </script>
 
 <style scoped>
-    .wrapper {
+    .nav-wrapper {
         display: flex;
         flex-direction: row;
         justify-content: space-between;
@@ -63,11 +63,11 @@
         border-bottom: 1px solid #eee;
     }
 
-    .left {
+    .nav-left {
         margin-left: 15px;
     }
 
-    .right {
+    .nav-right {
         display: flex;
         flex-direction: row;
         justify-content: flex-start;

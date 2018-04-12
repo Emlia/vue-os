@@ -1,9 +1,6 @@
 <template>
     <div>
-        <!--<div> {{myAnswers}}</div>-->
         <cell :questions="questions" :myAnswers="myAnswers"></cell>
-
-
     </div>
 </template>
 
@@ -19,7 +16,7 @@
             this.$store.commit('getChapters')
             this.$store.commit('getTypes')
             this.$store.commit('getAnswers')
-            this.$store.commit('setEtype','order')
+            this.$store.commit('setEtype', 'order')
         },
         computed: {
             questions() {

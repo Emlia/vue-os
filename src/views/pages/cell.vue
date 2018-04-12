@@ -126,7 +126,7 @@
             },
             showType() {
                 for (let i = 0; i < this.types.length; i++) {
-                    if (this.types[i].value == this.question.type) {
+                    if (this.types[i].id == this.question.type) {
                         return this.types[i].label
                     }
                 }

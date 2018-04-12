@@ -4,7 +4,8 @@
         <whiteapce>
             <div class="chapter-wrapper">
                 <div class="chapter-item" v-for="(item,index) in chapters" :key="index" @click="click(item.value)">
-                    <div class="chapter-icon">{{item.value}}</div>
+                    <div class="chapter-icon" :style="{backgroundColor:colors[(index)%colors.length]}">{{item.value}}
+                    </div>
                     <div class="chapter-text">{{item.label}}</div>
                 </div>
             </div>
@@ -15,23 +16,32 @@
 <script>
     import navPage from '../components/nav/navPage'
     import whiteapce from '../components/whitespace/whitespace'
+
     export default {
         name: "chapter-ui",
-        components: {navPage,whiteapce},
+        components: {navPage, whiteapce},
         data() {
-            return {}
+            return {
+                colors: ['#FF6666',
+                    '#66CC99',
+                    '#FF9933',
+                    '#9999FF',
+                    '#66CC00',
+                    '#993399',
+                    '#6666FF',]
+            }
         },
-        mounted(){
+        mounted() {
             this.$store.commit('getChapters')
         },
-        methods:{
-            click(id){
-                console.log('chapter-',id)
-                this.$store.commit('setChapterId',id)
+        methods: {
+            click(id) {
+                console.log('chapter-', id)
+                this.$store.commit('setChapterId', id)
                 this.$router.push('/chapterExercise')
             }
         },
-        computed:{
+        computed: {
             chapters() {
                 return this.$store.state.chapters
             },
@@ -50,24 +60,28 @@
     }
 
     .chapter-item {
-        width: 50%;
+        width: 100%;
         display: flex;
         flex-direction: row;
         justify-content: flex-start;
         align-items: center;
         margin-top: 10px;
     }
-    .chapter-icon{
+
+    .chapter-icon {
         font-size: 14px;
-        border: 1px solid #999;
+        /*border: 1px solid #999;*/
         border-radius: 50%;
         width: 22px;
         height: 22px;
         text-align: center;
-        line-height: 21px;
+        line-height: 22px;
         margin-right: 20px;
+        color: #fff;
     }
-    .chapter-text{
+
+    .chapter-text {
         font-size: 18px;
+
     }
 </style>

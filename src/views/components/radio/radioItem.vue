@@ -8,7 +8,7 @@
             <Icon class="icon" size="25" color="#fff" type="ios-close-empty"/>
         </div>
 
-        <div class="label">{{value.value}}</div>
+        <div class="label">{{value.label}}</div>
     </div>
 </template>
 
@@ -40,18 +40,6 @@
             return {}
         },
         methods: {
-            //完全相等
-            arrayIsEquel(a, b) {
-                if (a.length == b.length) {
-                    a.forEach(item => {
-                        if (!b.includes(item)) {
-                            return false
-                        }
-                    })
-                    return true
-                }
-                return false
-            },
             // a包含b
             arrayIsContain(a, b) {
                 if (a && b && b.length != 0) {
@@ -72,7 +60,7 @@
         computed: {
             showType() {
                 for (let i = 0; i < this.types.length; i++) {
-                    if (this.types[i].value == this.value.question.type) {
+                    if (this.types[i].id == this.value.question.type) {
                         return this.types[i].label
                     }
                 }
