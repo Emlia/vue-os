@@ -33,7 +33,8 @@
     import axios from 'axios'
     import qs from 'qs'
     import md5 from 'md5'
-import config from '../../config/config'
+    import config from '../../config/config'
+
     export default {
         name: "register",
         components: {navPage},
@@ -56,8 +57,15 @@ import config from '../../config/config'
                 })
                 axios.post(`${config.baseurl}/php-ci-os/index.php/Os/register`,
                     data).then((response) => {
-                    this.res = response.data
+                    let res = response.data
+                    if (res.ret == '200') {
+                        this.$Message.success('注册成功')
+                        this.$router.replace('/login')
+                    } else {
+                        this.$Message.error('注册失败')
+                    }
                 }).catch(function (error) {
+                    this.$Message.error('连接服务器失败')
                     console.log(error);
                 });
             }
