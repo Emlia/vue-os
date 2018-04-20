@@ -17,12 +17,12 @@
                 </Col>
             </Row>
         </div>
-        <Row class="wrapper-bottom">
-            <Col span="24" style="text-align: center;">
-            登录即代表阅读并统一
-            <div class="a-text" @click="doSomething">服务条款</div>
-            </Col>
-        </Row>
+        <!--<Row class="wrapper-bottom">-->
+            <!--<Col span="24" style="text-align: center;">-->
+            <!--登录即代表阅读并统一-->
+            <!--<div class="a-text" @click="doSomething">服务条款</div>-->
+            <!--</Col>-->
+        <!--</Row>-->
     </div>
 
 
