@@ -1,5 +1,6 @@
 import axios from 'axios';
 import env from '../config/env';
+import _ from 'lodash'
 
 let util = {};
 util.title = function (title) {
@@ -18,29 +19,37 @@ util.ajax = axios.create({
     timeout: 30000
 });
 
-util.get = (url, params) => {
-    return new Promise((resolve, reject) => {
-        axios.get(url, {
-            params: params
-        }).then(res => {
-            resolve(res.data)
-        }).catch(err => {
-            reject(err)
-        })
-    })
-}
-util.post = function (url, data) {
-    return new Promise((resolve, reject) => {
-        axios.post(url, qs.stringify(data), {
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded',
-                }
-            }
-        ).then(res => {
-            resolve(res.data)
-        }).catch(err => {
-            reject(err)
-        })
-    })
+util.toQuestion = function (question) {
+    let temp = {}
+    if (question.id) {
+        temp.id = question.id
+    }
+    if (question.type) {
+        temp.type = question.type
+    }
+
+    temp.chapter = question.chapter
+    temp.text = question.text
+    temp.src = question.src
+    temp.analysis = question.analysis
+
+    console.log('1', temp)
+    if (typeof question.options === 'string') {
+        temp.options = JSON.parse(question.options)
+    } else {
+        temp.options = question.options
+    }
+    if (typeof question.tag === 'string') {
+        temp.tag = JSON.parse(question.tag)
+    } else {
+        temp.tag = question.tag
+    }
+    if (typeof question.answer === 'string') {
+        temp.answer = JSON.parse(question.answer)
+    } else {
+        temp.answer = question.answer
+    }
+    console.log('2', temp)
+    return temp
 }
 export default util;

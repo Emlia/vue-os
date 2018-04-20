@@ -32,18 +32,17 @@
     import navPage from '../components/nav/navPage'
     import axios from 'axios'
     import qs from 'qs'
-
+    import md5 from 'md5'
+import config from '../../config/config'
     export default {
         name: "register",
-        components:{navPage},
+        components: {navPage},
         data() {
             return {
                 username: '',
                 password: '',
                 conformPassword: ''
             }
-        },
-        created() {
         },
         methods: {
             doSomething() {
@@ -52,10 +51,10 @@
             register() {
                 let data = qs.stringify({
                     username: this.username,
-                    password: this.password
+                    password: md5(this.password)
 
                 })
-                axios.post('http://localhost/php-ci-os/index.php/Os/register',
+                axios.post(`${config.baseurl}/php-ci-os/index.php/Os/register`,
                     data).then((response) => {
                     this.res = response.data
                 }).catch(function (error) {

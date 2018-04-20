@@ -1,9 +1,6 @@
 <template>
     <div style="width:100%;height:100%;">
         <navPage>
-            <div slot="right" @click="$router.push('adminManagement')">
-                <Icon type="navicon" size="25" color="#80848f"></Icon>
-            </div>
         </navPage>
         <div class="wrapper-center">
             <div class="wrapper-title">
@@ -43,8 +40,6 @@
 </template>
 
 <script>
-    import axios from 'axios'
-    import qs from "qs"
     import navPage from '../components/nav/navPage'
 
     export default {
@@ -52,12 +47,10 @@
         components: {navPage},
         data() {
             return {
-                username: 'emlia',
-                password: 'emlia103',
+                username: 'admin',
+                password: 'admin',
                 res: ''
             }
-        },
-        created() {
         },
         methods: {
             doSomething() {

@@ -1,15 +1,20 @@
 <template>
     <div>
-        <cell  :questions="chapterQuestions" :myAnswers="myAnswers"></cell>
+        <cell :questions="chapterQuestions" :myAnswers="myAnswers"></cell>
+
     </div>
 </template>
 
 <script>
     import cell from './cell'
     import Vue from 'vue'
+
+    import mixin from '../../libs/mixin'
+
     export default {
         name: "chapterExercise",
         components: {cell},
+        mixins: [mixin],
         data() {
             return {
                 question: {}
@@ -21,25 +26,25 @@
             this.$store.commit('getChapters')
             this.$store.commit('getTypes')
             this.$store.commit('getAnswers')
-            this.$store.commit('setEtype','chapter')
+            this.$store.commit('setEtype', 'chapter')
         },
         methods: {},
         computed: {
-           chapterQuestions() {
-               if (this.$store.state.keepOnChapter) {
-                   return this.questions.filter(item => {
-                       if (Object.keys(this.myAnswers).includes(item.id)) {
-                           return true
-                       }
-                       return false
-                   })
-               }
+            chapterQuestions() {
+                // if (this.$store.state.keepOnChapter) {
+                //     return this.questions.filter(item => {
+                //         if (Object.keys(this.myAnswers).includes(item.id)) {
+                //             return true
+                //         }
+                //         return false
+                //     })
+                // }
 
-               if (this.questions.length == 0) {
-                   return []
-               }
+                if (this.questions.length == 0) {
+                    return []
+                }
 
-                let chapterId = this.chapterId
+                let chapterId = this.$route.params.id
                 return this.questions.filter(item => {
                     if (item.chapter == chapterId) {
                         Vue.set(this.$store.state.chapterAnswers, item.id, []);
@@ -52,7 +57,7 @@
                 return this.$store.state.questions
             },
             chapterId() {
-                return this.$store.state.chapterId
+                return this.$route.params.id
             },
             myAnswers() {
                 return this.$store.state.chapterAnswers

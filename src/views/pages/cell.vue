@@ -1,7 +1,11 @@
 <template>
     <div>
-        <navPage/>
-        <whitespace @click="show = false" class="whitespace">
+        <navPage :style="settingModel?day:night">
+            <div slot="right" @click="md=true">
+                <Icon type="gear-a" size="25" color="#80848f"></Icon>
+            </div>
+        </navPage>
+        <whitespace @click="show = false" class="whitespace" :style="settingModel?day:night">
             <div>{{showType}}</div>
             <div class="tag-wrapper">
                 <div class="tag">章节:{{showChapter}}</div>
@@ -9,7 +13,7 @@
             <!--<div class="tag-wrapper">-->
             <!--<div class="tag" v-for="(tagitem,index) in  showTags" :key="index">{{tagitem}}</div>-->
             <!--</div>-->
-            <div class="text">{{question.text}}
+            <div class="text" :style="{fontSize:`${settingSize}px`}">{{question.text}}
             </div>
             <radio :question="question"
                    :myAnswer="myAnswer"
@@ -24,7 +28,7 @@
                     答案详解
                 </div>
 
-                <div class="analysis-font">{{question.analysis}}</div>
+                <div class="analysis-font" :style="{fontSize:`${settingSize}px`}">{{question.analysis}}</div>
             </div>
         </whitespace>
         <bottomPanel
@@ -32,7 +36,21 @@
                 @selected="selected"
                 @collect="collect"
                 :num="questions.length"
-                :pos="cPosition" :show="show" @ctop="ctop"/>
+                :pos="cPosition" :show="show" @ctop="ctop"
+        />
+        <MDialog class="md-wrapper" v-if="md" :bottom=false @maskClick="()=>{md=false}">
+            <div class="md-title">
+                设置
+            </div>
+            <div class="md-item">
+                <div class="md-text">字体大小</div>
+                <Slider v-model="settingSize" class="setting-right"></Slider>
+            </div>
+            <div class="md-item">
+                <div class="md-text">夜间模式</div>
+                <Switch v-model="settingModel"></Switch>
+            </div>
+        </MDialog>
     </div>
 </template>
 
@@ -41,10 +59,11 @@
     import whitespace from '../components/whitespace/whitespace'
     import bottomPanel from '../components/bottomPanel/bottomPanel'
     import navPage from '../components/nav/navPage'
+    import MDialog from '../components/dialog/MDialog'
 
     export default {
         name: "cell",
-        components: {radio, whitespace, bottomPanel, navPage},
+        components: {radio, whitespace, bottomPanel, navPage, MDialog},
         props: {
             questions: {
                 type: Array,
@@ -66,7 +85,18 @@
                 show: false,
                 // showAnalysis: false,
                 myCollections: [],
-                AnswerSet: []
+                AnswerSet: [],
+                md: false,
+                settingSize: 18,
+                settingModel: false,
+                day: {
+                    backgroundColor: '#333',
+                    color: '#fff'
+                },
+                night: {
+                    backgroundColor: '#fff',
+                    color: '#000'
+                }
             }
         },
         methods: {
@@ -89,12 +119,78 @@
                     //     return
                     // }
 
+
+
+                    //如果有错误答案或者完全正确,则
+
+
+                    let a = this.question.answer
+                    let b = this.myAnswer
+                    let flag = true
+
+                    // console.log(`---length ----${a.length}----${ b.length}---${a}----${b}`)
+                    // b中包含a没有的,则flag=false
+                    if (a && b) {
+                        for (let j = 0; j < b.length; j++) {
+                            // console.log(`包含的判断 ${b[j]}  ${a.includes(b[j])} a=  ${a}; b= ${b}`)
+                            if (!a.includes(b[j])) {
+                                flag = false
+                            }
+                        }
+                    } else {
+                        flag = false
+                    }
+                    // console.log(`${flag}  ${a.length} ${temp.length}`)
+                    //选择的过程中
+                    if (flag && a.length > b.length) {
+
+                    } else if (flag && a.length == b.length) {
+                        //正确
+                        return
+                    } else {
+                        //错误
+                        return
+                    }
+
                     this.$store.commit('addAnswer', {id: value.id, value: [value.value]})
                     // let answer = this.question.answer
                     // if (value.value === answer[0]) {
                     //     this.next();
                     // }
                 } else if (this.showType == '多选') {
+
+                    //如果有错误答案或者完全正确,则
+
+
+                    let a = this.question.answer
+                    let b = this.myAnswer
+                    let flag = true
+
+                    // console.log(`---length ----${a.length}----${ b.length}---${a}----${b}`)
+                    // b中包含a没有的,则flag=false
+                    if (a && b) {
+                        for (let j = 0; j < b.length; j++) {
+                            // console.log(`包含的判断 ${b[j]}  ${a.includes(b[j])} a=  ${a}; b= ${b}`)
+                            if (!a.includes(b[j])) {
+                                flag = false
+                            }
+                        }
+                    } else {
+                        flag = false
+                    }
+                    // console.log(`${flag}  ${a.length} ${temp.length}`)
+                    //选择的过程中
+                    if (flag && a.length > b.length) {
+
+                    } else if (flag && a.length == b.length) {
+                        //正确
+                        return
+                    } else {
+                        //错误
+                        return
+                    }
+
+
                     if (this.AnswerSet.includes(value.value)) {
                         this.deleteAnswerSet(value.value)
                     } else {
@@ -240,5 +336,35 @@
 
     .analysis-font {
         font-size: 18px;
+    }
+
+    .md-wrapper {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        flex-direction: column;
+    }
+
+    .md-item {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        width: 90%;
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+
+    .md-title {
+        font-size: 18px;
+        margin-top: 10px;
+    }
+
+    .md-text {
+        font-size: 14px;
+    }
+
+    .setting-right {
+        width: 60%;
     }
 </style>

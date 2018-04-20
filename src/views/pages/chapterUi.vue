@@ -1,7 +1,9 @@
 <template>
     <div>
         <navPage></navPage>
-        <whiteapce>
+        <whitesapce>
+            <!--<div>{{this.$store.state.keepOnChapter}}</div>-->
+            <!--<div>{{this.isContinue}}</div>-->
             <div class="chapter-wrapper">
                 <div class="chapter-item" v-for="(item,index) in chapters" :key="index" @click="click(item.value)">
                     <div class="chapter-icon" :style="{backgroundColor:colors[(index)%colors.length]}">{{item.value}}
@@ -9,17 +11,25 @@
                     <div class="chapter-text">{{item.label}}</div>
                 </div>
             </div>
-        </whiteapce>
+        </whitesapce>
+        <MDialog v-if="myDialog" @left="left" @right="right">
+            <div class="md-text">您上次未完成练习,
+                想要继续练习吗?
+            </div>
+        </MDialog>
     </div>
 </template>
 
 <script>
     import navPage from '../components/nav/navPage'
-    import whiteapce from '../components/whitespace/whitespace'
+    import whitesapce from '../components/whitespace/whitespace'
+    import mixin from '../../libs/mixin'
+    import MDialog from '../components/dialog/MDialog'
 
     export default {
         name: "chapter-ui",
-        components: {navPage, whiteapce},
+        components: {navPage, whitesapce, MDialog},
+        mixins: [mixin],
         data() {
             return {
                 colors: ['#FF6666',
@@ -28,23 +38,54 @@
                     '#9999FF',
                     '#66CC00',
                     '#993399',
-                    '#6666FF',]
+                    '#6666FF',],
+                isContinue: true
             }
         },
         mounted() {
             this.$store.commit('getChapters')
+            this.$store.commit('getAnswers')
+            this.$store.commit('getQuestions')
         },
         methods: {
             click(id) {
                 console.log('chapter-', id)
                 this.$store.commit('setChapterId', id)
-                this.$router.push('/chapterExercise')
+                this.$router.push(`/chapterExercise/${id}`)
+            },
+            left() {
+                this.$store.commit('reStartChapter')
+            },
+            right() {
+                let cid = Object.keys(this.chapterAnswer)[0]
+                console.log(`cid= ${cid}`)
+
+                let temp = this.questions.filter(item => {
+                    if (cid == item.id) {
+                        return true
+                    }
+                    return false
+                })
+                console.log(temp[0])
+                console.log(`temp=${temp[0]}`)
+                let id = temp[0].chapter
+                this.isContinue = false
+                this.$router.push(`/chapterExercise/${id}`)
             }
         },
         computed: {
+            myDialog() {
+                return this.$store.state.keepOnChapter && this.isContinue
+            },
             chapters() {
                 return this.$store.state.chapters
             },
+            questions() {
+                return this.$store.state.questions
+            },
+            chapterAnswer() {
+                return this.$store.state.chapterAnswers
+            }
         }
     }
 </script>
@@ -83,5 +124,13 @@
     .chapter-text {
         font-size: 18px;
 
+    }
+
+    .md-text {
+        font-size: 14px;
+        margin-top: 15px;
+        margin-left: 10px;
+        margin-right: 10px;
+        margin-bottom: 15px;
     }
 </style>

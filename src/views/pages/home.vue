@@ -1,6 +1,10 @@
 <template>
     <div class="wrapper">
-        <navPage/>
+        <navPage>
+            <div slot="right" @click="$router.push('/admin/Management')">
+                <Icon type="navicon" size="25" color="#80848f"></Icon>
+            </div>
+        </navPage>
         <Carousel autoplay v-model="value" loop>
             <CarouselItem>
                 <div class="demo-carousel">
@@ -69,15 +73,12 @@
 
 <script>
     import navPage from '../components/nav/navPage'
+    import mixin from '../../libs/mixin'
 
     export default {
         name: "home",
         components: {navPage},
-        created() {
-            if (this.$store.state.user.appkey == '') {
-                this.$router.replace('/login')
-            }
-        },
+        mixins: [mixin],
         data() {
             return {
                 value: 0

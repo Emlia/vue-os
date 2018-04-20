@@ -3,6 +3,7 @@ import Vue from 'vue'
 import axios from 'axios'
 import qs from 'qs'
 import config from '../config/config'
+import md5 from 'md5'
 
 Vue.use(Vuex);
 let baseurl = ''
@@ -292,7 +293,7 @@ const store = new Vuex.Store({
         login(state, arg) {
             let data = qs.stringify({
                 username: arg.username,
-                password: arg.password
+                password: md5(arg.password)
 
             })
             axios.post(`${baseurl}/php-ci-os/index.php/Os/login`,
@@ -301,6 +302,7 @@ const store = new Vuex.Store({
                 if (res.ret == '200') {
                     state.user.appkey = res.data[0].appkey
                     state.user.id = res.data[0].id
+                    state.user.username = res.data[0].username
                     //初始化
 
                     state.orderAnswers = {}
@@ -311,13 +313,25 @@ const store = new Vuex.Store({
                     state.keepOnChapter = false
 
                     arg._this.$router.push('/home')
+                    arg._this.$Message.success('登录成功')
                 } else {
+                    arg._this.$Message.error('用户名或密码错误')
                 }
 
             }).catch(function (error) {
+                arg._this.$Message.error('连接服务器失败')
                 console.log(error);
             });
-        }
+        },
+        reStartSim(state) {
+            state.keepOnSim = false
+            state.simulationAnswers = {}
+        },
+        reStartChapter(state) {
+            state.keepOnChapter = false
+            state.chapterAnswers = {}
+        },
+
     },
     actions: {}
 });

@@ -11,6 +11,7 @@ import adminManagement from './views/pages/adminManagement'
 import adminAdd from './views/pages/admin/add'
 import adminEdit from './views/pages/admin/edit'
 import QAdd from './views/pages/admin/question/add'
+import QEditUI from './views/pages/admin/question/editui'
 import QEdit from './views/pages/admin/question/edit'
 import QAll from './views/pages/admin/question/all'
 import TAdd from './views/pages/admin/tag/add'
@@ -41,10 +42,10 @@ const routers = [
     {
         path: '/orderExercise',
         component: orderExercise,
-        meta: {keepAlive: false} // 这是不会被keepalive的
+        // meta: {keepAlive: false} // 这是不会被keepalive的
     },
     {
-        path: '/chapterExercise',
+        path: '/chapterExercise/:id',
         component: chapterExercise
     },
     {
@@ -60,41 +61,21 @@ const routers = [
         component: errorExercise
     },
     {
-        path: '/adminManagement',
+        path: '/admin/Management',
         component: adminManagement
     },
     {
-        path: '/adminAdd',
-        component: adminAdd
+        path: '/admin/question/edit',
+        component: QEditUI
     },
     {
-        path: '/adminEdit',
-        component: adminEdit
-    },
-    {
-        path: '/QAdd',
-        component: QAdd
-    },
-    {
-        path: '/QEdit',
+        path: '/admin/question/edit/:id',
         component: QEdit
     },
     {
-        path: '/QAll',
-        component: QAll
-    },
-    {
-        path: '/TAdd',
-        component: TAdd
-    },
-    {
-        path: '/TEdit',
-        component: TEdit
-    },
-    {
-        path: '/TAll',
-        component: TAll
-    },
+        path: '/admin/question/all',
+        component: QAdd
+    }
 
 ];
 export default routers;

@@ -7,10 +7,12 @@
 <script>
     import cell from './cell'
     import _ from 'lodash'
+    import mixin from '../../libs/mixin'
 
     export default {
         name: "errorExercise",
         components: {cell},
+        mixins: [mixin],
         data() {
             return {}
         },

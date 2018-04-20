@@ -77,13 +77,16 @@
 
 <script>
     import whitespace from '../../../components/whitespace/whitespace'
+    import navPage from '../../../components/nav/navPage'
     import axios from 'axios'
     import qs from 'qs'
-    import navPage from '../../../components/nav/navPage'
+    import config from '../../../../config/config'
+    import mixin from '../../../../libs/mixin'
 
     export default {
         components: {whitespace, navPage},
         name: "add",
+        mixins: [mixin],
         data() {
             return {
                 abc: ['A', 'B', 'C', 'D', 'E', 'F', 'G', "H"],
@@ -122,7 +125,7 @@
                     analysis: this.analysis,
 
                 })
-                axios.post('http://localhost/php-ci-os/index.php/Os/addQuestion',
+                axios.post(`${config.baseurl}/php-ci-os/index.php/Os/addQuestion`,
                     data).then((response) => {
                     let res = response.data
                     if (res.ret === '200') {

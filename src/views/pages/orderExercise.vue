@@ -6,10 +6,12 @@
 
 <script>
     import cell from './cell'
+    import mixin from '../../libs/mixin'
 
     export default {
         name: "orderExercise",
         components: {cell},
+        mixins: [mixin],
         mounted() {
             this.$store.commit('getQuestions')
             this.$store.commit('getTags')
