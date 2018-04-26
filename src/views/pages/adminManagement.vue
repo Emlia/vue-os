@@ -2,7 +2,7 @@
     <div class="wrapper">
         <navPage></navPage>
         <whitesapce>
-            <div>{{$store.state.user}}</div>
+            <!--<div>{{$store.state.user}}</div>-->
             <!--<div class="cell">-->
             <!--<div class="tag">test</div>-->
             <!--<div>-->
@@ -14,7 +14,21 @@
             <!--&lt;!&ndash;<Button class="btn" @click="$router.push('adminEdit')">编辑测试数据</Button>&ndash;&gt;-->
             <!--</div>-->
             <!--</div>-->
+            <div class="cell">
+                <div class="tag">资讯</div>
+                <div>
+                    <Button class="btn" @click="$router.push('/admin/notice/edit')">编辑通知栏</Button>
+                    <!--<Button class="btn">编辑轮播图</Button>-->
+                </div>
+            </div>
 
+            <div class="cell">
+                <div class="tag">用户(user)</div>
+                <div>
+                    <Button class="btn" @click="$router.push('/admin/resetPassword')">重置密码</Button>
+                    <!--<Button class="btn" @click="$router.push('adminAdd')">电脑端操作</Button>-->
+                </div>
+            </div>
             <div class="cell">
                 <div class="tag">问题(question)</div>
                 <div>
@@ -33,13 +47,7 @@
             <!--&lt;!&ndash;<Button class="btn" @click="$router.push('adminAdd')">电脑端操作</Button>&ndash;&gt;-->
             <!--</div>-->
             <!--</div>-->
-            <div class="cell">
-                <div class="tag">用户(user)</div>
-                <div>
-                    <Button class="btn" @click="$router.push('QAdd')">重置密码</Button>
-                    <!--<Button class="btn" @click="$router.push('adminAdd')">电脑端操作</Button>-->
-                </div>
-            </div>
+
             <!--<div class="cell">-->
             <!--<div class="tag">章节(chapter)</div>-->
             <!--<div>-->

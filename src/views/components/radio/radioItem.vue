@@ -100,7 +100,7 @@
                     if (this.myAnswer.length != 0) {
                         // 如果  标准答案 包含 我的答案
                         if (this.arrayIsContain(this.answer, this.myAnswer)) {
-                            console.log('---- 标准答案 包含 我的答案-----')
+                            // console.log('---- 标准答案 包含 我的答案-----')
 
                             // 该按钮被选中
                             if (this.myAnswer.includes(this.value.value)) {
@@ -111,7 +111,7 @@
 
                             // 我的答案正好出现了错误答案
                         } else {
-                            console.log('----我的答案正好出现了错误答案-----')
+                            // console.log('----我的答案正好出现了错误答案-----')
                             // 该按钮被选中
                             if (this.myAnswer.includes(this.value.value)) {
                                 if (this.answer.includes(this.value.value)) {
@@ -132,7 +132,7 @@
                             }
                         }
                     } else {
-                        console.log('----该题目 我没有作答 -----')
+                        // console.log('----该题目 我没有作答 -----')
                         return 'text'
                     }
                 }

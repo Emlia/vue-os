@@ -4,6 +4,7 @@ import axios from 'axios'
 import qs from 'qs'
 import config from '../config/config'
 import md5 from 'md5'
+import util from '../libs/util'
 
 Vue.use(Vuex);
 let baseurl = ''
@@ -16,6 +17,7 @@ if (config.env === 'production') {
 const store = new Vuex.Store({
     state: {
         user: {id: 0, username: '', appkey: ''},
+        configuration: {switch: false, notice: ''},
         orderAnswers: {},
         chapterAnswers: {},
         simulationAnswers: {},
@@ -53,33 +55,20 @@ const store = new Vuex.Store({
 //
 
 
-                    let a = qt.answer
-                    let b = temp
-                    let flag = true
-
-                    // console.log(`---length ----${a.length}----${ b.length}---${a}----${b}`)
-                    if (a && b) {
-                        for (let j = 0; j < b.length; j++) {
-                            // console.log(`包含的判断 ${b[j]}  ${a.includes(b[j])} a=  ${a}; b= ${b}`)
-                            if (!a.includes(b[j])) {
-                                flag = false
-                            }
-                        }
-                    } else {
-                        flag = false
-                    }
-                    // console.log(`${flag}  ${a.length} ${temp.length}`)
-                    if (flag && a.length > temp.length) {
-
-                    } else if (flag && a.length == temp.length) {
+                    let as = util.getAnswerState(qt.answer, temp)
+                    if (as === 'true') {
                         t.push(i)
-                    } else {
+                    } else if (as === 'error') {
                         f.push(i)
                         var set = new Set(state.errors);
                         set.add(i)
                         state.errors = Array.from(set)
+
+                    } else if (as === 'empty') {
+
+                    } else if (as === 'contain') {
+
                     }
-                    // console.log('temp', temp)
                 }
             }
             return {t, f}
@@ -331,6 +320,24 @@ const store = new Vuex.Store({
             state.keepOnChapter = false
             state.chapterAnswers = {}
         },
+        getConfiguration(state) {
+            axios.get(`${baseurl}/php-ci-os/index.php/Os/getConfiguration`
+            ).then((response) => {
+                let res = response.data
+                if (res.ret == '200') {
+                    let notice = JSON.parse(res.data[0].notice)
+                    state.configuration.switch = notice.switch
+                    state.configuration.notice = notice.notice
+                    // console.log('ssss', res.data[0].notice)
+                } else {
+
+                }
+
+            }).catch(function (error) {
+
+                console.log(error);
+            });
+        }
 
     },
     actions: {}

@@ -4,7 +4,7 @@ import _ from 'lodash'
 
 let util = {};
 util.title = function (title) {
-    title = title ? title + ' - Home' : 'iView project';
+    title = title ? title + ' - Home' : 'os';
     window.document.title = title;
 };
 
@@ -51,5 +51,77 @@ util.toQuestion = function (question) {
     }
     console.log('2', temp)
     return temp
+}
+// 返回答题的状态,问题的答案和我的答案.答案未知:contain:包含,答案产生结果--empty:没有,作答 error:答案中有错误的,true:完全正确
+util.getAnswerState = function (questionAnswer, myAnswer) {
+
+    //如果有错误答案或者完全正确,则
+    let a = questionAnswer
+    let b = myAnswer
+    let flag = true
+
+    // console.log(`---length ----${a.length}----${ b.length}---${a}----${b}`)
+    if (b == undefined || b[0] == undefined || b[0] == '') {
+        return 'empty'
+    }
+    // b中包含a没有的,则flag=false
+    if (a && b) {
+        for (let j = 0; j < b.length; j++) {
+            // console.log(`包含的判断 ${b[j]}  ${a.includes(b[j])} a=  ${a}; b= ${b}`)
+            if (!a.includes(b[j])) {
+                flag = false
+            }
+        }
+    } else {
+        flag = false
+    }
+    // console.log(`${flag}  ${a.length} ${temp.length}`)
+    //选择的过程中
+    if (flag && a.length > b.length) {
+        return 'contain'
+    } else if (flag && a.length == b.length) {
+        //正确
+        return 'true'
+    } else {
+        //错误
+        return 'error'
+    }
+
+}
+util.myAnswerIsEmpty = function (myAnswers) {
+    let len = Object.keys(myAnswers).length
+    if (len == 0) {
+        return true
+    }
+    let flag = true
+    Object.keys(myAnswers).forEach(key => {
+        // console.log('myAnswerIsEmpty---', myAnswers[key])
+        if (myAnswers[key].length != 0) {
+            flag = false
+            // console.log('----?????---', flag)
+        }
+    })
+    return flag
+}
+util.myAnswerIsExist = function (myAnswers) {
+    return !this.myAnswerIsEmpty(myAnswers)
+}
+util.getQuestionById = function (questions, id) {
+    for (let i = 0; i < questions.length; i++) {
+        if (questions[i].id == id) {
+            return questions[i]
+        }
+    }
+}
+util.whereIsMyAnswersChapter = function (myAnswers, questions) {
+    let keys = Object.keys(myAnswers)
+    console.log('keys', keys)
+    if (keys.length != 0 && keys[0] && questions.length != 0) {
+        console.log('value', questions[keys[0]])
+        return this.getQuestionById(questions, keys[0]).chapter
+    } else {
+        return -1
+    }
+
 }
 export default util;

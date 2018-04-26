@@ -1,5 +1,6 @@
 <template>
     <div>
+        <!--<div>{{myAnswerIsExist}}&#45;&#45;{{isContinue}}</div>-->
         <cell :questions="randomlyQuestions" :myAnswers="myAnswers"></cell>
         <MDialog v-if="myDialog" @left="left" @right="right">
             <div class="md-text">您上次未完成练习,
@@ -15,10 +16,12 @@
     import Vue from 'vue'
     import MDialog from '../components/dialog/MDialog'
     import mixin from '../../libs/mixin'
+    import util from '../../libs/util'
+
     export default {
         name: "simulationExercise",
         components: {cell, MDialog},
-        mixins:[mixin],
+        mixins: [mixin],
         data() {
             return {
                 isContinue: true
@@ -35,6 +38,7 @@
         methods: {
             left() {
                 this.$store.commit('reStartSim')
+                this.isContinue = false
             },
             right() {
                 this.isContinue = false
@@ -42,10 +46,23 @@
         },
         computed: {
             myDialog() {
-                return this.$store.state.keepOnSim && this.isContinue
+                return this.myAnswerIsExist && this.isContinue
             },
+            myAnswerIsExist() {
+                return util.myAnswerIsExist(this.myAnswers)
+            },
+            qLength() {
+                return this.questions.length
+            },
+            // 如果有题目,显示题目, 如果没有,显示没有
             randomlyQuestions() {
-                if (this.$store.state.keepOnSim) {
+                if (this.qLength == 0 || this.myDialog) {
+                    console.log('empty----------')
+                    return []
+                }
+
+                if (this.isContinue == false && this.myAnswerIsExist == true) {
+                    console.log('old-----------')
                     return this.questions.filter(item => {
                         if (Object.keys(this.myAnswers).includes(item.id)) {
                             return true
@@ -54,9 +71,7 @@
                     })
                 }
 
-                if (this.questions.length == 0) {
-                    return []
-                }
+
                 var arr = _.cloneDeep(this.questions)
 
                 var result = []
@@ -72,8 +87,8 @@
 
                 }
                 // console.log(result)
-
-
+                this.isContinue = false
+                console.log('new----------')
                 return result
             },
             questions() {

@@ -2,8 +2,8 @@
     <div>
         <navPage></navPage>
         <whitesapce>
-            <!--<div>{{this.$store.state.keepOnChapter}}</div>-->
-            <!--<div>{{this.isContinue}}</div>-->
+            <!--<div>{{myAnswerIsExist}}</div>-->
+            <!--<div>{{isContinue}}</div>-->
             <div class="chapter-wrapper">
                 <div class="chapter-item" v-for="(item,index) in chapters" :key="index" @click="click(item.value)">
                     <div class="chapter-icon" :style="{backgroundColor:colors[(index)%colors.length]}">{{item.value}}
@@ -25,6 +25,7 @@
     import whitesapce from '../components/whitespace/whitespace'
     import mixin from '../../libs/mixin'
     import MDialog from '../components/dialog/MDialog'
+    import util from '../../libs/util'
 
     export default {
         name: "chapter-ui",
@@ -52,9 +53,11 @@
                 console.log('chapter-', id)
                 this.$store.commit('setChapterId', id)
                 this.$router.push(`/chapterExercise/${id}`)
+                this.isContinue = false
             },
             left() {
                 this.$store.commit('reStartChapter')
+                this.isContinue = false
             },
             right() {
                 let cid = Object.keys(this.chapterAnswer)[0]
@@ -75,7 +78,10 @@
         },
         computed: {
             myDialog() {
-                return this.$store.state.keepOnChapter && this.isContinue
+                return this.myAnswerIsExist && this.isContinue
+            },
+            myAnswerIsExist() {
+                return util.myAnswerIsExist(this.chapterAnswer)
             },
             chapters() {
                 return this.$store.state.chapters

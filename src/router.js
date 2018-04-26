@@ -17,7 +17,9 @@ import QAll from './views/pages/admin/question/all'
 import TAdd from './views/pages/admin/tag/add'
 import TEdit from './views/pages/admin/tag/edit'
 import TAll from './views/pages/admin/tag/all'
-
+import forgetPassword from './views/pages/forgetPassword'
+import resetPassword from './views/pages/resetPassword'
+import noticeEdit from './views/pages/admin/notice/edit'
 
 const routers = [
     {
@@ -34,6 +36,14 @@ const routers = [
     {
         path: '/login',
         component: login
+    },
+    {
+        path: '/forgetPassword',
+        component: forgetPassword
+    },
+    {
+        path: '/admin/resetPassword',
+        component: resetPassword
     },
     {
         path: '/home',
@@ -75,6 +85,10 @@ const routers = [
     {
         path: '/admin/question/all',
         component: QAdd
+    },
+    {
+        path: '/admin/notice/edit',
+        component: noticeEdit
     }
 
 ];

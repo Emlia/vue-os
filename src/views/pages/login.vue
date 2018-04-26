@@ -1,7 +1,6 @@
 <template>
     <div style="width:100%;height:100%;">
-        <navPage>
-        </navPage>
+        <navPage></navPage>
         <div class="wrapper-center">
             <div class="wrapper-title">
                 <Avatar src="https://i.loli.net/2017/08/21/599a521472424.jpg" size="large"/>
@@ -18,20 +17,19 @@
             </div>
 
             <Button class="home-input" type="info" long @click="login">登录</Button>
-            <Row>
-                <Col span="12" class="a-text" style="text-align: left;" @click="doSomething">
-                忘记密码?</Col>
-                <Col span="12" class="a-text"
-                     style="text-align: right;">
-                <div @click="$router.push('/register')">新用户注册</div>
-                </Col>
-            </Row>
+            <div class="login-between">
+                <div style="color:#2db7f5;" @click="$router.replace('/forgetPassword')">
+                    忘记密码?
+                </div>
+                <div style="color:#2db7f5;" @click="$router.replace('/register')">新用户注册</div>
+
+            </div>
         </div>
         <!--<Row class="wrapper-bottom">-->
-            <!--<Col span="24" style="text-align: center;">-->
-            <!--登录即代表阅读并统一-->
-            <!--<div class="a-text" @click="doSomething">服务条款</div>-->
-            <!--</Col>-->
+        <!--<Col span="24" style="text-align: center;">-->
+        <!--登录即代表阅读并统一-->
+        <!--<div class="a-text" @click="doSomething">服务条款</div>-->
+        <!--</Col>-->
         <!--</Row>-->
         <!--<div>{{res}}</div>-->
     </div>
@@ -72,6 +70,14 @@
         justify-content: flex-start;
         align-items: center;
         margin-bottom: 30px;
+    }
+
+    .login-between {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
     }
 
     .wrapper-center {

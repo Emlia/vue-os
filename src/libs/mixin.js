@@ -1,6 +1,6 @@
 export default {
     created() {
-        // console.log(this.$route)
+        console.log(this.$route)
         if (this.$route.path.includes('admin')) {
             if (this.$store.state.user.username !== 'admin') {
                 this.$router.replace('/login')

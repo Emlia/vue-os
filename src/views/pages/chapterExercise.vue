@@ -1,5 +1,6 @@
 <template>
     <div>
+        <!--<div>{{chapterId}}-&#45;&#45;{{whereIsMyAnswersChapter}}</div>-->
         <cell :questions="chapterQuestions" :myAnswers="myAnswers"></cell>
 
     </div>
@@ -10,6 +11,7 @@
     import Vue from 'vue'
 
     import mixin from '../../libs/mixin'
+    import util from '../../libs/util'
 
     export default {
         name: "chapterExercise",
@@ -31,20 +33,24 @@
         methods: {},
         computed: {
             chapterQuestions() {
-                // if (this.$store.state.keepOnChapter) {
-                //     return this.questions.filter(item => {
-                //         if (Object.keys(this.myAnswers).includes(item.id)) {
-                //             return true
-                //         }
-                //         return false
-                //     })
-                // }
+                let chapterId = this.$route.params.id
 
-                if (this.questions.length == 0) {
+                if (chapterId == this.whereIsMyAnswersChapter) {
+                    return this.questions.filter(item => {
+                        if (Object.keys(this.myAnswers).includes(item.id)) {
+                            return true
+                        }
+                        return false
+                    })
+                }
+
+                if (this.questions.length == 0 || this.myDialog) {
                     return []
                 }
 
-                let chapterId = this.$route.params.id
+                this.$store.commit('reStartChapter')
+                this.isContinue = false
+
                 return this.questions.filter(item => {
                     if (item.chapter == chapterId) {
                         Vue.set(this.$store.state.chapterAnswers, item.id, []);
@@ -52,6 +58,9 @@
                     }
                     return false
                 })
+            },
+            whereIsMyAnswersChapter() {
+                return util.whereIsMyAnswersChapter(this.myAnswers, this.questions)
             },
             questions() {
                 return this.$store.state.questions

@@ -24,7 +24,7 @@
             </CarouselItem>
         </Carousel>
 
-        <Alert style="margin-top: 10px;" type="warning" show-icon closable>本程序可能于 xxxx年xx月xx日更新</Alert>
+        <Alert v-if="mySwitch" style="margin-top: 10px;" type="warning" show-icon closable>{{notice}}</Alert>
 
 
         <div class="wrapper-selector">
@@ -82,6 +82,17 @@
         data() {
             return {
                 value: 0
+            }
+        },
+        mounted(){
+          this.$store.commit('getConfiguration')
+        },
+        computed: {
+            notice() {
+                return this.$store.state.configuration.notice
+            },
+            mySwitch() {
+                return this.$store.state.configuration.switch
             }
         }
     }

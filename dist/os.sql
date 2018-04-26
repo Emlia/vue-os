@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: 2018-04-12 04:50:27
+-- Generation Time: 2018-04-26 11:17:50
 -- 服务器版本： 10.1.28-MariaDB
 -- PHP Version: 7.1.11
 
@@ -41,8 +41,10 @@ CREATE TABLE `answer` (
 --
 
 INSERT INTO `answer` (`userid`, `orderAnswer`, `simulationAnswer`, `chapterAnswer`, `error`) VALUES
-(0, '{\"1\":[\"B\"],\"2\":[],\"3\":[\"D\"],\"4\":[\"C\"],\"5\":[\"A\"],\"15\":[\"D\"],\"31\":[\"A\",\"D\"],\"32\":[\"D\"],\"34\":[\"B\"],\"35\":[\"A\",\"B\",\"D\"]}', '{\"6\":[\"B\"],\"8\":[\"B\"],\"12\":[\"C\"],\"16\":[\"C\"],\"18\":[\"C\"],\"20\":[\"E\"],\"26\":[],\"28\":[\"B\"],\"29\":[],\"30\":[]}', '{\"1\":[\"A\"],\"3\":[\"C\"],\"4\":[],\"5\":[],\"6\":[],\"7\":[],\"8\":[],\"9\":[],\"10\":[],\"11\":[],\"12\":[],\"13\":[],\"14\":[],\"15\":[],\"16\":[],\"17\":[],\"18\":[],\"19\":[],\"20\":[],\"21\":[],\"22\":[],\"23\":[],\"24\":[],\"25\":[],\"26\":[],\"27\":[],\"28\":[],\"29\":[]}', '[25,29,28,19,27,15,11,5,4,3,2,1,0,7,6,8,9,10,12,13,14,16,17,18,20,21,22,23,24,26,30,31,33,34]'),
-(1, '{\"1\":[\"A\"],\"2\":[\"C\"]}', '{\"4\":[\"C\"],\"7\":[\"C\"],\"8\":[\"B\"],\"9\":[],\"10\":[\"C\"],\"13\":[\"A\"],\"14\":[],\"18\":[\"B\"],\"23\":[],\"30\":[\"C\"]}', '{\"1\":[\"A\"],\"3\":[\"B\"]}', '[3,6,7,8,9,12,13,17,22,29,0,2,1]');
+(0, '{\"1\":[\"B\"],\"2\":[\"C\"],\"3\":[\"D\"],\"4\":[\"C\"],\"5\":[\"A\"],\"6\":[\"A\"],\"7\":[\"A\"],\"8\":[\"B\"],\"9\":[\"B\"],\"15\":[\"D\"],\"30\":[\"A\"],\"31\":[\"A\",\"D\"],\"32\":[\"D\"],\"34\":[\"B\"],\"35\":[\"A\",\"B\",\"D\"],\"36\":[\"A\"]}', '{\"1\":[\"A\"],\"2\":[\"B\"],\"4\":[\"D\"],\"8\":[\"C\"],\"11\":[\"A\"],\"13\":[\"A\"],\"20\":[],\"28\":[],\"31\":[],\"32\":[]}', '{\"2\":[\"B\"],\"30\":[],\"34\":[]}', '[25,29,28,19,27,15,11,5,4,3,2,1,0,7,6,8,9,10,12,13,14,16,17,18,20,21,22,23,24,26,30,31,33,34]'),
+(1, '{\"1\":[\"A\"],\"2\":[\"C\"],\"36\":[\"A\"]}', '{\"4\":[\"C\"],\"7\":[\"C\"],\"8\":[\"B\"],\"9\":[],\"10\":[\"C\"],\"13\":[\"A\"],\"14\":[],\"18\":[\"B\"],\"23\":[],\"30\":[\"C\"]}', '{\"2\":[\"A\"],\"30\":[\"A\"],\"34\":[]}', '[3,6,7,8,9,12,13,17,22,29,0,2,1,34]'),
+(11, '{\"1\":[\"A\"],\"2\":[\"C\",\"A\"]}', '{}', '{}', '[0]'),
+(12, '{\"1\":[\"B\"],\"2\":[\"A\"],\"3\":[\"B\"],\"4\":[\"A\"],\"5\":[\"B\"],\"6\":[\"A\"],\"7\":[\"B\"],\"8\":[\"B\"],\"9\":[\"C\"],\"10\":[\"B\"],\"11\":[\"B\"]}', '{\"1\":[],\"2\":[],\"13\":[],\"15\":[],\"16\":[\"B\"],\"18\":[],\"21\":[],\"24\":[],\"32\":[],\"36\":[]}', '{\"1\":[\"A\"],\"3\":[]}', '[0,1,2,12,22,6,3,7,9,17,16,34,30,32,18,31,8,14,15,10]');
 
 -- --------------------------------------------------------
 
@@ -73,6 +75,24 @@ INSERT INTO `chapter` (`id`, `label`, `value`) VALUES
 (10, '多处理机操作系统', '10'),
 (11, '多媒体操作系统', '11'),
 (12, '保护和安全', '12');
+
+-- --------------------------------------------------------
+
+--
+-- 表的结构 `configuration`
+--
+
+CREATE TABLE `configuration` (
+  `id` int(11) NOT NULL,
+  `notice` text COLLATE utf8mb4_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- 转存表中的数据 `configuration`
+--
+
+INSERT INTO `configuration` (`id`, `notice`) VALUES
+(999, '{\"notice\":\"test notcie\",\"switch\":true}');
 
 -- --------------------------------------------------------
 
@@ -130,7 +150,8 @@ INSERT INTO `question` (`id`, `type`, `tag`, `chapter`, `answer`, `text`, `src`,
 (31, 2, '[]', 12, '[\"B\",\"A\"]', 'asdghyuas', '', 'eeeeeee', '[\"aaaa\",\"bbbbbbbbb\",\"cccccccccccccc\",\"dddddddd\",\"eeeeeeee\"]'),
 (32, 1, '[]', 3, '[\"C\"]', '222', '333', '999', '[\"444\",\"555\",\"777\",\"888\"]'),
 (34, 1, '[]', 2, '[\"B\"]', 'ewfrd', 'aafe', 'aefaw', '[\"saedf\",\"sdf\",\"sdf\",\"asdf\"]'),
-(35, 2, '[]', -1, '[\"A\",\"B\",\"D\"]', 'eqwedqweqaw', '', 'qwaed', '[\"qweqwqw\",\"eqweedwqa\",\"weqw\",\"wqedq\"]');
+(35, 1, '[]', -1, '[]', 'aaaa', '', 'qwaed', '[\"eee\",\"eqweedwqa\",\"weqw\",\"wqedq\"]'),
+(36, 1, '[]', 7, '[\"A\"]', 'sad', 'sdfq', 'hahaha ', '[\"wdsqa\",\"sda\",\"sd\",\"asd\"]');
 
 -- --------------------------------------------------------
 
@@ -191,15 +212,9 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id`, `username`, `password`, `appkey`) VALUES
-(1, 'emlia', 'emlia103', 'cf5a956f3f9e58e05acbf89fc1a36fad'),
-(2, 'admin', 'admin', 'cf5a956f3f9e58e05acbf89fc1a36fad'),
-(3, '啦啦啦', 'eee', 'cf5a956f3f9e58e05acbf89fc1a36fad'),
-(5, 'as', '213', '05ef3c699a99ab4be606885abbb1d70f'),
-(6, 'as', '213', 'cf5a956f3f9e58e05acbf89fc1a36fad'),
-(7, 'sdca', 'asd', 'bbf1b61a9d0c99a18dfef6741628b986'),
-(8, 'sdca', 'asd', 'cfff630a335cca2c1fae5e1de001d8bd'),
-(9, 'qqq', 'qqq', '1af1367c0fef80b1c5ca5bf5836ba275'),
-(10, 'eee', 'eee', '788af8723168763e429c583ac8e2f93c');
+(1, 'admin', '21232f297a57a5a743894a0e4a801fc3', '4251a24d19641f3cccebd161094a5941'),
+(2, 'emlia', '18bf000c6b771e9e8e5641226399db7c', 'dff473d1c14e1efddeb0d46e31f67a04'),
+(3, 'emlia11', '5907a4cd649cb2f14b0cf4af140ba0cb', 'e559ca6c3ea21fee888f6382a512803e');
 
 --
 -- Indexes for dumped tables
@@ -215,6 +230,12 @@ ALTER TABLE `answer`
 -- Indexes for table `chapter`
 --
 ALTER TABLE `chapter`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `configuration`
+--
+ALTER TABLE `configuration`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -252,10 +273,16 @@ ALTER TABLE `chapter`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
+-- 使用表AUTO_INCREMENT `configuration`
+--
+ALTER TABLE `configuration`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1000;
+
+--
 -- 使用表AUTO_INCREMENT `question`
 --
 ALTER TABLE `question`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
 -- 使用表AUTO_INCREMENT `tag`
@@ -273,7 +300,7 @@ ALTER TABLE `type`
 -- 使用表AUTO_INCREMENT `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
