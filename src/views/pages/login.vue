@@ -19,7 +19,7 @@
             <Button class="home-input" type="info" long @click="login">登录</Button>
             <div class="login-between">
                 <div style="color:#2db7f5;" @click="$router.replace('/forgetPassword')">
-                    忘记密码?
+                    修改密码
                 </div>
                 <div style="color:#2db7f5;" @click="$router.replace('/register')">新用户注册</div>
 

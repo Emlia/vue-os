@@ -23,17 +23,17 @@
             </div>
 
             <div class="cell">
-                <div class="tag">用户(user)</div>
+                <div class="tag">用户</div>
                 <div>
                     <Button class="btn" @click="$router.push('/admin/resetPassword')">重置密码</Button>
                     <!--<Button class="btn" @click="$router.push('adminAdd')">电脑端操作</Button>-->
                 </div>
             </div>
             <div class="cell">
-                <div class="tag">问题(question)</div>
+                <div class="tag">题目</div>
                 <div>
-                    <Button class="btn" @click="$router.push('/admin/question/all')">添加数据</Button>
-                    <Button class="btn" @click="$router.push('/admin/question/edit')">编辑数据</Button>
+                    <Button class="btn" @click="$router.push('/admin/question/all')">添加题目</Button>
+                    <Button class="btn" @click="$router.push('/admin/question/edit')">编辑题目</Button>
                     <!--<Button class="btn" @click="$router.push('QAll')">获取所有数据</Button>-->
                     <!--<Button class="btn" @click="$router.push('adminAdd')">电脑端操作</Button>-->
                 </div>
