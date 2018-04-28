@@ -26,10 +26,10 @@
                 <div class="cell-title">题干</div>
                 <Input v-model="text" type="textarea" placeholder="请输入题干.eg:您的幸运号码是多少?" clearable style="width: 60%"/>
             </div>
-            <div class="cell">
-                <div class="cell-title">图片</div>
-                <Input v-model="src" placeholder="请输入图片的url地址.eg:www.baidu.com." clearable style="width: 60%"/>
-            </div>
+            <!--<div class="cell">-->
+                <!--<div class="cell-title">图片</div>-->
+                <!--<Input v-model="src" placeholder="请输入图片的url地址.eg:www.baidu.com." clearable style="width: 60%"/>-->
+            <!--</div>-->
 
             <div class="cell">
                 <div class="cell-title">选项</div>
@@ -129,8 +129,8 @@
                     data).then((response) => {
                     let res = response.data
                     if (res.ret === '200') {
-                        this.type = -1
-                        this.chapter = -1
+                        // this.type = -1
+                        // this.chapter = -1
                         this.text = ''
                         this.src = ''
                         this.options = ['', '', '', '']
