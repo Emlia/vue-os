@@ -1,7 +1,7 @@
 <template>
     <div class="wrapper">
         <div class="title">{{title}}</div>
-        <!--<div class="title">{{question}}</div>-->
+        <div class="title">{{question}}</div>
         <div class="cell">
             <div class="cell-title">类型</div>
             <Select v-model="question.type" style="width: 60%">
@@ -19,10 +19,10 @@
             <Input v-model="question.text" type="textarea" placeholder="请输入题干.eg:您的幸运号码是多少?" clearable
                    style="width: 60%"/>
         </div>
-        <div class="cell">
-            <div class="cell-title">图片</div>
-            <Input v-model="question.src" placeholder="请输入图片的url地址.eg:www.baidu.com." clearable style="width: 60%"/>
-        </div>
+        <!--<div class="cell">-->
+        <!--<div class="cell-title">图片</div>-->
+        <!--<Input v-model="question.src" placeholder="请输入图片的url地址.eg:www.baidu.com." clearable style="width: 60%"/>-->
+        <!--</div>-->
         <div class="cell">
             <div class="cell-title">选项</div>
         </div>
@@ -64,6 +64,7 @@
     import whitespace from '../../../components/whitespace/whitespace'
     import navPage from '../../../components/nav/navPage'
     import util from '../../../../libs/util'
+    import _ from 'lodash'
 
     export default {
         components: {whitespace, navPage},
@@ -90,7 +91,7 @@
                     tag: [],
                     chapter: 0,
                     type: 1,
-                    answer: [''],
+                    answer: [],
                     text: '',
                     src: '',
                     analysis: '',
@@ -102,6 +103,7 @@
             let temp = util.toQuestion(this.initData)
             if (Object.keys(temp).length == 9) {
                 this.question = temp
+                // this.$set(this.question, 'answer', temp.answer)
             }
 
         },
@@ -125,9 +127,10 @@
             },
             initData(value) {
                 let temp = util.toQuestion(this.initData)
+                console.log('77777777777', temp)
                 if (Object.keys(temp).length == 9) {
                     this.question = temp
-                    this.question.answer = temp.answer
+                    // this.$set(this.question, 'answer', temp.answer)
                 }
             }
         },
@@ -140,7 +143,7 @@
                 }
             },
             multiple() {
-                this.question.answer = []
+                // this.question.answer = []
                 if (this.getType.length == 0) {
                     return false
                 }

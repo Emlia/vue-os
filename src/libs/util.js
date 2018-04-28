@@ -23,6 +23,8 @@ util.toQuestion = function (question) {
     let temp = {}
     if (question.id) {
         temp.id = question.id
+    } else {
+        return {}
     }
     if (question.type) {
         temp.type = question.type
@@ -44,11 +46,13 @@ util.toQuestion = function (question) {
     } else {
         temp.tag = question.tag
     }
+
     if (typeof question.answer === 'string') {
         temp.answer = JSON.parse(question.answer)
     } else {
         temp.answer = question.answer
     }
+    console.log('1.5', _.cloneDeep(temp))
     console.log('2', temp)
     return temp
 }
