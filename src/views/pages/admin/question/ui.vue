@@ -1,7 +1,7 @@
 <template>
     <div class="wrapper">
         <div class="title">{{title}}</div>
-        <div class="title">{{question}}</div>
+        <!--<div class="title">{{question}}</div>-->
         <div class="cell">
             <div class="cell-title">类型</div>
             <Select v-model="question.type" style="width: 60%">
@@ -127,7 +127,7 @@
             },
             initData(value) {
                 let temp = util.toQuestion(this.initData)
-                console.log('77777777777', temp)
+                // console.log('77777777777', temp)
                 if (Object.keys(temp).length == 9) {
                     this.question = temp
                     // this.$set(this.question, 'answer', temp.answer)

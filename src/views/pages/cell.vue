@@ -51,6 +51,9 @@
                 <Switch v-model="settingModel"></Switch>
             </div>
         </MDialog>
+        <div class="edit-q" @click="$router.push(`/admin/question/edit/${question.id}`)">
+            <Icon type="wrench" size="20"></Icon>
+        </div>
     </div>
 </template>
 
@@ -366,5 +369,17 @@
 
     .setting-right {
         width: 60%;
+    }
+    .edit-q {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: fixed;
+        top: 50%;
+        right: 5%;
+        border-radius: 50%;
+        padding: 5px;
+        border: 1px #eee solid;
+        background: #eee;
     }
 </style>

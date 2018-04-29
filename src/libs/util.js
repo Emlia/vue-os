@@ -35,7 +35,7 @@ util.toQuestion = function (question) {
     temp.src = question.src
     temp.analysis = question.analysis
 
-    console.log('1', temp)
+    // console.log('1', temp)
     if (typeof question.options === 'string') {
         temp.options = JSON.parse(question.options)
     } else {
@@ -52,8 +52,8 @@ util.toQuestion = function (question) {
     } else {
         temp.answer = question.answer
     }
-    console.log('1.5', _.cloneDeep(temp))
-    console.log('2', temp)
+    // console.log('1.5', _.cloneDeep(temp))
+    // console.log('2', temp)
     return temp
 }
 // 返回答题的状态,问题的答案和我的答案.答案未知:contain:包含,答案产生结果--empty:没有,作答 error:答案中有错误的,true:完全正确
