@@ -81,30 +81,6 @@
                 return this.$store.state.types
             },
             type() {
-
-                // console.log(`value=${this.value.value}--answer=${this.answer}--myAnswer${this.myAnswer}`)
-                // if (this.showType == '单选') {
-                //     // 如果有这题答案的话
-                //     if (this.myAnswer) {
-                //         //如果选中该按钮
-                //         if (this.myAnswer[0] === this.value.value) {
-                //             //如果答案是该按钮
-                //             if (this.value.value === this.answer[0]) {
-                //                 return 'true'
-                //             } else {
-                //                 return 'false'
-                //             }
-                //         } else {
-                //             if (this.value.value === this.answer[0]) {
-                //                 return 'true'
-                //             } else {
-                //                 return 'text'
-                //             }
-                //         }
-                //     } else {
-                //         return 'text'
-                //     }
-                // } else
                 if (this.showType == '单选' || this.showType == '多选') {
                     // 如果答案列表中有这题答案的话,未作答时为[]
                     // console.log(`${this.value.question.id}这题用户是否作答 ${this.myAnswer}`)

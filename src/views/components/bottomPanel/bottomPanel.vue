@@ -8,17 +8,19 @@
             </div>
             <div class="center">
                 <Icon type="ios-checkmark-outline" size="25" color="#80848f"></Icon>
-                <div class="font" style="color:blue">{{TF.t.length}}</div>
+                <div class="font" style="color:#5cadff">{{TF.t.length}}</div>
                 <Icon type="ios-close-outline" size="25" color="#80848f"></Icon>
-                <div class="font" style="color:red">{{TF.f.length}}</div>
+                <div class="font" style="color:#ed3f14">{{TF.f.length}}</div>
             </div>
             <div class="right">
                 <Icon type="grid" size="25" color="#80848f"></Icon>
-                <div class="font">{{pos+1}}/{{num}}</div>
+                <div class="font">{{pos+1}}/{{num.length}}</div>
             </div>
         </div>
         <div v-show="show" class="bottom" :style="setting.model?day:night">
-            <div @click="clickT(i)" class="cell" v-for="i in num" :key="i">{{i}}</div>
+            <div @click="clickT(item)" :style="{borderColor: `${getColor(item)}`}" class="cell"
+                 v-for="(item,index) in num" :key="index">{{item}}
+            </div>
         </div>
         <!--<transition name="slide-fade">-->
 
@@ -31,9 +33,9 @@
         name: "bottom-panel",
         props: {
             num: {
-                type: Number,
+                type: Array,
                 default() {
-                    return 0
+                    return []
                 }
             },
             pos: {
@@ -77,6 +79,16 @@
             },
             collect() {
                 this.$emit('collect')
+            },
+            getColor(id) {
+
+                if (this.TF.t.includes(id)) {
+                    return '#5cadff'
+                }
+                if (this.TF.f.includes(id)) {
+                    return '#ed3f14'
+                }
+                return '#80848f'
             }
         },
         computed: {

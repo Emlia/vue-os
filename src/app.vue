@@ -1,15 +1,17 @@
 <template>
     <div>
-        <!--<transition name="fade">-->
-            <!-- 这里不会被keepalive -->
-            <router-view v-if="!$route.meta.keepAlive"></router-view>
-        <!--</transition>-->
+        <transition :name="fade">
+            <!--<router-view class="app-fade"></router-view>-->
+            <router-view></router-view>
+        </transition>
     </div>
 </template>
 <script>
     export default {
         data() {
-            return {};
+            return {
+                fade: 'app-fadein'
+            };
         },
         mounted() {
 
@@ -20,19 +22,38 @@
         methods: {},
         watch: {
             '$route'(to, from) {
-
+                const toDepth = to.path.split('/').length
+                const fromDepth = from.path.split('/').length
+                this.fade = toDepth > fromDepth ? 'app-fadein' : 'app-fadeout'
             }
         }
     };
 </script>
-<style scoped>
-    .fade-enter-active, .fade-leave-active {
-        transition: opacity .5s;
+<style>
+    .app-fade {
+        /*position: relative;*/
+        transition: all .8s cubic-bezier(.55, 0, .1, 1);
     }
 
-    .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */
-    {
-        opacity: 0;
-        /*transform: translateX(-100%);*/
+    .app-fadein-enter-active {
+        z-index: 1;
+        transform: translate(0px, 0)
+    }
+
+    .app-fadein-leave-active {
+        z-index: 0;
+    }
+
+    .app-fadein-enter {
+        transform: translate(96%, 0)
+    }
+
+    .app-fadeout-enter-active {
+        z-index: 0;
+    }
+
+    .app-fadeout-leave-active {
+        z-index: 1;
+        transform: translate(100%, 0);
     }
 </style>

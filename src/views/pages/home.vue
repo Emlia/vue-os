@@ -1,7 +1,7 @@
 <template>
     <div class="wrapper">
         <navPage>
-            <div slot="right" @click="$router.push('/admin/Management')">
+            <div v-if="username=='admin'" slot="right" @click="$router.push('/admin/Management')">
                 <Icon type="navicon" size="25" color="#80848f"></Icon>
             </div>
         </navPage>
@@ -29,7 +29,7 @@
 
         <div class="wrapper-selector">
             <Alert type="success">
-                <Button class="home-btn" type="info" @click="$router.push('orderExercise')">顺序练习</Button>
+                <Button class="home-btn" type="info" @click="$router.push('orderExercise/0')">顺序练习</Button>
                 <template slot="desc">
                     <div class="home-label">一题一题做,一点一点成长~</div>
 
@@ -46,7 +46,7 @@
             </Alert>
             <Alert type="success">
 
-                <Button class="home-btn" type="warning" @click="$router.push('simulationExercise')">随机出题</Button>
+                <Button class="home-btn" type="warning" @click="$router.push('simulationExercise/0')">随机出题</Button>
 
                 <template slot="desc">
                     <div class="home-label">
@@ -57,7 +57,7 @@
             </Alert>
             <Alert type="success">
 
-                <Button class="home-btn" type="error" @click="$router.push('errorExercise')">错 题 本</Button>
+                <Button class="home-btn" type="error" @click="$router.push('errorExercise/0')">错 题 本</Button>
 
                 <template slot="desc">
                     <div class="home-label">错题虐我千百遍,我待错题如初恋~</div>
@@ -84,8 +84,8 @@
                 value: 0
             }
         },
-        mounted(){
-          this.$store.commit('getConfiguration')
+        mounted() {
+            this.$store.commit('getConfiguration')
         },
         computed: {
             notice() {
@@ -93,7 +93,10 @@
             },
             mySwitch() {
                 return this.$store.state.configuration.switch
-            }
+            },
+            username() {
+                return this.$store.state.user.username
+            },
         }
     }
 </script>
@@ -104,6 +107,7 @@
     }
 
     .wrapper-selector {
+        margin-top: 20px;
         margin-left: 10%;
         margin-right: 10%;
     }

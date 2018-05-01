@@ -1,19 +1,20 @@
 <template>
-    <div>
+    <div style="width: 100%;height: 100%;">
         <navPage :style="setting.model?day:night">
             <div slot="right" @click="md=true">
                 <Icon type="gear-a" size="25" color="#80848f"></Icon>
             </div>
         </navPage>
+
         <whitespace @click="show = false" class="whitespace" :style="setting.model?day:night">
-            <div :style="{fontSize:`${setting.size*0.4}px`}">{{showType}}</div>
+            <div :style="{fontSize:`${setting.size*0.6}px`}">{{showType}}</div>
             <div class="tag-wrapper">
-                <div class="tag" :style="{fontSize:`${setting.size*0.4}px`}">章节:{{showChapter}}</div>
+                <div class="tag" :style="{fontSize:`${setting.size*0.6}px`}">章节:{{showChapter}}</div>
             </div>
             <!--<div class="tag-wrapper">-->
             <!--<div class="tag" v-for="(tagitem,index) in  showTags" :key="index">{{tagitem}}</div>-->
             <!--</div>-->
-            <div class="text" :style="{fontSize:`${setting.size}px`}">{{question.text}}
+            <div class="text" :style="{fontSize:`${setting.size}px`}">{{`${question.text}`}}
             </div>
             <radio :question="question"
                    :myAnswer="myAnswer"
@@ -36,8 +37,8 @@
                 :collections="myCollections"
                 @selected="selected"
                 @collect="collect"
-                :num="questions.length"
-                :pos="cPosition" :show="show" @ctop="ctop"
+                :num="questionsIds"
+                :pos="questionsIds.indexOf(question.id)" :show="show" @ctop="ctop"
         />
         <MDialog class="md-wrapper" v-if="md" :bottom=false @maskClick="()=>{md=false}">
             <div class="md-title">
@@ -45,14 +46,14 @@
             </div>
             <div class="md-item">
                 <div class="md-text">字体大小</div>
-                <Slider v-model="settingSize" class="setting-right"></Slider>
+                <Slider v-model="settingSize" class="setting-right" :min="18" :max="35"></Slider>
             </div>
             <div class="md-item">
                 <div class="md-text">夜间模式</div>
                 <Switch v-model="settingModel"></Switch>
             </div>
         </MDialog>
-        <div class="edit-q" @click="$router.push(`/admin/question/edit/${question.id}`)">
+        <div v-if="username=='admin'" class="edit-q" @click="$router.push(`/admin/question/edit/${question.id}`)">
             <Icon type="wrench" size="20"></Icon>
         </div>
     </div>
@@ -86,7 +87,7 @@
         },
         data() {
             return {
-                cPosition: 0,
+                // cPosition: 0,
                 show: false,
                 // showAnalysis: false,
                 myCollections: [],
@@ -101,7 +102,8 @@
                 night: {
                     backgroundColor: '#fff',
                     color: '#000'
-                }
+                },
+                first: true
             }
         },
         mounted() {
@@ -116,22 +118,31 @@
             settingSize(value) {
                 util.setValue('setting', {size: this.settingSize, model: this.settingModel})
                 this.$store.commit('setSetting', {size: this.settingSize, model: this.settingModel})
+            },
+            questions() {
+                // console.log('qqqqq')
             }
         },
         methods: {
             next() {
-                this.cPosition = (this.cPosition + 1) % this.questions.length
+                let temp = this.questionsIds.indexOf(this.question.id)
+                let pos = Number(temp)
+                pos = (pos + 1) % this.questions.length
+                // console.log('wwww', pos + 1)
+                this.$router.replace(this.questionsIds[pos])
             },
             selected(value) {
-                this.cPosition = value - 1
+                // console.log('vvv', value)
+                this.$router.replace(value)
             },
             collect() {
-                console.log('collect-', this.cPosition)
+
             },
             ctop() {
                 this.show = !this.show
             },
             mRadio(value) {
+                // console.log('???', value)
                 // 如果是单选
                 if (this.showType == '单选') {
                     // if (this.myAnswers.hasOwnProperty(value.id)) {
@@ -216,7 +227,7 @@
                     }
 
                     this.$store.commit('addAnswer', {id: value.id, value: this.getAnswerSet()})
-                    console.log(this.getAnswerSet())
+                    // console.log(this.getAnswerSet())
                 }
             },
             deleteAnswerSet(value) {
@@ -230,6 +241,21 @@
             }
         },
         computed: {
+            questionsIds() {
+                let temp = []
+                this.questions.forEach(item => {
+                    temp.push(item.id)
+                })
+                if (temp.length != 0 && this.first) {
+                    // console.log('重定向')
+                    this.$router.replace(temp[0])
+                    this.first = false
+                }
+                return temp
+            },
+            username() {
+                return this.$store.state.user.username
+            },
             setting() {
                 return this.$store.state.setting
             },
@@ -268,37 +294,9 @@
                 return this.question.answer.join(' ')
             },
             question() {
-                var temp = this.questions[this.cPosition]
                 this.AnswerSet = []
-                if (temp === undefined) {
-                    return {
-                        id: 0,
-                        type: 0,
-                        tag: [],
-                        chapter: 0,
-                        answer: [],
-                        text: '',
-                        src: '',
-                        analysis: '',
-                        options: []
-                    }
-                }
-                if (typeof temp.options === 'string') {
-                    temp.options = JSON.parse(temp.options)
-                    temp.tag = JSON.parse(temp.tag)
-                    temp.answer = JSON.parse(temp.answer)
-                }
-                return temp
+                return util.getQuestionById(this.questions, this.$route.params.id)
             },
-            // showTags() {
-            //     return this.$store.getters.showTags
-            // },
-            // showChapter() {
-            //     return this.$store.getters.showChapter
-            // },
-            // showType() {
-            //     return this.$store.getters.showType
-            // },
             // the type of exercise
             type() {
                 return this.$store.state.etype

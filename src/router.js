@@ -50,12 +50,12 @@ const routers = [
         component: home
     },
     {
-        path: '/orderExercise',
+        path: '/orderExercise/:id',
         component: orderExercise,
         // meta: {keepAlive: false} // 这是不会被keepalive的
     },
     {
-        path: '/chapterExercise/:id',
+        path: '/chapterExercise/:chapterId/:id',
         component: chapterExercise
     },
     {
@@ -63,11 +63,11 @@ const routers = [
         component: chapterUi
     },
     {
-        path: '/simulationExercise',
+        path: '/simulationExercise/:id',
         component: simulationExercise
     },
     {
-        path: '/errorExercise',
+        path: '/errorExercise/:id',
         component: errorExercise
     },
     {

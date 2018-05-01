@@ -113,15 +113,26 @@ util.myAnswerIsExist = function (myAnswers) {
 util.getQuestionById = function (questions, id) {
     for (let i = 0; i < questions.length; i++) {
         if (questions[i].id == id) {
-            return questions[i]
+            return this.toQuestion(questions[i])
         }
+    }
+    return {
+        id: 0,
+        type: 0,
+        tag: [],
+        chapter: 0,
+        answer: [],
+        text: '',
+        src: '',
+        analysis: '',
+        options: []
     }
 }
 util.whereIsMyAnswersChapter = function (myAnswers, questions) {
     let keys = Object.keys(myAnswers)
-    console.log('keys', keys)
+    // console.log('keys', keys)
     if (keys.length != 0 && keys[0] && questions.length != 0) {
-        console.log('value', questions[keys[0]])
+        // console.log('value', questions[keys[0]])
         return this.getQuestionById(questions, keys[0]).chapter
     } else {
         return -1

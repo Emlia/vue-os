@@ -58,11 +58,11 @@ const store = new Vuex.Store({
 
                     let as = util.getAnswerState(qt.answer, temp)
                     if (as === 'true') {
-                        t.push(i)
+                        t.push(qt.id)
                     } else if (as === 'error') {
-                        f.push(i)
+                        f.push(qt.id)
                         var set = new Set(state.errors);
-                        set.add(i)
+                        set.add(qt.id)
                         state.errors = Array.from(set)
 
                     } else if (as === 'empty') {

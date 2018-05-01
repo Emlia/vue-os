@@ -50,9 +50,9 @@
         },
         methods: {
             click(id) {
-                console.log('chapter-', id)
+                // console.log('chapter-', id)
                 this.$store.commit('setChapterId', id)
-                this.$router.push(`/chapterExercise/${id}`)
+                this.$router.push(`/chapterExercise/${id}/0`)
                 this.isContinue = false
             },
             left() {
@@ -61,7 +61,7 @@
             },
             right() {
                 let cid = Object.keys(this.chapterAnswer)[0]
-                console.log(`cid= ${cid}`)
+                // console.log(`cid= ${cid}`)
 
                 let temp = this.questions.filter(item => {
                     if (cid == item.id) {
@@ -69,11 +69,11 @@
                     }
                     return false
                 })
-                console.log(temp[0])
-                console.log(`temp=${temp[0]}`)
+                // console.log(temp[0])
+                // console.log(`temp=${temp[0]}`)
                 let id = temp[0].chapter
                 this.isContinue = false
-                this.$router.push(`/chapterExercise/${id}`)
+                this.$router.push(`/chapterExercise/${id}/0`)
             }
         },
         computed: {
