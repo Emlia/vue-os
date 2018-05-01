@@ -240,6 +240,23 @@
 .setting-right[data-v-44715be7] {
   width: 60%;
 }
+.edit-q[data-v-44715be7] {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: center;
+      justify-content: center;
+  -ms-flex-align: center;
+      align-items: center;
+  position: fixed;
+  width: 28px;
+  height: 28px;
+  top: 50%;
+  right: 5%;
+  border-radius: 50%;
+  padding: 5px;
+  border: 1px #eee solid;
+  background: #eee;
+}
 
 .radio-item-wrapper[data-v-6da381f0] {
   margin-top: 10px;

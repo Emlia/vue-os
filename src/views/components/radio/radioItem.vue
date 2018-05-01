@@ -1,14 +1,15 @@
 <template>
     <div class="wrapper" @click="$emit('click',value.value)">
-        <div class="value" v-show="type==='text' ">{{value.value}}</div>
-        <div class="icon-wrapper" v-show="type === 'true'">
+        <div class="value" v-show="type==='text' " :style="setting.model?day:night">{{value.value}}</div>
+        <div class="icon-wrapper" v-show="type === 'true'" :style="setting.model?day:night">
             <Icon class="icon" size="25" color="#fff" type="ios-checkmark-empty"/>
         </div>
-        <div class="icon-wrapper" style="background-color: #ed3f14" v-show="type === 'false'">
+        <div class="icon-wrapper" style="background-color: #ed3f14" v-show="type === 'false'"
+             :style="setting.model?day:night">
             <Icon class="icon" size="25" color="#fff" type="ios-close-empty"/>
         </div>
 
-        <div class="label">{{value.label}}</div>
+        <div class="label" :style="{fontSize:`${setting.size}px`}">{{value.label}}</div>
     </div>
 </template>
 
@@ -37,7 +38,14 @@
             }
         },
         data() {
-            return {}
+            return {
+                day: {
+                    border: '2px solid #595959'
+                },
+                night: {
+                    border: '2px solid #eee'
+                }
+            }
         },
         methods: {
             // a包含b
@@ -58,6 +66,9 @@
         },
         watch: {},
         computed: {
+            setting() {
+                return this.$store.state.setting
+            },
             showType() {
                 for (let i = 0; i < this.types.length; i++) {
                     if (this.types[i].id == this.value.question.type) {

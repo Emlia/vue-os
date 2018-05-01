@@ -1,19 +1,19 @@
 <template>
     <div>
-        <navPage :style="settingModel?day:night">
+        <navPage :style="setting.model?day:night">
             <div slot="right" @click="md=true">
                 <Icon type="gear-a" size="25" color="#80848f"></Icon>
             </div>
         </navPage>
-        <whitespace @click="show = false" class="whitespace" :style="settingModel?day:night">
-            <div>{{showType}}</div>
+        <whitespace @click="show = false" class="whitespace" :style="setting.model?day:night">
+            <div :style="{fontSize:`${setting.size*0.4}px`}">{{showType}}</div>
             <div class="tag-wrapper">
-                <div class="tag">章节:{{showChapter}}</div>
+                <div class="tag" :style="{fontSize:`${setting.size*0.4}px`}">章节:{{showChapter}}</div>
             </div>
             <!--<div class="tag-wrapper">-->
             <!--<div class="tag" v-for="(tagitem,index) in  showTags" :key="index">{{tagitem}}</div>-->
             <!--</div>-->
-            <div class="text" :style="{fontSize:`${settingSize}px`}">{{question.text}}
+            <div class="text" :style="{fontSize:`${setting.size}px`}">{{question.text}}
             </div>
             <radio :question="question"
                    :myAnswer="myAnswer"
@@ -22,13 +22,14 @@
             <div v-show="showAnalysis">
                 <div class="analysis-wapper">
                     <div class="analysis-font">答案 {{answerText}}</div>
-                    <Button style="color:deepskyblue" shape="circle" @click="next">下一题</Button>
+                    <Button style="color:deepskyblue" shape="circle" @click="next" :style="setting.model?day:night">下一题
+                    </Button>
                 </div>
                 <div class="analysis-font analysis-center">
                     答案详解
                 </div>
 
-                <div class="analysis-font" :style="{fontSize:`${settingSize}px`}">{{question.analysis}}</div>
+                <div class="analysis-font" :style="{fontSize:`${setting.size}px`}">{{question.analysis}}</div>
             </div>
         </whitespace>
         <bottomPanel
@@ -63,6 +64,7 @@
     import bottomPanel from '../components/bottomPanel/bottomPanel'
     import navPage from '../components/nav/navPage'
     import MDialog from '../components/dialog/MDialog'
+    import util from '../../libs/util'
 
     export default {
         name: "cell",
@@ -94,12 +96,26 @@
                 settingModel: false,
                 day: {
                     backgroundColor: '#333',
-                    color: '#fff'
+                    color: '#595959'
                 },
                 night: {
                     backgroundColor: '#fff',
                     color: '#000'
                 }
+            }
+        },
+        mounted() {
+            this.settingSize = this.setting.size
+            this.settingModel = this.setting.model
+        },
+        watch: {
+            settingModel(value) {
+                util.setValue('setting', {size: this.settingSize, model: this.settingModel})
+                this.$store.commit('setSetting', {size: this.settingSize, model: this.settingModel})
+            },
+            settingSize(value) {
+                util.setValue('setting', {size: this.settingSize, model: this.settingModel})
+                this.$store.commit('setSetting', {size: this.settingSize, model: this.settingModel})
             }
         },
         methods: {
@@ -121,7 +137,6 @@
                     // if (this.myAnswers.hasOwnProperty(value.id)) {
                     //     return
                     // }
-
 
 
                     //如果有错误答案或者完全正确,则
@@ -215,6 +230,9 @@
             }
         },
         computed: {
+            setting() {
+                return this.$store.state.setting
+            },
             myAnswer() {
                 if (this.myAnswers[this.question.id]) {
                     // console.log('???????????', this.myAnswers[this.question.id])
@@ -370,11 +388,14 @@
     .setting-right {
         width: 60%;
     }
+
     .edit-q {
         display: flex;
         justify-content: center;
         align-items: center;
         position: fixed;
+        width: 28px;
+        height: 28px;
         top: 50%;
         right: 5%;
         border-radius: 50%;

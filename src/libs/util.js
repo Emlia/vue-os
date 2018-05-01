@@ -128,4 +128,10 @@ util.whereIsMyAnswersChapter = function (myAnswers, questions) {
     }
 
 }
+util.setValue = function (key, value) {
+    localStorage.setItem(key, JSON.stringify(value))
+}
+util.getValue = function (key) {
+    return JSON.parse(localStorage.getItem(key))
+}
 export default util;

@@ -6,7 +6,7 @@
             <!--<div>{{question}}</div>-->
             <ui title="编辑题目" :initData="question[0]" @questionChange="questionChange"></ui>
             <div class="tool">
-                <Button @click="$router.go(-1)">返回</Button>
+                <Button @click="$router.replace(`/admin/question/edit/${Number(question[0].id)+1}`)">下一题</Button>
                 <Button @click="edit">修改</Button>
             </div>
         </whitespace>

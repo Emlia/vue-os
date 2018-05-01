@@ -1,6 +1,6 @@
 <template>
     <div class="wrapper">
-        <div class="top" @click="cTop">
+        <div class="top" @click="cTop" :style="setting.model?day:night">
             <div class="left" @click="collect">
                 <!--<Icon type="ios-star-outline" size="25" color="#80848f"></Icon>-->
                 <!--<div class="font">收藏</div>-->
@@ -17,7 +17,7 @@
                 <div class="font">{{pos+1}}/{{num}}</div>
             </div>
         </div>
-        <div v-show="show" class="bottom">
+        <div v-show="show" class="bottom" :style="setting.model?day:night">
             <div @click="clickT(i)" class="cell" v-for="i in num" :key="i">{{i}}</div>
         </div>
         <!--<transition name="slide-fade">-->
@@ -56,7 +56,16 @@
             }
         },
         data() {
-            return {}
+            return {
+                day: {
+                    backgroundColor: '#333',
+                    color: '#595959'
+                },
+                night: {
+                    backgroundColor: '#fff',
+                    color: '#000'
+                }
+            }
         },
         methods: {
             clickT(value) {
@@ -71,6 +80,9 @@
             }
         },
         computed: {
+            setting() {
+                return this.$store.state.setting
+            },
             TF() {
                 return this.$store.getters.showTF
             }

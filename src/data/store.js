@@ -18,6 +18,7 @@ const store = new Vuex.Store({
     state: {
         user: {id: 0, username: '', appkey: ''},
         configuration: {switch: false, notice: ''},
+        setting: {size: 18, model: false},
         orderAnswers: {},
         chapterAnswers: {},
         simulationAnswers: {},
@@ -292,6 +293,8 @@ const store = new Vuex.Store({
                     state.user.appkey = res.data[0].appkey
                     state.user.id = res.data[0].id
                     state.user.username = res.data[0].username
+
+                    util.setValue('user', state.user)
                     //初始化
 
                     state.orderAnswers = {}
@@ -337,6 +340,12 @@ const store = new Vuex.Store({
 
                 console.log(error);
             });
+        },
+        setUser(state, user) {
+            state.user = user
+        },
+        setSetting(state, setting) {
+            state.setting = setting
         }
 
     },
