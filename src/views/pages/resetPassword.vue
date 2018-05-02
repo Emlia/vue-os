@@ -70,13 +70,13 @@
                     let res = response.data
                     if (res.ret === '200') {
                         this.result = res.data
-                        this.$Message.success('success')
+                        this.$Message.success('成功')
                     } else {
-                        this.$Message.error('fail')
+                        this.$Message.error('失败')
                     }
 
                 }).catch(function (error) {
-                    console.log(error);
+                    this.$Message.error('连接服务器失败')
                 });
             },
             resetPassword(id) {
@@ -91,14 +91,14 @@
                     data).then((response) => {
                     let res = response.data
                     if (res.ret === '200') {
-                        this.$Message.success('success')
+                        this.$Message.success('成功')
                         this.myDialog = true
                     } else {
-                        this.$Message.error('fail')
+                        this.$Message.error('失败')
                     }
 
                 }).catch(function (error) {
-                    console.log(error);
+                    this.$Message.error('连接服务器失败')
                 });
 
 

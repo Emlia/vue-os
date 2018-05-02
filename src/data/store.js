@@ -61,9 +61,6 @@ const store = new Vuex.Store({
                         t.push(qt.id)
                     } else if (as === 'error') {
                         f.push(qt.id)
-                        var set = new Set(state.errors);
-                        set.add(qt.id)
-                        state.errors = Array.from(set)
 
                     } else if (as === 'empty') {
 
@@ -92,7 +89,7 @@ const store = new Vuex.Store({
                     break;
                 default:
                     temp = {}
-                    console.log('ettype 出错')
+                // console.log('ettype 出错')
             }
             // console.log('MytAnswer', temp)
             return temp
@@ -192,7 +189,7 @@ const store = new Vuex.Store({
 
         },
         getQuestions(state) {
-            console.log('getQuestions')
+            // console.log('getQuestions')
             if (state.questions.length == 0) {
                 axios.get(`${baseurl}/php-ci-os/index.php/Os/getQuestions`).then((response) => {
                     let code = response.data.ret
@@ -346,6 +343,28 @@ const store = new Vuex.Store({
         },
         setSetting(state, setting) {
             state.setting = setting
+        },
+        addErrors(state, val) {
+            let set = new Set(state.errors);
+            set.add(val)
+            state.errors = Array.from(set)
+        },
+        deleteErrors(state, val) {
+            let index = state.errors.indexOf(val);
+            if (index > -1) {
+                state.errors.splice(index, 1);
+                this.commit('uploadAnswer')
+                this.commit('getAnswers')
+                delete state.errorAnswers[val]
+            }
+        },
+        resetAnswer(state, val) {
+            state.orderAnswers = {}
+            state.chapterAnswers = {}
+            state.simulationAnswers = {}
+            state.errors = []
+            state.errorAnswers = {}
+            this.commit('uploadAnswer')
         }
 
     },

@@ -49,8 +49,24 @@
         },
         methods: {
             forgetPassword() {
+
+                let reg = /^[a-zA-Z0-9]{3,12}$/
+                if (!reg.test(this.username)) {
+                    this.$Message.info('用户名:英文数字,3-12位')
+                    return
+                }
+                reg = /^[a-zA-Z0-9]{5,12}$/
+                if (!reg.test(this.oldPassword)) {
+                    this.$Message.info('密码:英文数字,5-12位')
+                    return
+                }
+                reg = /^[a-zA-Z0-9]{5,12}$/
+                if (!reg.test(this.newPassword)) {
+                    this.$Message.info('密码:英文数字,5-12位')
+                    return
+                }
                 if (this.newPassword !== this.conformPassword) {
-                    this.$Message.error('两次密码输入不一致')
+                    this.$Message.info('两次密码输入不一致')
                     return
                 }
                 let data = qs.stringify({

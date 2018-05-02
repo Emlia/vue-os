@@ -45,6 +45,10 @@
                 设置
             </div>
             <div class="md-item">
+                <div class="md-text">重置答案</div>
+                <Switch v-model="resetMyAnswer"></Switch>
+            </div>
+            <div class="md-item">
                 <div class="md-text">字体大小</div>
                 <Slider v-model="settingSize" class="setting-right" :min="18" :max="35"></Slider>
             </div>
@@ -56,6 +60,10 @@
         <div v-if="username=='admin'" class="edit-q" @click="$router.push(`/admin/question/edit/${question.id}`)">
             <Icon type="wrench" size="20"></Icon>
         </div>
+        <div v-if="type=='error'" class="edit-del" @click="deleteErrors">
+            <Icon type="backspace" size="20"></Icon>
+        </div>
+        <Spin size="large" fix v-if="question.text==''"></Spin>
     </div>
 </template>
 
@@ -95,6 +103,7 @@
                 md: false,
                 settingSize: 18,
                 settingModel: false,
+                resetMyAnswer: false,
                 day: {
                     backgroundColor: '#333',
                     color: '#595959'
@@ -109,6 +118,9 @@
         mounted() {
             this.settingSize = this.setting.size
             this.settingModel = this.setting.model
+            // if (this.type == 'chapter') {
+            //     location.reload()
+            // }
         },
         watch: {
             settingModel(value) {
@@ -119,8 +131,15 @@
                 util.setValue('setting', {size: this.settingSize, model: this.settingModel})
                 this.$store.commit('setSetting', {size: this.settingSize, model: this.settingModel})
             },
-            questions() {
-                // console.log('qqqqq')
+            resetMyAnswer(value) {
+                if (value) {
+                    this.$store.commit('resetAnswer')
+                    this.resetMyAnswer = false
+                    this.$Message.success('重置成功')
+                }
+            },
+            questions(val) {
+                // console.log('qqqq', val)
             }
         },
         methods: {
@@ -137,6 +156,10 @@
             },
             collect() {
 
+            },
+            deleteErrors() {
+                this.$store.commit('deleteErrors', this.question.id)
+                this.next()
             },
             ctop() {
                 this.show = !this.show
@@ -182,6 +205,10 @@
                     }
 
                     this.$store.commit('addAnswer', {id: value.id, value: [value.value]})
+                    let res = util.getAnswerState(this.question.answer, [value.value])
+                    if (res == 'error') {
+                        this.$store.commit('addErrors', this.question.id)
+                    }
                     // let answer = this.question.answer
                     // if (value.value === answer[0]) {
                     //     this.next();
@@ -306,7 +333,7 @@
             },
             types() {
                 return this.$store.state.types
-            }
+            },
         }
     }
 </script>
@@ -395,6 +422,21 @@
         width: 28px;
         height: 28px;
         top: 50%;
+        right: 5%;
+        border-radius: 50%;
+        padding: 5px;
+        border: 1px #eee solid;
+        background: #eee;
+    }
+
+    .edit-del {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: fixed;
+        width: 28px;
+        height: 28px;
+        top: 60%;
         right: 5%;
         border-radius: 50%;
         padding: 5px;

@@ -29,7 +29,7 @@
             errorQuestions() {
                 return this.questions.filter(item => {
                     // console.log(`${this.errors}  ${item.id}  ${this.errors.includes(Number(item.id))}`)
-                    if (this.errors.includes(Number(item.id))) {
+                    if (this.errors.includes(Number(item.id))||this.errors.includes(item.id)) {
                         return true
                     }
                     return false

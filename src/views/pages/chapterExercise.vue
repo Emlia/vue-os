@@ -43,7 +43,7 @@
                     return []
                 }
 
-                // 继续练习
+                //继续练习
                 if (Number(chapterId) == Number(this.whereIsMyAnswersChapter)) {
                     // console.log('继续练习')
                     this.$store.commit('getAnswers')

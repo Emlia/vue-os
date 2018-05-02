@@ -133,10 +133,10 @@
     }
 
     .md-text {
-        font-size: 14px;
-        margin-top: 15px;
+        font-size: 16px;
+        margin-top: 20px;
         margin-left: 10px;
         margin-right: 10px;
-        margin-bottom: 15px;
+        margin-bottom: 20px;
     }
 </style>

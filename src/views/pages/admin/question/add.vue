@@ -27,8 +27,8 @@
                 <Input v-model="text" type="textarea" placeholder="请输入题干.eg:您的幸运号码是多少?" clearable style="width: 60%"/>
             </div>
             <!--<div class="cell">-->
-                <!--<div class="cell-title">图片</div>-->
-                <!--<Input v-model="src" placeholder="请输入图片的url地址.eg:www.baidu.com." clearable style="width: 60%"/>-->
+            <!--<div class="cell-title">图片</div>-->
+            <!--<Input v-model="src" placeholder="请输入图片的url地址.eg:www.baidu.com." clearable style="width: 60%"/>-->
             <!--</div>-->
 
             <div class="cell">
@@ -93,7 +93,7 @@
                 // tags: [],
                 tag: [],
                 chapter: 0,
-                type: 1,
+                type: 0,
                 answer: [],
                 text: '',
                 src: '',
@@ -110,6 +110,25 @@
         },
         methods: {
             addQT() {
+                console.log('asdxas', this.type)
+                if (!this.type) {
+                    this.$Message.info('题目类型不能为空')
+                    return
+                }
+                if (!this.chapter) {
+                    this.$Message.info('题目章节不能为空')
+                    return
+                }
+                let reg = /^[a-zA-Z]+$/
+                if (!reg.test(this.text)) {
+                    this.$Message.info('题干不能为空')
+                    return
+                }
+                if (this.answer == '' || this.answer.length == 0) {
+                    this.$Message.info('答案不能为空')
+                    return
+                }
+
                 let answer = this.answer
                 if (typeof answer === 'string') {
                     answer = [answer]
@@ -136,13 +155,13 @@
                         this.options = ['', '', '', '']
                         this.answer = []
                         this.analysis = ''
-                        this.$Message.success('success')
+                        this.$Message.success('成功')
                     } else {
-                        this.$Message.error('fail')
+                        this.$Message.error('失败')
                     }
 
                 }).catch(function (error) {
-                    console.log(error);
+                    this.$Message.error('连接服务器失败')
                 });
             },
             sub(index) {

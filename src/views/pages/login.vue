@@ -45,8 +45,8 @@
         components: {navPage},
         data() {
             return {
-                username: 'admin',
-                password: 'admin',
+                username: '',
+                password: '',
                 res: ''
             }
         },
@@ -55,6 +55,17 @@
                 this.$Message.info('do something ...')
             },
             login() {
+                let reg = /^[a-zA-Z0-9]{3,12}$/
+                if (!reg.test(this.username)) {
+                    this.$Message.info('用户名:英文数字,3-12位')
+                    return
+                }
+                reg = /^[a-zA-Z0-9]{5,12}$/
+                if (!reg.test(this.password)) {
+                    this.$Message.info('密码:英文数字,5-12位')
+                    return
+                }
+
                 this.$store.commit('login', {username: this.username, password: this.password, _this: this})
             },
 

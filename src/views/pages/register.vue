@@ -50,6 +50,22 @@
                 this.$Message.info('do something ...')
             },
             register() {
+
+                let reg = /^[a-zA-Z0-9]{3,12}$/
+                if (!reg.test(this.username)) {
+                    this.$Message.info('用户名:英文数字,3-12位')
+                    return
+                }
+                reg = /^[a-zA-Z0-9]{5,12}$/
+                if (!reg.test(this.password)) {
+                    this.$Message.info('密码:英文数字,5-12位')
+                    return
+                }
+                if(this.password!=this.conformPassword){
+                    this.$Message.info('两次密码输入不一致')
+                    return
+                }
+
                 let data = qs.stringify({
                     username: this.username,
                     password: md5(this.password)

@@ -57,12 +57,12 @@
             // 如果有题目,显示题目, 如果没有,显示没有
             randomlyQuestions() {
                 if (this.qLength == 0 || this.myDialog) {
-                    console.log('empty----------')
+                    // console.log('empty----------')
                     return []
                 }
 
                 if (this.isContinue == false && this.myAnswerIsExist == true) {
-                    console.log('old-----------')
+                    // console.log('old-----------')
                     return this.questions.filter(item => {
                         if (Object.keys(this.myAnswers).includes(item.id)) {
                             return true
@@ -76,7 +76,7 @@
 
                 var result = []
 
-                var ranNum = 10;
+                var ranNum = 50;
 
                 for (var i = 0; i < ranNum; i++) {
 
@@ -88,7 +88,7 @@
                 }
                 // console.log(result)
                 this.isContinue = false
-                console.log('new----------')
+                // console.log('new----------')
                 return result
             },
             questions() {
@@ -103,10 +103,10 @@
 
 <style scoped>
     .md-text {
-        font-size: 14px;
-        margin-top: 15px;
+        font-size: 16px;
+        margin-top: 20px;
         margin-left: 10px;
         margin-right: 10px;
-        margin-bottom: 15px;
+        margin-bottom: 20px;
     }
 </style>

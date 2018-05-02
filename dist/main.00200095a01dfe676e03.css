@@ -258,6 +258,23 @@
   border: 1px #eee solid;
   background: #eee;
 }
+.edit-del[data-v-44715be7] {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: center;
+      justify-content: center;
+  -ms-flex-align: center;
+      align-items: center;
+  position: fixed;
+  width: 28px;
+  height: 28px;
+  top: 60%;
+  right: 5%;
+  border-radius: 50%;
+  padding: 5px;
+  border: 1px #eee solid;
+  background: #eee;
+}
 
 .radio-item-wrapper[data-v-6da381f0] {
   margin-top: 10px;
@@ -500,19 +517,19 @@
   font-size: 18px;
 }
 .md-text[data-v-20667d0c] {
-  font-size: 14px;
-  margin-top: 15px;
+  font-size: 16px;
+  margin-top: 20px;
   margin-left: 10px;
   margin-right: 10px;
-  margin-bottom: 15px;
+  margin-bottom: 20px;
 }
 
 .md-text[data-v-4f0ea378] {
-  font-size: 14px;
-  margin-top: 15px;
+  font-size: 16px;
+  margin-top: 20px;
   margin-left: 10px;
   margin-right: 10px;
-  margin-bottom: 15px;
+  margin-bottom: 20px;
 }
 
 .wrapper[data-v-cafdb906] {
