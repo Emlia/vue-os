@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: 2018-05-02 04:38:02
+-- Generation Time: 2018-05-09 15:15:02
 -- 服务器版本： 10.1.28-MariaDB
 -- PHP Version: 7.1.11
 
@@ -31,17 +31,19 @@ SET time_zone = "+00:00";
 CREATE TABLE `answer` (
   `userid` int(11) NOT NULL,
   `orderAnswer` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `simulationAnswer` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `chapterAnswer` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `error` text COLLATE utf8mb4_unicode_ci NOT NULL
+  `simulation` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `simulationAnswer` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `error` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `errorAnswer` text COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- 转存表中的数据 `answer`
 --
 
-INSERT INTO `answer` (`userid`, `orderAnswer`, `simulationAnswer`, `chapterAnswer`, `error`) VALUES
-(1, '{}', '{}', '{}', '[]');
+INSERT INTO `answer` (`userid`, `orderAnswer`, `chapterAnswer`, `simulation`, `simulationAnswer`, `error`, `errorAnswer`) VALUES
+(1, '{\"1\":[\"C\"],\"2\":[\"B\"],\"3\":[\"D\"],\"29\":[\"B\"],\"30\":[\"B\"],\"31\":[\"C\"],\"126\":[\"B\"],\"127\":[\"A\"]}', '{}', '[\"109\",\"76\",\"63\",\"19\",\"13\",\"27\",\"77\",\"92\",\"39\",\"24\"]', '{\"19\":[\"A\"],\"63\":[\"C\"],\"76\":[\"A\"],\"109\":[\"B\"]}', '[\"1\",\"30\",\"127\"]', '{\"40\":null,\"101\":null,\"109\":null,\"127\":[\"D\"]}');
 
 -- --------------------------------------------------------
 
@@ -82,7 +84,7 @@ CREATE TABLE `configuration` (
 --
 
 INSERT INTO `configuration` (`id`, `notice`) VALUES
-(999, '{\"notice\":\"哈哈~eesx\",\"switch\":true}');
+(999, '{\"notice\":\"test test ~~\",\"switch\":true}');
 
 -- --------------------------------------------------------
 
@@ -293,10 +295,11 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id`, `username`, `password`, `appkey`) VALUES
-(1, 'admin', '21232f297a57a5a743894a0e4a801fc3', '4251a24d19641f3cccebd161094a5941'),
-(2, 'emlia', '18bf000c6b771e9e8e5641226399db7c', 'dff473d1c14e1efddeb0d46e31f67a04'),
-(3, 'emlia11', 'cce8e45b90ac05366ff9fba340ea830b', 'c661526d06c997ae30642c4128687609'),
-(4, 'emlia111', 'fa7a42779e8be95e2c8b23e2043c9423', '69e26184332b3407e3f0b1def3811a86');
+(1, 'admin', '21232f297a57a5a743894a0e4a801fc3', '40a1ddc1d28d9d486b907f4d7a0734f5'),
+(2, 'emlia', '80f8f403131321e767c5400d8f4566eb', '817ad590826ae33c333d902a793bc26b'),
+(3, 'emlia11', '9d9439dde114c37991eacd2036a1fadd', '530cd7f787ec5ad4a16d0e43f3c611bd'),
+(4, 'emlia111', 'fa7a42779e8be95e2c8b23e2043c9423', 'f8b1a135c61b9bf08057ee4c3ae273f4'),
+(5, 'emlia112', '809e9c113537b322791207748e5ff533', '6f21691f008ae7a3bab1cdf048164ecc');
 
 --
 -- Indexes for dumped tables
@@ -364,7 +367,7 @@ ALTER TABLE `configuration`
 -- 使用表AUTO_INCREMENT `question`
 --
 ALTER TABLE `question`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=127;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=128;
 
 --
 -- 使用表AUTO_INCREMENT `tag`
@@ -382,7 +385,7 @@ ALTER TABLE `type`
 -- 使用表AUTO_INCREMENT `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

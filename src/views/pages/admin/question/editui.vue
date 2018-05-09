@@ -1,6 +1,10 @@
 <template>
     <div class="q-edit-wrapper">
-        <navPage></navPage>
+        <navPage>
+            <div slot="left" class="left-left" @click="$router.go(-1)">
+                返回上一页
+            </div>
+        </navPage>
         <whitesapce>
             <div class="q-edit-input">
                 <Input v-model="search" @on-click="searchClick" icon="ios-search" placeholder="请输入部分题干内容"
@@ -10,7 +14,10 @@
                 <div class="chapter-icon" :style="{backgroundColor:colors[(index)%colors.length]}">{{item.id}}
                 </div>
                 <div class="chapter-text">{{item.text}}</div>
-                <Button type="dashed" @click="questionClick(item.id)">修改问题</Button>
+                <div>
+                    <Button type="error" @click="deleteQuestion(item.id)">删除该题</Button>
+                    <Button type="success" @click="questionClick(item.id)">修改问题</Button>
+                </div>
             </div>
             <!--<div>{{result}}</div>-->
         </whitesapce>
@@ -52,9 +59,9 @@
                     let res = response.data
                     if (res.ret === '200') {
                         this.result = res.data
-                        this.$Message.success('success')
+                        this.$Message.success('查询成功')
                     } else {
-                        this.$Message.error('fail')
+                        this.$Message.error('查询失败')
                     }
 
                 }).catch(function (error) {
@@ -63,6 +70,27 @@
             },
             questionClick(id) {
                 this.$router.push(`/admin/question/edit/${id}`)
+            },
+            deleteQuestion(id){
+                let data = qs.stringify({
+                    id: this.$store.state.user.id,
+                    appkey: this.$store.state.user.appkey,
+
+                    qid:id,
+                })
+                axios.post(`${config.baseurl}/php-ci-os/index.php/Os/deleteQuestion`,
+                    data).then((response) => {
+                    let res = response.data
+                    if (res.ret === '200') {
+                        this.result = []
+                        this.$Message.success('删除成功')
+                    } else {
+                        this.$Message.error('删除失败')
+                    }
+
+                }).catch(function (error) {
+                    // console.log(error);
+                });
             }
         }
     }
@@ -98,10 +126,10 @@
         font-size: 14px;
         /*border: 1px solid #999;*/
         border-radius: 50%;
-        width: 22px;
-        height: 22px;
+        width: 25px;
+        height: 25px;
         text-align: center;
-        line-height: 22px;
+        line-height: 25px;
         margin-right: 20px;
         color: #fff;
     }

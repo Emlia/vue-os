@@ -74,6 +74,14 @@
   border-bottom: 1px solid #eee;
 }
 .nav-left[data-v-529f6c07] {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: row;
+      flex-direction: row;
+  -ms-flex-pack: start;
+      justify-content: flex-start;
+  -ms-flex-align: center;
+      align-items: center;
   margin-left: 15px;
 }
 .nav-right[data-v-529f6c07] {
@@ -86,6 +94,12 @@
   -ms-flex-align: center;
       align-items: center;
   margin-right: 15px;
+}
+.left-left[data-v-529f6c07] {
+  margin-left: 10px;
+  color: #666;
+  font-size: 14px;
+  cursor: pointer;
 }
 .vertical-center-modal[data-v-529f6c07] {
   width: 60%;
@@ -155,6 +169,12 @@
 .home-btn[data-v-5e27c0e4] {
   font-size: 13px;
   font-weight: 700;
+}
+.left-left[data-v-5e27c0e4] {
+  margin-left: 10px;
+  color: #666;
+  font-size: 14px;
+  cursor: pointer;
 }
 .home-label[data-v-5e27c0e4] {
   margin-top: 8px;
@@ -258,6 +278,12 @@
   border: 1px #eee solid;
   background: #eee;
 }
+.edit-q[data-v-44715be7]:hover {
+  color: #57a3f3;
+  background-color: transparent;
+  border-color: #57a3f3;
+  cursor: pointer;
+}
 .edit-del[data-v-44715be7] {
   display: -ms-flexbox;
   display: flex;
@@ -275,9 +301,34 @@
   border: 1px #eee solid;
   background: #eee;
 }
+.edit-del[data-v-44715be7]:hover {
+  color: #57a3f3;
+  background-color: transparent;
+  border-color: #57a3f3;
+  cursor: pointer;
+}
+.left-left[data-v-44715be7] {
+  margin-left: 10px;
+  color: #666;
+  font-size: 14px;
+  cursor: pointer;
+}
+/*.btn-analysis {*/
+/*}*/
+/*.btn-analysis:hover {*/
+/*color: #57a3f3;*/
+/*background-color: transparent;*/
+/*border-color: #57a3f3;*/
+/*}*/
 
 .radio-item-wrapper[data-v-6da381f0] {
   margin-top: 10px;
+}
+.radio-item-wrapper[data-v-6da381f0]:hover {
+  color: #57a3f3;
+  background-color: transparent;
+  border-color: #57a3f3;
+  cursor: pointer;
 }
 
 .wrapper[data-v-6a94a4bb] {
@@ -306,7 +357,7 @@
       justify-content: center;
   -ms-flex-align: center;
       align-items: center;
-  border: 2px solid #eee;
+  border: 2px solid #ccc;
   background: #2db7f5;
   width: 25px;
   height: 25px;
@@ -360,6 +411,12 @@
   -ms-flex-align: center;
       align-items: center;
 }
+.center[data-v-6816bac4]:hover {
+  color: #57a3f3;
+  background-color: transparent;
+  border-color: #57a3f3;
+  cursor: pointer;
+}
 .right[data-v-6816bac4] {
   margin-right: 10px;
   display: -ms-flexbox;
@@ -368,6 +425,12 @@
       flex-direction: row;
   -ms-flex-align: center;
       align-items: center;
+}
+.right[data-v-6816bac4]:hover {
+  color: #57a3f3;
+  background-color: transparent;
+  border-color: #57a3f3;
+  cursor: pointer;
 }
 .bottom[data-v-6816bac4] {
   display: -ms-flexbox;
@@ -399,6 +462,12 @@
   border-radius: 50%;
   border: 1px solid #999;
   margin: 5px 5px;
+}
+.cell[data-v-6816bac4]:hover {
+  color: #57a3f3;
+  background-color: transparent;
+  border-color: #57a3f3;
+  cursor: pointer;
 }
 /* 可以设置不同的进入和离开动画 */
 /* 设置持续时间和动画函数 */
@@ -673,10 +742,10 @@
   font-size: 14px;
   /*border: 1px solid #999;*/
   border-radius: 50%;
-  width: 22px;
-  height: 22px;
+  width: 25px;
+  height: 25px;
   text-align: center;
-  line-height: 22px;
+  line-height: 25px;
   margin-right: 20px;
   color: #fff;
 }

@@ -6,20 +6,23 @@
                 <!--<div class="font">收藏</div>-->
                 <!--<div> {{TF}}</div>-->
             </div>
-            <div class="center">
+            <div class="center" :title="`答题正确${TF.t.length},答题错误${TF.f.length}`">
                 <Icon type="ios-checkmark-outline" size="25" color="#80848f"></Icon>
                 <div class="font" style="color:#5cadff">{{TF.t.length}}</div>
                 <Icon type="ios-close-outline" size="25" color="#80848f"></Icon>
                 <div class="font" style="color:#ed3f14">{{TF.f.length}}</div>
             </div>
-            <div class="right">
+            <div class="right" :title="`当前位置${pos+1},题目总数${num.length}`">
                 <Icon type="grid" size="25" color="#80848f"></Icon>
                 <div class="font">{{pos+1}}/{{num.length}}</div>
             </div>
         </div>
         <div v-show="show" class="bottom" :style="setting.model?day:night">
-            <div @click="clickT(item)" :style="{borderColor: `${getColor(item)}`}" class="cell"
-                 v-for="(item,index) in num" :key="index">{{item}}
+            <div @click="clickT(item)"
+                 :style="{borderColor: `${getColor(item)}`}"
+                 class="cell"
+                 title="进入该题"
+                 v-for="(item,index) in num" :key="item">{{item}}
             </div>
         </div>
         <!--<transition name="slide-fade">-->
@@ -135,11 +138,25 @@
         align-items: center;
     }
 
+    .center:hover {
+        color: #57a3f3;
+        background-color: transparent;
+        border-color: #57a3f3;
+        cursor: pointer;
+    }
+
     .right {
         margin-right: 10px;
         display: flex;
         flex-direction: row;
         align-items: center;
+    }
+
+    .right:hover {
+        color: #57a3f3;
+        background-color: transparent;
+        border-color: #57a3f3;
+        cursor: pointer;
     }
 
     .bottom {
@@ -170,6 +187,13 @@
         border-radius: 50%;
         border: 1px solid #999;
         margin: 5px 5px;
+    }
+
+    .cell:hover {
+        color: #57a3f3;
+        background-color: transparent;
+        border-color: #57a3f3;
+        cursor: pointer;
     }
 
     /* 可以设置不同的进入和离开动画 */

@@ -24,7 +24,10 @@
         mixins: [mixin],
         data() {
             return {
-                isContinue: true
+                // 状态 0 , 1,  2
+                flag: 0,
+                // myDialog: false,
+                empty: []
             }
         },
         mounted() {
@@ -34,62 +37,53 @@
             this.$store.commit('getTypes')
             this.$store.commit('getAnswers')
             this.$store.commit('setEtype', 'simulation')
+            // if (this.myAnswerIsExist) {
+            //     this.myDialog = true
+            // }
         },
         methods: {
             left() {
-                this.$store.commit('reStartSim')
-                this.isContinue = false
+                this.flag = 1
+                // this.myDialog = false
+
             },
             right() {
-                this.isContinue = false
+                this.flag = 2
+                // this.myDialog = false
+                // this.isContinue = false
             }
         },
         computed: {
             myDialog() {
-                return this.myAnswerIsExist && this.isContinue
+                return this.myAnswerIsExist && this.flag == 0
             },
             myAnswerIsExist() {
                 return util.myAnswerIsExist(this.myAnswers)
             },
-            qLength() {
-                return this.questions.length
+            questionsIsExist() {
+                return this.questions.length != 0
+            },
+            simulationIsExist() {
+                return this.simulation.length != 0
             },
             // 如果有题目,显示题目, 如果没有,显示没有
             randomlyQuestions() {
-                if (this.qLength == 0 || this.myDialog) {
-                    // console.log('empty----------')
-                    return []
+
+                if (this.oldQ && this.questionsIsExist && this.simulationIsExist) {
+                    console.log('old-----------')
+                    return util.getQuestionByArray(this.questions, this.simulation)
                 }
-
-                if (this.isContinue == false && this.myAnswerIsExist == true) {
-                    // console.log('old-----------')
-                    return this.questions.filter(item => {
-                        if (Object.keys(this.myAnswers).includes(item.id)) {
-                            return true
-                        }
-                        return false
-                    })
+                if (this.newQ && this.questionsIsExist) {
+                    console.log('new-----------')
+                    let simArray = util.getSimArray(this.questions)
+                    this.$store.commit('reStartSim')
+                    this.$store.commit('setSimulation', simArray)
+                    this.flag = 3
+                    // console.log('simArray', simArray)
+                    return util.getQuestionByArray(this.questions, simArray)
                 }
-
-
-                var arr = _.cloneDeep(this.questions)
-
-                var result = []
-
-                var ranNum = 50;
-
-                for (var i = 0; i < ranNum; i++) {
-
-                    var ran = Math.floor(Math.random() * arr.length)
-                    let temp = arr.splice(ran, 1)[0]
-                    Vue.set(this.$store.state.simulationAnswers, temp.id, []);
-                    result.push(temp);
-
-                }
-                // console.log(result)
-                this.isContinue = false
-                // console.log('new----------')
-                return result
+                console.log('empty')
+                return this.empty
             },
             questions() {
                 return this.$store.state.questions
@@ -97,6 +91,18 @@
             myAnswers() {
                 return this.$store.state.simulationAnswers
             },
+            simulation() {
+                return this.$store.state.simulation
+            },
+            // 曾经有答案,点击继续上次按钮
+            oldQ() {
+                return this.myAnswerIsExist && this.flag == 2 || this.flag == 3
+            },
+            // 曾经有答案,点击重新开始按钮
+            newQ() {
+                // return !this.oldQ
+                return !this.myAnswerIsExist && this.flag == 0 || this.flag == 1
+            }
         }
     }
 </script>

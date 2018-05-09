@@ -1,6 +1,10 @@
 <template>
     <div>
-        <navPage></navPage>
+        <navPage>
+            <div slot="left" class="left-left" @click="$router.go(-1)">
+                返回上一页
+            </div>
+        </navPage>
         <whitespace>
             <div class="tag">编辑通知栏</div>
             <div class="n-edit-switch">
@@ -42,20 +46,21 @@
         methods: {
             change() {
                 let data = qs.stringify({
+                    id: this.$store.state.user.id,
+                    appkey: this.$store.state.user.appkey,
                     notice: JSON.stringify({notice: this.notice, switch: this.mySwitch})
                 })
                 axios.post(`${config.baseurl}/php-ci-os/index.php/Os/updateConfiguration`,
                     data).then((response) => {
                     let res = response.data
                     if (res.ret === '200') {
-
-                        this.$Message.success('success')
+                        this.$Message.success('修改成功')
                     } else {
-                        this.$Message.error('fail')
+                        this.$Message.error('修改失败')
                     }
 
                 }).catch(function (error) {
-                    console.log(error);
+                    // console.log(error);
                 });
             }
         },

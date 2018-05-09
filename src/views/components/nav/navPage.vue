@@ -13,17 +13,17 @@
         <div class="nav-right">
             <slot name="right"></slot>
             <!--<div style="margin-left: 10px;" @click="setting=true">-->
-                <!--<Icon type="gear-a" size="25" color="#80848f"></Icon>-->
+            <!--<Icon type="gear-a" size="25" color="#80848f"></Icon>-->
             <!--</div>-->
 
         </div>
         <!--<Modal style="width: 60%"-->
-                <!--title="设置"-->
-                <!--v-model="setting"-->
-               <!--&gt;-->
-            <!--<p>Content of dialog</p>-->
-            <!--<p>Content of dialog</p>-->
-            <!--<p>Content of dialog</p>-->
+        <!--title="设置"-->
+        <!--v-model="setting"-->
+        <!--&gt;-->
+        <!--<p>Content of dialog</p>-->
+        <!--<p>Content of dialog</p>-->
+        <!--<p>Content of dialog</p>-->
         <!--</Modal>-->
     </div>
 </template>
@@ -64,6 +64,10 @@
     }
 
     .nav-left {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: center;
         margin-left: 15px;
     }
 
@@ -73,6 +77,13 @@
         justify-content: flex-start;
         align-items: center;
         margin-right: 15px;
+    }
+
+    .left-left {
+        margin-left: 10px;
+        color: #666;
+        font-size: 14px;
+        cursor: pointer;
     }
 
     .vertical-center-modal {

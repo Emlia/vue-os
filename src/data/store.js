@@ -24,6 +24,7 @@ const store = new Vuex.Store({
         simulationAnswers: {},
         errorAnswers: {},
         errors: [],
+        simulation: [],
         tags: [],
         chapters: [],
         chapterId: 0,
@@ -123,6 +124,7 @@ const store = new Vuex.Store({
                     break;
                 case 'error':
                     Vue.set(state.errorAnswers, args.id, args.value);
+                    this.commit('uploadAnswer')
                     break;
                 default:
                     console.log('ettype 出错')
@@ -132,18 +134,26 @@ const store = new Vuex.Store({
         },
         uploadAnswer(state) {
             let data = qs.stringify({
+                id: state.user.id,
+                username: state.user.username,
+                appkey: state.user.appkey,
+
                 userid: state.user.id,
                 orderAnswer: JSON.stringify(state.orderAnswers),
                 chapterAnswer: JSON.stringify(state.chapterAnswers),
                 simulationAnswer: JSON.stringify(state.simulationAnswers),
-                error: JSON.stringify(state.errors)
+                error: JSON.stringify(state.errors),
+                simulation:JSON.stringify(state.simulation),
+                errorAnswer:JSON.stringify(state.errorAnswers)
             })
             axios.post(`${baseurl}/php-ci-os/index.php/Os/updateAnswer`,
                 data).then((response) => {
                 let res = response.data
                 if (res.ret == '200') {
 
-                } else {
+                } else if (res.ret == '300') {
+                    // 身份验证失败
+                    util.setValue('user', null)
                 }
 
             }).catch(function (error) {
@@ -179,6 +189,12 @@ const store = new Vuex.Store({
                     }
                     if (!(data[0].error == '' || data[0].error == '{}')) {
                         state.errors = JSON.parse(data[0].error)
+                    }
+                    if (!(data[0].errorAnswer == '' || data[0].errorAnswer == '{}')) {
+                        state.errorAnswers = JSON.parse(data[0].errorAnswer)
+                    }
+                    if (!(data[0].simulation == '' || data[0].simulation == '{}')) {
+                        state.simulation = JSON.parse(data[0].simulation)
                     }
 
                 }
@@ -287,9 +303,9 @@ const store = new Vuex.Store({
                 data).then((response) => {
                 let res = response.data
                 if (res.ret == '200') {
-                    state.user.appkey = res.data[0].appkey
-                    state.user.id = res.data[0].id
-                    state.user.username = res.data[0].username
+                    state.user.appkey = res.data.appkey
+                    state.user.id = res.data.id
+                    state.user.username = res.data.username
 
                     util.setValue('user', state.user)
                     //初始化
@@ -298,6 +314,7 @@ const store = new Vuex.Store({
                     state.chapterAnswers = {}
                     state.simulationAnswers = {}
                     state.errors = []
+                    state.simulation = []
                     state.keepOnSim = false
                     state.keepOnChapter = false
 
@@ -309,7 +326,7 @@ const store = new Vuex.Store({
 
             }).catch(function (error) {
                 arg._this.$Message.error('连接服务器失败')
-                console.log(error);
+                // console.log(error);
             });
         },
         reStartSim(state) {
@@ -355,7 +372,8 @@ const store = new Vuex.Store({
                 state.errors.splice(index, 1);
                 this.commit('uploadAnswer')
                 this.commit('getAnswers')
-                delete state.errorAnswers[val]
+                Vue.set(state.errorAnswers, val, null);
+                // delete state.errorAnswers[val]
             }
         },
         resetAnswer(state, val) {
@@ -363,8 +381,38 @@ const store = new Vuex.Store({
             state.chapterAnswers = {}
             state.simulationAnswers = {}
             state.errors = []
+            state.simulation = []
             state.errorAnswers = {}
             this.commit('uploadAnswer')
+        },
+        loginAuthority(state, _this) {
+            let data = qs.stringify({
+                id: state.user.id,
+                username: state.user.username,
+                appkey: state.user.appkey
+
+            })
+            axios.post(`${baseurl}/php-ci-os/index.php/Os/loginAuthority`,
+                data).then((response) => {
+                let res = response.data
+                if (res.ret == '200') {
+                    //一般用户验证成功
+                    // arg._this.$Message.success('验证成功')
+                } else {
+                    // 验证失败
+                    // console.log('验证失败')
+                    util.setValue('user', null)
+                    _this.$Message.error('用户验证失败,请重新登录')
+                    _this.$router.replace('/login')
+                }
+
+            }).catch(function (error) {
+                util.setValue('user', null)
+                _this.$router.replace('/login')
+            });
+        },
+        setSimulation(state, value) {
+            state.simulation = value
         }
 
     },

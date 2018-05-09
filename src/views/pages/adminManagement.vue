@@ -1,6 +1,10 @@
 <template>
     <div class="wrapper">
-        <navPage></navPage>
+        <navPage>
+            <div slot="left" class="left-left" @click="$router.push('/home')">
+                返回首页
+            </div>
+        </navPage>
         <whitesapce>
             <!--<div>{{$store.state.user}}</div>-->
             <!--<div class="cell">-->

@@ -1,8 +1,13 @@
 <template>
     <div class="wrapper">
         <navPage>
-            <div v-if="username=='admin'" slot="right" @click="$router.push('/admin/Management')">
-                <Icon type="navicon" size="25" color="#80848f"></Icon>
+            <div slot="left" class="left-left" @click="$router.replace('/login')">
+                返回登录
+            </div>
+            <div v-if="username=='admin'" class="nav-right" slot="right" @click="$router.push('/admin/Management')">
+                <div class="left-left">管理员操作</div>
+                <Icon type="navicon" size="25" color="#80848f"
+                      style="margin-left: 10px;"></Icon>
             </div>
         </navPage>
         <Carousel autoplay v-model="value" loop>
@@ -128,6 +133,13 @@
     .home-btn {
         font-size: 13px;
         font-weight: 700;
+    }
+
+    .left-left {
+        margin-left: 10px;
+        color: #666;
+        font-size: 14px;
+        cursor: pointer;
     }
 
     .home-label {

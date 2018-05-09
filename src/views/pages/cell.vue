@@ -1,8 +1,14 @@
 <template>
     <div style="width: 100%;height: 100%;">
         <navPage :style="setting.model?day:night">
-            <div slot="right" @click="md=true">
-                <Icon type="gear-a" size="25" color="#80848f"></Icon>
+            <div slot="left" class="left-left" @click="$router.replace('/home')">
+                返回首页
+            </div>
+            <div slot="center" class="left-left">{{`第${Number(questionsIds.indexOf(question.id))+1}题`}}</div>
+            <div slot="right" class="nav-right" @click="md=true">
+                <div class="left-left">设置</div>
+                <Icon type="gear-a" size="25" color="#80848f"
+                      style="margin-left: 10px;"></Icon>
             </div>
         </navPage>
 
@@ -14,7 +20,10 @@
             <!--<div class="tag-wrapper">-->
             <!--<div class="tag" v-for="(tagitem,index) in  showTags" :key="index">{{tagitem}}</div>-->
             <!--</div>-->
-            <div class="text" :style="{fontSize:`${setting.size}px`}">{{`${question.text}`}}
+            <div class="text"
+                 :style="{fontSize:`${setting.size}px`}"
+                 v-html="text"
+            >
             </div>
             <radio :question="question"
                    :myAnswer="myAnswer"
@@ -23,7 +32,15 @@
             <div v-show="showAnalysis">
                 <div class="analysis-wapper">
                     <div class="analysis-font">答案 {{answerText}}</div>
-                    <Button style="color:deepskyblue" shape="circle" @click="next" :style="setting.model?day:night">下一题
+                    <Button style="color:deepskyblue"
+                            class="btn-analysis"
+                            shape="circle" @click="forword"
+                            :style="setting.model?day:night">上一题
+                    </Button>
+                    <Button style="color:deepskyblue"
+                            class="btn-analysis"
+                            shape="circle" @click="next"
+                            :style="setting.model?day:night">下一题
                     </Button>
                 </div>
                 <div class="analysis-font analysis-center">
@@ -57,10 +74,13 @@
                 <Switch v-model="settingModel"></Switch>
             </div>
         </MDialog>
-        <div v-if="username=='admin'" class="edit-q" @click="$router.push(`/admin/question/edit/${question.id}`)">
+        <div v-if="username=='admin'" class="edit-q"
+             title="修改该题"
+             @click="$router.push(`/admin/question/edit/${question.id}`)">
             <Icon type="wrench" size="20"></Icon>
         </div>
-        <div v-if="type=='error'" class="edit-del" @click="deleteErrors">
+        <div v-if="type=='error'" class="edit-del" @click="deleteErrors"
+             title="从错题本中移除该题">
             <Icon type="backspace" size="20"></Icon>
         </div>
         <Spin size="large" fix v-if="question.text==''"></Spin>
@@ -136,10 +156,15 @@
                     this.$store.commit('resetAnswer')
                     this.resetMyAnswer = false
                     this.$Message.success('重置成功')
+                    this.$router.go(-1)
                 }
             },
             questions(val) {
                 // console.log('qqqq', val)
+            },
+            questionsIds(temp) {
+                // console.log(temp)
+
             }
         },
         methods: {
@@ -147,7 +172,14 @@
                 let temp = this.questionsIds.indexOf(this.question.id)
                 let pos = Number(temp)
                 pos = (pos + 1) % this.questions.length
-                // console.log('wwww', pos + 1)
+                // console.log('wwww', pos)
+                this.$router.replace(this.questionsIds[pos])
+            },
+            forword() {
+                let temp = this.questionsIds.indexOf(this.question.id)
+                let pos = Number(temp)
+                pos = (pos - 1 + this.questions.length) % this.questions.length
+                // console.log('wwww', pos)
                 this.$router.replace(this.questionsIds[pos])
             },
             selected(value) {
@@ -159,7 +191,7 @@
             },
             deleteErrors() {
                 this.$store.commit('deleteErrors', this.question.id)
-                this.next()
+                this.forword()
             },
             ctop() {
                 this.show = !this.show
@@ -268,6 +300,9 @@
             }
         },
         computed: {
+            text() {
+                return this.question.text.replace(/\n/g, '<br/>').replace(/\s/g, '&nbsp;')
+            },
             questionsIds() {
                 let temp = []
                 this.questions.forEach(item => {
@@ -275,8 +310,8 @@
                 })
                 if (temp.length != 0 && this.first) {
                     // console.log('重定向')
-                    this.$router.replace(temp[0])
                     this.first = false
+                    this.$router.replace(temp[0])
                 }
                 return temp
             },
@@ -429,6 +464,13 @@
         background: #eee;
     }
 
+    .edit-q:hover {
+        color: #57a3f3;
+        background-color: transparent;
+        border-color: #57a3f3;
+        cursor: pointer;
+    }
+
     .edit-del {
         display: flex;
         justify-content: center;
@@ -443,4 +485,28 @@
         border: 1px #eee solid;
         background: #eee;
     }
+
+    .edit-del:hover {
+        color: #57a3f3;
+        background-color: transparent;
+        border-color: #57a3f3;
+        cursor: pointer;
+    }
+
+    .left-left {
+        margin-left: 10px;
+        color: #666;
+        font-size: 14px;
+        cursor: pointer;
+    }
+
+    /*.btn-analysis {*/
+
+    /*}*/
+
+    /*.btn-analysis:hover {*/
+    /*color: #57a3f3;*/
+    /*background-color: transparent;*/
+    /*border-color: #57a3f3;*/
+    /*}*/
 </style>

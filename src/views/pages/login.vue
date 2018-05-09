@@ -1,6 +1,6 @@
 <template>
     <div style="width:100%;height:100%;">
-        <navPage></navPage>
+        <!--<navPage></navPage>-->
         <div class="wrapper-center">
             <div class="wrapper-title">
                 <Avatar src="https://i.loli.net/2017/08/21/599a521472424.jpg" size="large"/>

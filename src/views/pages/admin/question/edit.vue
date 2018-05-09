@@ -1,6 +1,10 @@
 <template>
     <div>
-        <navPage></navPage>
+        <navPage>
+            <div slot="left" class="left-left" @click="$router.go(-1)">
+                返回上一页
+            </div>
+        </navPage>
         <whitespace>
             <!--<div>{{result}}</div>-->
             <!--<div>{{question}}</div>-->
@@ -41,7 +45,10 @@
             },
             edit() {
                 let data = qs.stringify({
-                    id:this.result.id,
+                    id: this.$store.state.user.id,
+                    appkey: this.$store.state.user.appkey,
+
+                    qid:this.result.id,
                     type: this.result.type,
                     tag: JSON.stringify(this.result.tag),
                     chapter: this.result.chapter,

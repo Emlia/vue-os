@@ -139,6 +139,30 @@ util.whereIsMyAnswersChapter = function (myAnswers, questions) {
     }
 
 }
+util.getSimArray = function (questions) {
+    let arr = _.cloneDeep(questions)
+    let sim = []
+    let ranNum = 10;
+    for (let i = 0; i < ranNum; i++) {
+
+        let ran = Math.floor(Math.random() * arr.length)
+        let temp = arr.splice(ran, 1)[0]
+        sim.push(temp.id)
+    }
+    return sim
+}
+util.getQuestionByArray = function (questions, array) {
+    let temp = []
+    let question = {}
+    for (let i = 0; i < array.length; i++) {
+        question = this.getQuestionById(questions, array[i])
+        if (question.text) {
+            temp.push(question)
+        }
+    }
+    // console.log('getQuestionByArray',temp)
+    return temp
+}
 util.setValue = function (key, value) {
     localStorage.setItem(key, JSON.stringify(value))
 }

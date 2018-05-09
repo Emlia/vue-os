@@ -6,6 +6,7 @@ export default {
         let user = util.getValue('user')
         if (user) {
             this.$store.commit('setUser', user)
+            this.$store.commit('loginAuthority', this)
         } else {
             this.$router.replace('/login')
             return

@@ -1,6 +1,10 @@
 <template>
     <div class="wrapper">
-        <navPage></navPage>
+        <navPage>
+            <div slot="left" class="left-left" @click="$router.go(-1)">
+                返回上一页
+            </div>
+        </navPage>
         <whitespace>
             <div class="title">添加题目</div>
             <div class="cell">
@@ -134,6 +138,9 @@
                     answer = [answer]
                 }
                 let data = qs.stringify({
+                    id: this.$store.state.user.id,
+                    appkey: this.$store.state.user.appkey,
+
                     type: this.type,
                     tag: JSON.stringify(this.tag),
                     chapter: this.chapter,

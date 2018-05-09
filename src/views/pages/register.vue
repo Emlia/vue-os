@@ -71,6 +71,7 @@
                     password: md5(this.password)
 
                 })
+                let _this = this
                 axios.post(`${config.baseurl}/php-ci-os/index.php/Os/register`,
                     data).then((response) => {
                     let res = response.data
@@ -83,8 +84,8 @@
                         this.$Message.error('注册失败')
                     }
                 }).catch(function (error) {
-                    this.$Message.error('连接服务器失败')
-                    console.log(error);
+                    _this.$Message.error('连接服务器失败')
+                    // console.log(error);
                 });
             }
         }

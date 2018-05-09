@@ -66,4 +66,11 @@
     .radio-item-wrapper {
         margin-top: 10px;
     }
+
+    .radio-item-wrapper:hover {
+        color: #57a3f3;
+        background-color: transparent;
+        border-color: #57a3f3;
+        cursor: pointer;
+    }
 </style>

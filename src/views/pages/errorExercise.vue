@@ -8,6 +8,7 @@
     import cell from './cell'
     import _ from 'lodash'
     import mixin from '../../libs/mixin'
+    import util from '../../libs/util'
 
     export default {
         name: "errorExercise",
@@ -27,13 +28,22 @@
         methods: {},
         computed: {
             errorQuestions() {
-                return this.questions.filter(item => {
-                    // console.log(`${this.errors}  ${item.id}  ${this.errors.includes(Number(item.id))}`)
-                    if (this.errors.includes(Number(item.id))||this.errors.includes(item.id)) {
-                        return true
+                // return this.questions.filter(item => {
+                //     // console.log(`${this.errors}  ${item.id}  ${this.errors.includes(Number(item.id))}`)
+                //     if (this.errors.includes(Number(item.id))||this.errors.includes(item.id)) {
+                //         return true
+                //     }
+                //     return false
+                // })
+                let temp = []
+                let qq = {}
+                for (let i = 0; i < this.errors.length; i++) {
+                    qq = util.getQuestionById(this.questions, this.errors[i])
+                    if (qq.text) {
+                        temp.push(qq)
                     }
-                    return false
-                })
+                }
+                return temp
             },
             questions() {
                 return this.$store.state.questions

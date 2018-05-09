@@ -82,7 +82,7 @@
                         this.$Message.success('修改成功')
                         this.$router.replace('/login')
                     } else {
-                        this.$Message.error('修改失败,请确认')
+                        this.$Message.error('修改失败,请确认用户名和原密码')
                     }
                 }).catch(function (error) {
                     this.$Message.error('连接服务器失败')

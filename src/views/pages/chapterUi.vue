@@ -12,11 +12,11 @@
                 </div>
             </div>
         </whitesapce>
-        <MDialog v-if="myDialog" @left="left" @right="right">
-            <div class="md-text">您上次未完成练习,
-                想要继续练习吗?
-            </div>
-        </MDialog>
+        <!--<MDialog v-if="myDialog" @left="left" @right="right">-->
+        <!--<div class="md-text">您上次未完成练习,-->
+        <!--想要继续练习吗?-->
+        <!--</div>-->
+        <!--</MDialog>-->
     </div>
 </template>
 
@@ -24,12 +24,12 @@
     import navPage from '../components/nav/navPage'
     import whitesapce from '../components/whitespace/whitespace'
     import mixin from '../../libs/mixin'
-    import MDialog from '../components/dialog/MDialog'
+    // import MDialog from '../components/dialog/MDialog'
     import util from '../../libs/util'
 
     export default {
         name: "chapter-ui",
-        components: {navPage, whitesapce, MDialog},
+        components: {navPage, whitesapce},
         mixins: [mixin],
         data() {
             return {
@@ -40,7 +40,7 @@
                     '#66CC00',
                     '#993399',
                     '#6666FF',],
-                isContinue: true
+                // isContinue: false
             }
         },
         mounted() {
@@ -52,37 +52,38 @@
             click(id) {
                 // console.log('chapter-', id)
                 this.$store.commit('setChapterId', id)
-                this.$router.push(`/chapterExercise/${id}/0`)
-                this.isContinue = false
-            },
-            left() {
                 this.$store.commit('reStartChapter')
-                this.isContinue = false
-            },
-            right() {
-                let cid = Object.keys(this.chapterAnswer)[0]
-                // console.log(`cid= ${cid}`)
-
-                let temp = this.questions.filter(item => {
-                    if (cid == item.id) {
-                        return true
-                    }
-                    return false
-                })
-                // console.log(temp[0])
-                // console.log(`temp=${temp[0]}`)
-                let id = temp[0].chapter
-                this.isContinue = false
                 this.$router.push(`/chapterExercise/${id}/0`)
-            }
+                // this.isContinue = false
+            },
+            // left() {
+            //     this.$store.commit('reStartChapter')
+            //     this.isContinue = false
+            // },
+            // right() {
+            //     let cid = Object.keys(this.chapterAnswer)[0]
+            //     // console.log(`cid= ${cid}`)
+            //
+            //     let temp = this.questions.filter(item => {
+            //         if (cid == item.id) {
+            //             return true
+            //         }
+            //         return false
+            //     })
+            //     // console.log(temp[0])
+            //     // console.log(`temp=${temp[0]}`)
+            //     let id = temp[0].chapter
+            //     this.isContinue = false
+            //     this.$router.push(`/chapterExercise/${id}/0`)
+            // }
         },
         computed: {
-            myDialog() {
-                return this.myAnswerIsExist && this.isContinue
-            },
-            myAnswerIsExist() {
-                return util.myAnswerIsExist(this.chapterAnswer)
-            },
+            // myDialog() {
+            //     return this.myAnswerIsExist && this.isContinue
+            // },
+            // myAnswerIsExist() {
+            //     return util.myAnswerIsExist(this.chapterAnswer)
+            // },
             chapters() {
                 return this.$store.state.chapters
             },

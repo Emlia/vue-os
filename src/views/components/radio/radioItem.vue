@@ -43,7 +43,7 @@
                     border: '2px solid #595959'
                 },
                 night: {
-                    border: '2px solid #eee'
+                    border: '2px solid #ccc'
                 }
             }
         },
@@ -152,7 +152,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        border: 2px solid #eee;
+        border: 2px solid #ccc;
         background: #2db7f5;
         width: 25px;
         height: 25px;

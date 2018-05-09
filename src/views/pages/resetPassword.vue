@@ -1,6 +1,10 @@
 <template>
     <div>
-        <navPage></navPage>
+        <navPage>
+            <div slot="left" class="left-left" @click="$router.go(-1)">
+                返回上一页
+            </div>
+        </navPage>
         <whitespace>
             <div class="q-edit-input">
                 <Input v-model="search" @on-click="searchClick" icon="ios-search" placeholder="请输入部分用户名内容"
@@ -63,6 +67,8 @@
         methods: {
             searchClick() {
                 let data = qs.stringify({
+                    id: this.$store.state.user.id,
+                    appkey: this.$store.state.user.appkey,
                     username: this.search
                 })
                 axios.post(`${config.baseurl}/php-ci-os/index.php/Os/searchUser`,
@@ -83,7 +89,9 @@
                 let time = md5(new Date().getTime()).slice(0, 6)
                 this.newPassword = time
                 let data = qs.stringify({
-                    id: id,
+                    id: this.$store.state.user.id,
+                    appkey: this.$store.state.user.appkey,
+                    nid: id,
                     newPassword: md5(this.newPassword)
 
                 })
