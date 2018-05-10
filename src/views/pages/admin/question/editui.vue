@@ -15,7 +15,7 @@
                 </div>
                 <div class="chapter-text">{{item.text}}</div>
                 <div>
-                    <Button type="error" @click="deleteQuestion(item.id)">删除该题</Button>
+                    <!--<Button type="error" @click="deleteQuestion(item.id)">删除该题</Button>-->
                     <Button type="success" @click="questionClick(item.id)">修改问题</Button>
                 </div>
             </div>
@@ -71,27 +71,7 @@
             questionClick(id) {
                 this.$router.push(`/admin/question/edit/${id}`)
             },
-            deleteQuestion(id){
-                let data = qs.stringify({
-                    id: this.$store.state.user.id,
-                    appkey: this.$store.state.user.appkey,
 
-                    qid:id,
-                })
-                axios.post(`${config.baseurl}/php-ci-os/index.php/Os/deleteQuestion`,
-                    data).then((response) => {
-                    let res = response.data
-                    if (res.ret === '200') {
-                        this.result = []
-                        this.$Message.success('删除成功')
-                    } else {
-                        this.$Message.error('删除失败')
-                    }
-
-                }).catch(function (error) {
-                    // console.log(error);
-                });
-            }
         }
     }
 </script>

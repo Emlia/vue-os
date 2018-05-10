@@ -10,8 +10,9 @@
             <!--<div>{{question}}</div>-->
             <ui title="编辑题目" :initData="question[0]" @questionChange="questionChange"></ui>
             <div class="tool">
-                <Button @click="$router.replace(`/admin/question/edit/${Number(question[0].id)+1}`)">下一题</Button>
+                <!--<Button @click="$router.replace(`/admin/question/edit/${Number(question[0].id)+1}`)">下一题</Button>-->
                 <Button @click="$router.go(-1)">返回</Button>
+                <Button @click="deleteQuestion">删除该题</Button>
                 <Button @click="edit">修改</Button>
             </div>
         </whitespace>
@@ -26,10 +27,11 @@
     import qs from 'qs'
     import config from '../../../../config/config'
     import mixin from '../../../../libs/mixin'
+
     export default {
         name: "edit",
         components: {navPage, whitespace, ui},
-        mixins:[mixin],
+        mixins: [mixin],
         data() {
             return {
                 result: {}
@@ -48,7 +50,7 @@
                     id: this.$store.state.user.id,
                     appkey: this.$store.state.user.appkey,
 
-                    qid:this.result.id,
+                    qid: this.result.id,
                     type: this.result.type,
                     tag: JSON.stringify(this.result.tag),
                     chapter: this.result.chapter,
@@ -70,6 +72,27 @@
 
                 }).catch(function (error) {
                     this.$Message.error('连接服务器失败')
+                });
+            },
+            deleteQuestion() {
+                let data = qs.stringify({
+                    id: this.$store.state.user.id,
+                    appkey: this.$store.state.user.appkey,
+
+                    qid: this.result.id,
+                })
+                axios.post(`${config.baseurl}/php-ci-os/index.php/Os/deleteQuestion`,
+                    data).then((response) => {
+                    let res = response.data
+                    if (res.ret === '200') {
+                        this.result = []
+                        this.$Message.success('删除成功')
+                    } else {
+                        this.$Message.error('删除失败')
+                    }
+
+                }).catch(function (error) {
+                    // console.log(error);
                 });
             }
         },
