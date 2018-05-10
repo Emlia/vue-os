@@ -24,9 +24,6 @@ import noticeEdit from './views/pages/admin/notice/edit'
 const routers = [
     {
         path: '/',
-        meta: {
-            title: ''
-        },
         component: index
     },
     {
@@ -92,4 +89,5 @@ const routers = [
     }
 
 ];
+// 导出路由地址
 export default routers;

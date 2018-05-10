@@ -24,7 +24,7 @@
         mixins: [mixin],
         data() {
             return {
-                // 状态 0 , 1,  2
+                // 状态 0 , 1,  2, 3
                 flag: 0,
                 // myDialog: false,
                 empty: []
@@ -42,11 +42,13 @@
             // }
         },
         methods: {
+            // 重新开始
             left() {
                 this.flag = 1
                 // this.myDialog = false
 
             },
+            // 继续上次
             right() {
                 this.flag = 2
                 // this.myDialog = false
@@ -54,6 +56,7 @@
             }
         },
         computed: {
+            // 控制对话框是否显示
             myDialog() {
                 return this.simulationIsExist && this.flag == 0
             },

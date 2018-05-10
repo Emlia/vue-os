@@ -24,6 +24,7 @@
             this.$store.commit('getTypes')
             this.$store.commit('getAnswers')
             this.$store.commit('setEtype', 'error')
+            this.$store.commit('resetErrorAnswer')
         },
         methods: {},
         computed: {

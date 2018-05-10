@@ -143,8 +143,8 @@ const store = new Vuex.Store({
                 chapterAnswer: JSON.stringify(state.chapterAnswers),
                 simulationAnswer: JSON.stringify(state.simulationAnswers),
                 error: JSON.stringify(state.errors),
-                simulation:JSON.stringify(state.simulation),
-                errorAnswer:JSON.stringify(state.errorAnswers)
+                simulation: JSON.stringify(state.simulation),
+                errorAnswer: JSON.stringify({})
             })
             axios.post(`${baseurl}/php-ci-os/index.php/Os/updateAnswer`,
                 data).then((response) => {
@@ -190,9 +190,10 @@ const store = new Vuex.Store({
                     if (!(data[0].error == '' || data[0].error == '{}')) {
                         state.errors = JSON.parse(data[0].error)
                     }
-                    if (!(data[0].errorAnswer == '' || data[0].errorAnswer == '{}')) {
-                        state.errorAnswers = JSON.parse(data[0].errorAnswer)
-                    }
+                    // if (!(data[0].errorAnswer == '' || data[0].errorAnswer == '{}')) {
+                    //     state.errorAnswers = {}
+                    // }
+                    state.errorAnswers = {}
                     if (!(data[0].simulation == '' || data[0].simulation == '{}')) {
                         state.simulation = JSON.parse(data[0].simulation)
                     }
@@ -337,6 +338,9 @@ const store = new Vuex.Store({
         reStartChapter(state) {
             state.keepOnChapter = false
             state.chapterAnswers = {}
+        },
+        resetErrorAnswer(state) {
+            state.errorAnswers = {}
         },
         getConfiguration(state) {
             axios.get(`${baseurl}/php-ci-os/index.php/Os/getConfiguration`

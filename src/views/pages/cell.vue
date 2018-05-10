@@ -79,7 +79,7 @@
              @click="$router.push(`/admin/question/edit/${question.id}`)">
             <Icon type="wrench" size="20"></Icon>
         </div>
-        <div v-if="type=='error'" class="edit-del" @click="deleteErrors"
+        <div v-if="type=='error'" class="edit-del" @click="deleteErrors(question.id)"
              title="从错题本中移除该题">
             <Icon type="backspace" size="20"></Icon>
         </div>
@@ -189,9 +189,10 @@
             collect() {
 
             },
-            deleteErrors() {
-                this.$store.commit('deleteErrors', this.question.id)
-                this.forword()
+            deleteErrors(id) {
+                this.$store.commit('deleteErrors', id)
+                this.$Message.success('已从错题本中移除该题')
+                this.next()
             },
             ctop() {
                 this.show = !this.show
@@ -238,8 +239,12 @@
 
                     this.$store.commit('addAnswer', {id: value.id, value: [value.value]})
                     let res = util.getAnswerState(this.question.answer, [value.value])
-                    if (res == 'error') {
+
+                    if (this.type != 'error' && res == 'error') {
                         this.$store.commit('addErrors', this.question.id)
+                    }
+                    if (this.type == 'error' && res == 'true') {
+                        this.deleteErrors(value.id)
                     }
                     // let answer = this.question.answer
                     // if (value.value === answer[0]) {
