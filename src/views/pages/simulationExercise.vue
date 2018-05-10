@@ -55,7 +55,7 @@
         },
         computed: {
             myDialog() {
-                return this.myAnswerIsExist && this.flag == 0
+                return this.simulationIsExist && this.flag == 0
             },
             myAnswerIsExist() {
                 return util.myAnswerIsExist(this.myAnswers)
@@ -70,11 +70,11 @@
             randomlyQuestions() {
 
                 if (this.oldQ && this.questionsIsExist && this.simulationIsExist) {
-                    console.log('old-----------')
+                    // console.log('old-----------')
                     return util.getQuestionByArray(this.questions, this.simulation)
                 }
                 if (this.newQ && this.questionsIsExist) {
-                    console.log('new-----------')
+                    // console.log('new-----------')
                     let simArray = util.getSimArray(this.questions)
                     this.$store.commit('reStartSim')
                     this.$store.commit('setSimulation', simArray)
@@ -82,7 +82,7 @@
                     // console.log('simArray', simArray)
                     return util.getQuestionByArray(this.questions, simArray)
                 }
-                console.log('empty')
+                // console.log('empty')
                 return this.empty
             },
             questions() {
@@ -96,12 +96,12 @@
             },
             // 曾经有答案,点击继续上次按钮
             oldQ() {
-                return this.myAnswerIsExist && this.flag == 2 || this.flag == 3
+                return this.simulationIsExist && this.flag == 2 || this.flag == 3
             },
             // 曾经有答案,点击重新开始按钮
             newQ() {
                 // return !this.oldQ
-                return !this.myAnswerIsExist && this.flag == 0 || this.flag == 1
+                return !this.simulationIsExist && this.flag == 0 || this.flag == 1
             }
         }
     }

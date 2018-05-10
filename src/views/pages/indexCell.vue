@@ -96,7 +96,7 @@
     import util from '../../libs/util'
 
     export default {
-        name: "cell",
+        name: "index-cell",
         components: {radio, whitespace, bottomPanel, navPage, MDialog},
         props: {
             questions: {

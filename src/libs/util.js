@@ -142,7 +142,7 @@ util.whereIsMyAnswersChapter = function (myAnswers, questions) {
 util.getSimArray = function (questions) {
     let arr = _.cloneDeep(questions)
     let sim = []
-    let ranNum = 10;
+    let ranNum = 50;
     for (let i = 0; i < ranNum; i++) {
 
         let ran = Math.floor(Math.random() * arr.length)

@@ -14,7 +14,7 @@
                 <div class="chapter-icon" :style="{backgroundColor:colors[(index)%colors.length]}">{{item.id}}
                 </div>
                 <div class="chapter-text">{{item.username}}</div>
-                <Button type="dashed" @click="resetPassword(item.id)">重置密码</Button>
+                <Button :disabled="item.username=='admin'" type="success" @click="resetPassword(item.id)">重置密码</Button>
             </div>
             <!--<div>{{newPassword}}</div>-->
         </whitespace>

@@ -332,6 +332,7 @@ const store = new Vuex.Store({
         reStartSim(state) {
             state.keepOnSim = false
             state.simulationAnswers = {}
+            this.commit('uploadAnswer')
         },
         reStartChapter(state) {
             state.keepOnChapter = false
@@ -413,6 +414,7 @@ const store = new Vuex.Store({
         },
         setSimulation(state, value) {
             state.simulation = value
+            this.commit('uploadAnswer')
         }
 
     },

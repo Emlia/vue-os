@@ -22,7 +22,7 @@
                  :style="{borderColor: `${getColor(item)}`}"
                  class="cell"
                  title="进入该题"
-                 v-for="(item,index) in num" :key="item">{{item}}
+                 v-for="(item,index) in num" :key="item">{{index+1}}
             </div>
         </div>
         <!--<transition name="slide-fade">-->
