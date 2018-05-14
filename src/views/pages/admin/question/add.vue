@@ -114,7 +114,7 @@
         },
         methods: {
             addQT() {
-                console.log('asdxas', this.type)
+                // console.log('asdxas', this.type)
                 if (!this.type) {
                     this.$Message.info('题目类型不能为空')
                     return

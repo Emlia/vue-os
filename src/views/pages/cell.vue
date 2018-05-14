@@ -47,7 +47,7 @@
                     答案详解
                 </div>
 
-                <div class="analysis-font" :style="{fontSize:`${setting.size}px`}">{{question.analysis}}</div>
+                <div class="analysis-font" :style="{fontSize:`${setting.size}px`}" v-html="analysis"></div>
             </div>
         </whitespace>
         <bottomPanel
@@ -307,6 +307,12 @@
         computed: {
             text() {
                 return this.question.text.replace(/\n/g, '<br/>').replace(/\s/g, '&nbsp;')
+            },
+            analysis() {
+                if(this.question.analysis==''){
+                    return '略'
+                }
+                return this.question.analysis.replace(/\n/g, '<br/>').replace(/\s/g, '&nbsp;')
             },
             questionsIds() {
                 let temp = []
