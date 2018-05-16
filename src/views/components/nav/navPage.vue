@@ -82,7 +82,7 @@
     .left-left {
         margin-left: 10px;
         color: #666;
-        font-size: 14px;
+        font-size: 13px;
         cursor: pointer;
     }
 

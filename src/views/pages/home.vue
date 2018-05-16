@@ -4,9 +4,9 @@
             <div slot="left" class="left-left" @click="$router.replace('/login')">
                 返回登录
             </div>
-            <div slot="center" class="left-left" >
-                操作系统课程练习题
-            </div>
+            <!--<div slot="center" class="left-left" >-->
+                <!--操作系统练习题-->
+            <!--</div>-->
             <div v-if="username=='admin'" class="nav-right" slot="right" @click="$router.push('/admin/Management')">
                 <div class="left-left">管理员操作</div>
                 <Icon type="navicon" size="25" color="#80848f"
