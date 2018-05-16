@@ -4,8 +4,9 @@ import _ from 'lodash'
 
 let util = {};
 util.title = function (title) {
-    title = title ? title + ' - Home' : 'os';
-    window.document.title = title;
+    // title = title ? title + ' - Home' : 'os';
+    // window.document.title = title;
+    window.document.title = '操作系统课程练习题';
 };
 
 const ajaxUrl = env === 'development' ?

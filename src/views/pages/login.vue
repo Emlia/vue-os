@@ -1,7 +1,14 @@
 <template>
     <div style="width:100%;height:100%;">
-        <!--<navPage></navPage>-->
+        <navPage :back="false">
+            <div slot="center" class="left-left">操作系统课程练习题</div>
+        </navPage>
         <div class="wrapper-center">
+            <!--<div class="title-text">操作系统课程练习题</div>-->
+            <!--<div class="wrapper-title">-->
+                <!--<Avatar src="https://i.loli.net/2017/08/21/599a521472424.jpg" size="large"/>-->
+                <!--<div class="title-text">操作系统课程练习题</div>-->
+            <!--</div>-->
             <div class="wrapper-title">
                 <Avatar src="https://i.loli.net/2017/08/21/599a521472424.jpg" size="large"/>
                 <div class="home-text-login">登录</div>
@@ -18,8 +25,8 @@
 
             <Button class="home-input" type="info" long @click="login">登录</Button>
             <div class="login-between">
-                <div style="color:#2db7f5;" @click="$router.replace('/forgetPassword')">
-                    修改密码
+                <div style="color:#2db7f5;" @click="$Message.info('请联系管理员重置密码')">
+                    忘记密码?
                 </div>
                 <div style="color:#2db7f5;" @click="$router.replace('/register')">新用户注册</div>
 
@@ -75,6 +82,12 @@
 </script>
 
 <style scoped>
+    .title-text {
+        text-align: center;
+        font-size: 20px;
+        margin-bottom: 5px;
+    }
+
     .wrapper-title {
         display: flex;
         flex-direction: row;
