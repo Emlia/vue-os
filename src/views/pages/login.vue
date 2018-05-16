@@ -6,8 +6,8 @@
         <div class="wrapper-center">
             <!--<div class="title-text">操作系统课程练习题</div>-->
             <!--<div class="wrapper-title">-->
-                <!--<Avatar src="https://i.loli.net/2017/08/21/599a521472424.jpg" size="large"/>-->
-                <!--<div class="title-text">操作系统课程练习题</div>-->
+            <!--<Avatar src="https://i.loli.net/2017/08/21/599a521472424.jpg" size="large"/>-->
+            <!--<div class="title-text">操作系统课程练习题</div>-->
             <!--</div>-->
             <div class="wrapper-title">
                 <Avatar src="https://i.loli.net/2017/08/21/599a521472424.jpg" size="large"/>
@@ -105,11 +105,14 @@
     }
 
     .wrapper-center {
-        left: 10%;
-        right: 10%;
-        position: absolute;
-        top: 33%;
-        transform: translateY(-50%);
+        /*left: 10%;*/
+        /*right: 10%;*/
+        /*position: absolute;*/
+        /*top: 33%;*/
+        /*transform: translateY(-50%);*/
+        margin-left: 10%;
+        margin-right: 10%;
+        margin-top: 10%;
     }
 
     .wrapper-bottom {

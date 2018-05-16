@@ -27,11 +27,14 @@
   width: 100%;
 }
 .wrapper-center[data-v-f6957b98] {
-  left: 10%;
-  right: 10%;
-  position: absolute;
-  top: 33%;
-  transform: translateY(-50%);
+  /*left: 10%;*/
+  /*right: 10%;*/
+  /*position: absolute;*/
+  /*top: 33%;*/
+  /*transform: translateY(-50%);*/
+  margin-left: 10%;
+  margin-right: 10%;
+  margin-top: 10%;
 }
 .wrapper-bottom[data-v-f6957b98] {
   width: 100%;
