@@ -85,6 +85,12 @@
         font-size: 13px;
         cursor: pointer;
     }
+    .title-title {
+        /*margin-left: 10px;*/
+        color: #666;
+        font-size: 20px;
+        /*cursor: pointer;*/
+    }
 
     .vertical-center-modal {
         width: 60%;

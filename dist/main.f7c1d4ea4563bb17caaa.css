@@ -109,6 +109,12 @@
   font-size: 13px;
   cursor: pointer;
 }
+.title-title[data-v-529f6c07] {
+  /*margin-left: 10px;*/
+  color: #666;
+  font-size: 20px;
+  /*cursor: pointer;*/
+}
 .vertical-center-modal[data-v-529f6c07] {
   width: 60%;
   display: -ms-flexbox;

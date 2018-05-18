@@ -2,7 +2,7 @@
     <div style="width:100%;height:100%;">
         <!--<navPage></navPage>-->
         <navPage :back="false">
-            <div slot="center" class="left-left">操作系统课程练习题</div>
+            <div slot="center" class="title-title">操作系统课程练习题</div>
         </navPage>
         <div class="wrapper-center">
             <div class="wrapper-title">
