@@ -29,8 +29,15 @@
             <div class="cell">
                 <div class="tag">用户</div>
                 <div>
-                    <Button class="btn" @click="$router.push('/admin/resetPassword')">重置密码</Button>
+                    <Button class="btn" @click="$router.push('/admin/resetPassword')">重置用户密码</Button>
                     <!--<Button class="btn" @click="$router.push('adminAdd')">电脑端操作</Button>-->
+                </div>
+            </div>
+
+            <div class="cell">
+                <div class="tag">管理员</div>
+                <div>
+                    <Button class="btn" @click="$router.push('/forgetPassword')">修改密码</Button>
                 </div>
             </div>
             <div class="cell">
@@ -42,34 +49,6 @@
                     <!--<Button class="btn" @click="$router.push('adminAdd')">电脑端操作</Button>-->
                 </div>
             </div>
-            <!--<div class="cell">-->
-            <!--<div class="tag">标签(tag)</div>-->
-            <!--<div>-->
-            <!--<Button class="btn" @click="$router.push('TAdd')">添加数据</Button>-->
-            <!--<Button class="btn" @click="$router.push('TEdit')">编辑数据</Button>-->
-            <!--<Button class="btn" @click="$router.push('TAll')">获取所有数据</Button>-->
-            <!--&lt;!&ndash;<Button class="btn" @click="$router.push('adminAdd')">电脑端操作</Button>&ndash;&gt;-->
-            <!--</div>-->
-            <!--</div>-->
-
-            <!--<div class="cell">-->
-            <!--<div class="tag">章节(chapter)</div>-->
-            <!--<div>-->
-            <!--<Button class="btn" @click="$router.push('QAdd')">添加数据</Button>-->
-            <!--<Button class="btn" @click="$router.push('QEditUI')">编辑数据</Button>-->
-            <!--<Button class="btn" @click="$router.push('QAll')">获取所有数据</Button>-->
-            <!--&lt;!&ndash;<Button class="btn" @click="$router.push('adminAdd')">电脑端操作</Button>&ndash;&gt;-->
-            <!--</div>-->
-            <!--</div>-->
-            <!--<div class="cell">-->
-            <!--<div class="tag">答案(answer)</div>-->
-            <!--<div>-->
-            <!--<Button class="btn" @click="$router.push('QAdd')">添加数据</Button>-->
-            <!--<Button class="btn" @click="$router.push('QEdit')">编辑数据</Button>-->
-            <!--<Button class="btn" @click="$router.push('QAll')">获取所有数据</Button>-->
-            <!--&lt;!&ndash;<Button class="btn" @click="$router.push('adminAdd')">电脑端操作</Button>&ndash;&gt;-->
-            <!--</div>-->
-            <!--</div>-->
         </whitesapce>
 
     </div>

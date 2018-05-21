@@ -9,10 +9,10 @@
                 <Avatar src="https://i.loli.net/2017/08/21/599a521472424.jpg" size="large"/>
                 <div class="home-text-login">修改密码</div>
             </div>
-            <Input class="home-input" v-model="username" placeholder="请输入用户名" clearable autofocus/>
-            <Input class="home-input" type="password" v-model="oldPassword" placeholder="请输入原密码" clearable/>
-            <Input class="home-input" type="password" v-model="newPassword" placeholder="请输入新密码" clearable/>
-            <Input class="home-input" type="password" v-model="conformPassword" placeholder="请再输入新密码" clearable/>
+            <Input class="home-input" v-model="username" placeholder="请输入用户名(英文数字,3-12位)" clearable autofocus/>
+            <Input class="home-input" type="password" v-model="oldPassword" placeholder="请输入原密码(英文数字,5-12位)" clearable/>
+            <Input class="home-input" type="password" v-model="newPassword" placeholder="请输入新密码(英文数字,5-12位)" clearable/>
+            <Input class="home-input" type="password" v-model="conformPassword" placeholder="请再输入新密码(英文数字,5-12位)" clearable/>
             <Button class="home-input" type="info" long @click="forgetPassword">确认修改</Button>
             <Row>
                 <Col span="12" class="a-text"
